@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6313b1b8-fde5-44ca-bfd5-272cdb6bca6c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/frontEnd/admin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/API.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1kRZXRRr9KP5W1yinjxeWBR5W4z" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6313b1b8-fde5-44ca-bfd5-272cdb6bca6c" name="Default Changelist" comment="" />
+      <created>1605665406528</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605665406528</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="308" y="166" key="DBNavigator.DatasetFilterDialog" timestamp="1605723599862">
+      <screen x="0" y="23" width="1440" height="842" />
+    </state>
+    <state x="308" y="166" key="DBNavigator.DatasetFilterDialog/0.23.1440.842@0.23.1440.842" timestamp="1605723599862" />
+    <state x="258" y="106" key="DBNavigator.ProjectSettingsDialog" timestamp="1605723561313">
+      <screen x="0" y="23" width="1440" height="842" />
+    </state>
+    <state x="258" y="106" key="DBNavigator.ProjectSettingsDialog/0.23.1440.842@0.23.1440.842" timestamp="1605723561313" />
+    <state x="221" y="83" key="SettingsEditor" timestamp="1605723278851">
+      <screen x="0" y="23" width="1440" height="842" />
+    </state>
+    <state x="221" y="83" key="SettingsEditor/0.23.1440.842@0.23.1440.842" timestamp="1605723278851" />
+    <state x="421" y="76" width="598" height="735" key="find.popup" timestamp="1605725083192">
+      <screen x="0" y="23" width="1440" height="842" />
+    </state>
+    <state x="421" y="76" width="598" height="735" key="find.popup/0.23.1440.842@0.23.1440.842" timestamp="1605725083192" />
+  </component>
+</project>
