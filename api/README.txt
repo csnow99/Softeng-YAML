@@ -52,3 +52,20 @@ post:	The amendVoteRequest contains the ID of the alternative, the participant w
 
 
 
+Part 2) Database Schema
+The tables included in the database are Choices, Participants, Alternatives, Feedback, and Votes. Each table has an automatically incremented ID as its primary key. 
+Choices
+	When choice_isCompleted is false, completion_time and chosen_alternative should be null.
+	chosen_alternative references the ID of one of the alternatives for that choice
+Participants
+	choice_id references the ID of the choice that the participant registered in
+Alternatives
+	choice_id references the ID of the choice that the alternative is in
+Feedback
+	alternative_id references the ID of the alternative that the feedback is in
+	participant_id references the ID of the participant that wrote the feedback
+Votes
+	participant_id references the ID of the participant who voted
+	alternative_id references the ID of the alternative voted on
+	vote_type represents whether it is an upvote or a downvote: 0 for downvote, 1 for upvote
+	A trigger should be set up so that any time a user revotes again their first vote gets removed from the table, so that each user only has one vote per alternative
