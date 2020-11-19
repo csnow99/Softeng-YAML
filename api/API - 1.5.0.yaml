@@ -341,11 +341,11 @@ definitions:
     required:
     - "altID"
     - "description"
-    - "name"
+    - "title"
     properties:
       altID:
         type: "string"
-      name:
+      title:
         type: "string"
       description:
         type: "string"
@@ -467,11 +467,14 @@ definitions:
     required:
     - "ID"
     - "completed"
-    - "date"
+    - "dateCreated"
+    - "dateCompleted"
     properties:
       ID:
         type: "string"
-      date:
+      dateCreated:
+        type: "object"
+      dateCompleted:
         type: "object"
       completed:
         type: "boolean"
@@ -494,7 +497,9 @@ definitions:
     required:
     - "alternatives"
     - "isCompleted"
+    - "dateCreated"
     - "dateCompleted"
+    - "selectedAlternativeID"
     - "statusCode"
     properties:
       alternatives:
@@ -503,8 +508,12 @@ definitions:
           $ref: "#/definitions/Alternative"
       isCompleted:
         type: "boolean"
+      dateCreated:
+        type: "object"
       dateCompleted:
         type: "object"
+      selectedAlternativeID:
+        type: "string"
       statusCode:
         type: "integer"
       
