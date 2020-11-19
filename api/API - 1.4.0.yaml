@@ -434,7 +434,7 @@ definitions:
         type: "string"
       description:
         type: "string"
-      participantList:
+      alternativeList:
         type: "array"
         items:
           $ref: "#/definitions/Alternative"
