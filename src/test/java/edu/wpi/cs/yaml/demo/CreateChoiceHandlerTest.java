@@ -1,5 +1,7 @@
 package edu.wpi.cs.yaml.demo;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -10,7 +12,10 @@ import com.google.gson.Gson;
 
 import edu.wpi.cs.yaml.demo.http.CreateChoiceRequest;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceResponse;
+import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDRequest;
+import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDResponse;
 import edu.wpi.cs.yaml.demo.model.Alternative;
+
 import edu.wpi.cs.yaml.demo.LambdaTest;
 
 
@@ -19,20 +24,24 @@ import edu.wpi.cs.yaml.demo.LambdaTest;
  */
 public class CreateChoiceHandlerTest extends LambdaTest {
 
-    void testSuccessInput(String incoming) throws IOException {
+    String testSuccessInput(String incoming) throws IOException {
     	CreateChoiceHandler handler = new CreateChoiceHandler();
     	CreateChoiceRequest req = new Gson().fromJson(incoming, CreateChoiceRequest.class);
        
         CreateChoiceResponse resp = handler.handleRequest(req, createContext("create"));
         Assert.assertEquals(200, resp.httpCode);
+        
+        return resp.response;			//return choiceID
     }
 	
-    void testFailInput(String incoming, int failureCode) throws IOException {
+    String testFailInput(String incoming, int failureCode) throws IOException {
     	CreateChoiceHandler handler = new CreateChoiceHandler();
     	CreateChoiceRequest req = new Gson().fromJson(incoming, CreateChoiceRequest.class);
 
     	CreateChoiceResponse resp = handler.handleRequest(req, createContext("create"));
         Assert.assertEquals(failureCode, resp.httpCode);
+        
+        return resp.response;
     }
 
    
@@ -48,14 +57,17 @@ public class CreateChoiceHandlerTest extends LambdaTest {
     	alternatives.add(alt3);
     	CreateChoiceRequest ccr = new CreateChoiceRequest("testChoice4", 10, "sample description", alternatives);
         String SAMPLE_INPUT_STRING = new Gson().toJson(ccr);  
-        
+        String choiceID = null;
         try {
-        	testSuccessInput(SAMPLE_INPUT_STRING);
+        	 choiceID = testSuccessInput(SAMPLE_INPUT_STRING);
         } catch (IOException ioe) {
         	Assert.fail("Invalid:" + ioe.getMessage());
         }
-        
-        
+        if (choiceID != null) {
+        DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
+        DeleteSingleChoiceByIDResponse d_resp = new DeleteChoiceHandler().handleRequest(dcr, createContext("delete"));
+        assertEquals("Succesfully deleted: "+choiceID, d_resp.response);
+        }
     }
     
     

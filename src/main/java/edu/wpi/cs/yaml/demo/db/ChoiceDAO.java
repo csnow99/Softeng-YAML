@@ -55,10 +55,10 @@ public class ChoiceDAO {
             throw new Exception("Failed to update report: " + e.getMessage());
         }
     }*/
-    public boolean deleteChoice(Choice choice) throws Exception {
+    public boolean deleteChoice(String choiceID) throws Exception {
         try {
             PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE choice_ID = ?;");
-            ps.setString(1, choice.choiceID);
+            ps.setString(1, choiceID);
             int numAffected = ps.executeUpdate();
             ps.close();
             

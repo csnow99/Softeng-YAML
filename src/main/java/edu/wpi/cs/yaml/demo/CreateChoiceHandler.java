@@ -46,7 +46,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 
 		CreateChoiceResponse response;
 		try {
-			String choiceID = Integer.toString(req.getName().hashCode());
+			String choiceID = Integer.toString(req.getName().hashCode()); //placeholder ID generator
 			if (createChoice(choiceID, req.getName(), req.getMaxParticipants(), req.getDescription(), req.getAlternatives()))
 			{
 				response = new CreateChoiceResponse(choiceID, 200);
