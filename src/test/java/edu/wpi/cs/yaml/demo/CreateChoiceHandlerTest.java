@@ -57,6 +57,7 @@ public class CreateChoiceHandlerTest extends LambdaTest {
     	alternatives.add(alt3);
     	CreateChoiceRequest ccr = new CreateChoiceRequest("testChoice4", 10, "sample description", alternatives);
         String SAMPLE_INPUT_STRING = new Gson().toJson(ccr);  
+        System.out.print(SAMPLE_INPUT_STRING);
         String choiceID = null;
         try {
         	 choiceID = testSuccessInput(SAMPLE_INPUT_STRING);
