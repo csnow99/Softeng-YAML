@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Create Choice</title>
+    </head>
+    <body>
+        <h1>YAML CHOICE</h1>
+            <form>
+                <div id="choice">
+                    <label>Choice Name: </label><input type="text" name="choiceName" value=""><br>
+                    <label>Number of Participants: </label><input type="number" name="partNum" value=""><br>
+                    <label>Choice description: </label><input type="text" name="choiceDesc" value=""><br>
+                </div>
+                <br>
+                <div id="alternative">
+                    <label>Alternative Name: </label><input type="text" name="altName1" value=""><br>
+                    <label>Alternative Description: </label><input type="text" name="altDesc1" value=""><br><br>
+
+                    <label>Alternative Name: </label><input type="text" name="altName2" value=""><br>
+                    <label>Alternative Description: </label><input type="text" name="altDesc2" value=""><br><br>
+
+                    <input type="button" value="Create another alternative" onclick="JavaScript:handleAltCreateClick">
+                </div>
+
+                <input type="button" value="Create Choice" onclick="JavaScript:handleChoiceCreateClick(this)">
+            </form>
+    </body>
+</html>

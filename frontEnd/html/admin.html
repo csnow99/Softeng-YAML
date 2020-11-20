@@ -11,13 +11,16 @@
             on
             <label id="createDate">___</label>
         </p>
-        <p>
-            Delete all choices created
-            <input type="text" id="numDays" name="numDays">
-            ago
-            <button id="numDaysBtn">Submit</button>
-        </p>
-        <button id="newReport">Create new Report</button>
+
+        <p>Delete all choices N days old. N is: </p>
+            <form>
+                <input type="text" id="numDays" name="numDays">
+                <input type="button" id="numDaysBtn" value="Submit">
+            </form>
+        <br>
+        <form>
+        <input type="button" id="newReport" value="Create new report">
+        </form>
         <br>
         <p>Last report:</p>
         <div id="report">
