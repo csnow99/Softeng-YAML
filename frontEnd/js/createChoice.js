@@ -1,3 +1,20 @@
+function loadChoicePage(response) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", choicePage_url + "/" + name, true);
+    xhr.send();
+
+    console.log("sent");
+
+    //Not complete
+}
+
+function processCreateChoiceResponse(result) {
+    console.log("result:" + result);
+
+    loadChoicePage(result)
+
+}
+
 function handleChoiceCreateClick(e) {
   var form = document.createForm;
 
@@ -6,18 +23,15 @@ function handleChoiceCreateClick(e) {
   data["Choice Name"] = form.choiceName.value;
   data["Max Participants"] = form.partNum.value;
   data["Choice Description"] = form.choiceDesc.value;
-  data["Alternative Name #1"] = form.choiceName.value;
-
-  if (form.system.checked) {  // be sure to flag system constant requests...
-     data["system"] = true;
-  }
-
-  data["value"] = form.constantValue.value;
+  data["Alternative Name #1"] = form.altName1.value;
+  data["Alternative Description #1"] = form.altDesc2.value;
+  data["Alternative Name #2"] = form.altName2.value;
+  data["Alternative Description #2"] = form.altDesc2.value;
 
   var js = JSON.stringify(data);
   console.log("JS:" + js);
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", create_url, true);
+  xhr.open("POST", createChoice_url, true);
 
   // send the collected data as JSON
   xhr.send(js);
@@ -29,7 +43,7 @@ function handleChoiceCreateClick(e) {
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
 	      console.log ("XHR:" + xhr.responseText);
-	      processCreateResponse(xhr.responseText);
+	      processCreateChoiceResponse(xhr.responseText);
     	 } else {
     		 console.log("actual:" + xhr.responseText)
 			  var js = JSON.parse(xhr.responseText);
@@ -37,7 +51,7 @@ function handleChoiceCreateClick(e) {
 			  alert (err);
     	 }
     } else {
-      processCreateResponse("N/A");
+      processCreateChoiceResponse("N/A");
     }
   };
 }
