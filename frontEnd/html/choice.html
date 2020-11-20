@@ -2,9 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Choice</title>
 </head>
 <body>
+    <div id="choiceInfo"></div>
 
+    <h1>Sign In</h1>
+    <form>
+        <label>Name: </label><input type="text" name="partName" value=""><br>
+        <label>Password (Optional):  </label><input type="password" name="partPass" value=""><br>
+        <input type="button" value="Sign In" onclick="JavaScript:handleSignInClick(this)"><br>
+    </form>
+    <p>
+        Name/Password are only for this choice. <br>
+        New to this choice? Make up a name (and password). <br>
+        Returning? Use the same name (and password). <br>
+    </p>
+
+    <div id="altContent"></div>
 </body>
 </html>
