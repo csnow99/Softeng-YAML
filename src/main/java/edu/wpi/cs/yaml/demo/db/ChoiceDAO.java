@@ -83,20 +83,21 @@ public class ChoiceDAO {
                 return false;
             }
 
-            ps = conn.prepareStatement("INSERT INTO " + tblName + " (choice_ID, choice_name, choice_maxParticipants, choice_description, choice_isCompleted, completion_time, chosen_alternative) values(?,?,?,?,?,?,?);");
+            ps = conn.prepareStatement("INSERT INTO " + tblName + " (choice_ID, choice_name, choice_maxParticipants, choice_description, creation_time, choice_isCompleted, completion_time, chosen_alternative) values(?,?,?,?,?,?,?,?);");
             ps.setString(1,  choice.choiceID);
             ps.setString(2,  choice.choiceName);
             ps.setInt(3, choice.maxParticipants);
             ps.setString(4, choice.choiceDescription);
-            ps.setBoolean(5, false);     //a newly created choice is not completed
-            ps.setTimestamp(6, null);    //it does not have a completion date
-            ps.setString(7, null);       //it does not have a selected alternative
+            ps.setTimestamp(5, choice.timeCreated);
+            ps.setBoolean(6, false);     //a newly created choice is not completed
+            ps.setTimestamp(7, null);    //it does not have a completion date
+            ps.setString(8, null);       //it does not have a selected alternative
             
             ps.execute();
             return true;
 
         } catch (Exception e) {
-            throw new Exception("Failed to insert constant: " + e.getMessage());
+            throw new Exception("Failed to create choice: " + e.getMessage());
         }
     }
 

@@ -35,7 +35,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 		for (Alternative alt : alternatives) {
 			alt.setChoiceID(choiceID);
 			altDao.addAlternative(alt);
-		}
+		} 
 		return true;
 	}
 	
@@ -50,10 +50,11 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 		String alternativesHashCode = "";													//never longer than 30 digits
 		for (Alternative alt : req.getAlternatives()) {
 			Integer altHashCode = alt.name.hashCode()%1000000; 								//make these 6 digits long
-			alternativesHashCode.concat(altHashCode.toString());
+			alternativesHashCode = alternativesHashCode.concat(altHashCode.toString());
 		}
+	
 		String newID = "";																	//never longer than 60 digits
-		newID.concat(nameHashCode).concat(descriptionHashCode).concat(maxParticipants).concat(alternativesHashCode);
+		newID = newID.concat(nameHashCode).concat(descriptionHashCode).concat(maxParticipants).concat(alternativesHashCode);
 		return newID;
 	}
 	
@@ -69,7 +70,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 			{
 				response = new CreateChoiceResponse(choiceID, 200);
 			} else {
-				response = new CreateChoiceResponse(choiceID, 400);
+				response = new CreateChoiceResponse("Unable to create choice: " +choiceID, 400);
 			}
 		} catch (Exception e) {
 			response = new CreateChoiceResponse("Unable to create choice: " + req.getName() + "(" + e.getMessage() + ")", 400);
