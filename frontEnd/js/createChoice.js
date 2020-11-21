@@ -22,9 +22,9 @@ function handleChoiceCreateClick(e) {
 */
 
 
-  data["Choice Name"] = form.choiceName.value;
-  data["Max Participants"] = form.partNum.value;
-  data["Choice Description"] = form.choiceDesc.value;
+  data["name"] = form.choiceName.value;
+  data["maxParticipants"] = form.partNum.value;
+  data["description"] = form.choiceDesc.value;
 
   var alt1 = {};
   var alt2 = {};
@@ -34,7 +34,7 @@ function handleChoiceCreateClick(e) {
   alt2["description"] = form.altDesc2.value;
 
   var alts = [alt1, alt2];
-  data["Alternatives"] = alts;
+  data["alternatives"] = alts;
 
   var js = JSON.stringify(data);
   console.log("JS:" + js);
