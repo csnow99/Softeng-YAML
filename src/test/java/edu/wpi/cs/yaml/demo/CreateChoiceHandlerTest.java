@@ -27,7 +27,7 @@ public class CreateChoiceHandlerTest extends LambdaTest {
     String testSuccessInput(String incoming) throws IOException {
     	CreateChoiceHandler handler = new CreateChoiceHandler();
     	CreateChoiceRequest req = new Gson().fromJson(incoming, CreateChoiceRequest.class);
-       
+        System.out.println(req);
         CreateChoiceResponse resp = handler.handleRequest(req, createContext("create"));
         Assert.assertEquals(200, resp.httpCode);
         
