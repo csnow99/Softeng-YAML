@@ -39,6 +39,24 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 		return true;
 	}
 	
+	/*Returns a newly generated ID for a choice
+	 * 
+	 * */
+	String generateChoiceID(CreateChoiceRequest req) {
+		
+		String nameHashCode = Integer.toString(req.getName().hashCode());					//never longer than 10 digits
+		String descriptionHashCode = Integer.toString(req.getDescription().hashCode());		//never longer than 10 digits
+		String maxParticipants = Integer.toString(req.getMaxParticipants());				//never longer than 10 digits
+		String alternativesHashCode = "";													//never longer than 30 digits
+		for (Alternative alt : req.getAlternatives()) {
+			Integer altHashCode = alt.name.hashCode()%1000000; 								//make these 6 digits long
+			alternativesHashCode.concat(altHashCode.toString());
+		}
+		String newID = "";																	//never longer than 60 digits
+		newID.concat(nameHashCode).concat(descriptionHashCode).concat(maxParticipants).concat(alternativesHashCode);
+		return newID;
+	}
+	
 	@Override 
 	public CreateChoiceResponse handleRequest(CreateChoiceRequest req, Context context)  {
 		logger = context.getLogger();
@@ -46,7 +64,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 
 		CreateChoiceResponse response;
 		try {
-			String choiceID = Integer.toString(req.getName().hashCode()); //placeholder ID generator
+			String choiceID = generateChoiceID(req);
 			if (createChoice(choiceID, req.getName(), req.getMaxParticipants(), req.getDescription(), req.getAlternatives()))
 			{
 				response = new CreateChoiceResponse(choiceID, 200);

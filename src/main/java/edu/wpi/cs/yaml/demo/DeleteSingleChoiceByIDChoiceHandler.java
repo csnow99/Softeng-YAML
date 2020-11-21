@@ -13,7 +13,7 @@ import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDResponse;
 /**
  * No more JSON parsing
  */
-public class DeleteChoiceHandler implements RequestHandler<DeleteSingleChoiceByIDRequest,DeleteSingleChoiceByIDResponse> {
+public class DeleteSingleChoiceByIDChoiceHandler implements RequestHandler<DeleteSingleChoiceByIDRequest,DeleteSingleChoiceByIDResponse> {
 
 	public LambdaLogger logger = null;
 	

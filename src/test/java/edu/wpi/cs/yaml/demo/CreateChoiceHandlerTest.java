@@ -66,7 +66,7 @@ public class CreateChoiceHandlerTest extends LambdaTest {
         }
         if (choiceID != null) {
         DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
-        DeleteSingleChoiceByIDResponse d_resp = new DeleteChoiceHandler().handleRequest(dcr, createContext("delete"));
+        DeleteSingleChoiceByIDResponse d_resp = new DeleteSingleChoiceByIDChoiceHandler().handleRequest(dcr, createContext("delete"));
         assertEquals("Succesfully deleted: "+choiceID, d_resp.response);
         }
     }
