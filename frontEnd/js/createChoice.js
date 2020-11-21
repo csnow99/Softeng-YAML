@@ -9,14 +9,32 @@ function handleChoiceCreateClick(e) {
   var form = document.createChoice;
 
   var data = {};
+/*
+{
+    "name":"testChoice4",
+    "maxParticipants":10,
+    "description":"sample description",
+    "alternatives":[
+        {"alternativeID":"alt1_ID","name":"alt5_name","description":"alt1_description"},
+        {"alternativeID":"alt2_ID","name":"alt6_name","description":"alt2_description"},
+        {"alternativeID":"alt3_ID","name":"alt7_name","description":"alt3_description"}
+        ]}
+*/
+
 
   data["Choice Name"] = form.choiceName.value;
   data["Max Participants"] = form.partNum.value;
   data["Choice Description"] = form.choiceDesc.value;
-  data["Alternative Name #1"] = form.altName1.value;
-  data["Alternative Description #1"] = form.altDesc2.value;
-  data["Alternative Name #2"] = form.altName2.value;
-  data["Alternative Description #2"] = form.altDesc2.value;
+
+  var alt1 = {};
+  var alt2 = {};
+  alt1["name"] = form.altName1.value;
+  alt1["description"] = form.altDesc1.value;
+  alt2["name"] = form.altName2.value;
+  alt2["description"] = form.altDesc2.value;
+
+  var alts = [alt1, alt2];
+  data["Alternatives"] = alts;
 
   var js = JSON.stringify(data);
   console.log("JS:" + js);
