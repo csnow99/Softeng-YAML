@@ -1,13 +1,3 @@
-function loadChoicePage(response) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", choicePage_url + "/" + name, true);
-    xhr.send();
-
-    console.log("sent");
-
-    //Not complete
-}
-
 function processCreateChoiceResponse(result) {
     console.log("result:" + result);
 
@@ -16,7 +6,7 @@ function processCreateChoiceResponse(result) {
 }
 
 function handleChoiceCreateClick(e) {
-  var form = document.createForm;
+  var form = document.createChoice;
 
   var data = {};
 
