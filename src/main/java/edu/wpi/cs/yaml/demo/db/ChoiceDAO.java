@@ -131,4 +131,4 @@ public class ChoiceDAO {
         return new Choice(choiceID, choiceName, maxParticipants, choiceDescription, isCompleted);
     }
 
-}d
+}
