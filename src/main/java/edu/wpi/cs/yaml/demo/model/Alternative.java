@@ -14,6 +14,15 @@ public class Alternative {
 		this.description = description;
 	}
 	
+	public Alternative(String alternativeID, String choiceID, String name, String description) {
+		this.alternativeID = alternativeID;
+		this.name = name;
+		this.choiceID = choiceID;
+		this.description = description;
+	}
+	
+	
+	
 	public void setChoiceID(String choiceID) {
 		this.choiceID = choiceID;
 	}

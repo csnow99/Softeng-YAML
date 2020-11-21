@@ -123,12 +123,15 @@ public class ChoiceDAO {
     }*/
     
     private Choice generateChoice(ResultSet resultSet) throws Exception {
-        String choiceID = resultSet.getString("choice_ID");
-    	String choiceName = resultSet.getString("choice_name");
-    	int maxParticipants = resultSet.getInt("choice_maxParticipants");
-    	String choiceDescription = resultSet.getString("choice_description");
-    	boolean isCompleted = resultSet.getBoolean("choice_isCompleted");
-        return new Choice(choiceID, choiceName, maxParticipants, choiceDescription, isCompleted);
+    	Choice returnChoice = new Choice();
+    	returnChoice.choiceID = resultSet.getString("choice_ID");
+    	returnChoice.choiceName = resultSet.getString("choice_name");
+    	returnChoice.maxParticipants = resultSet.getInt("choice_maxParticipants");
+    	returnChoice.choiceDescription = resultSet.getString("choice_description");
+    	returnChoice.timeCreated = resultSet.getTimestamp("creation_time");
+    	returnChoice.isCompleted = resultSet.getBoolean("choice_isCompleted");
+    	returnChoice.timeCompleted = resultSet.getTimestamp("completion_time");
+        return returnChoice;
     }
 
 }

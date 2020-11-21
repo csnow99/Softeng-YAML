@@ -24,7 +24,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 		
 		// check if present
 		Choice exist = choiceDao.getChoice(choiceID);
-		Choice choice = new Choice(choiceID, choiceName, maxParticipants, choiceDescription, false);
+		Choice choice = new Choice(choiceID, choiceName, maxParticipants, choiceDescription);
 		if (exist == null) {
 			choiceDao.addChoice(choice);
 		} else {

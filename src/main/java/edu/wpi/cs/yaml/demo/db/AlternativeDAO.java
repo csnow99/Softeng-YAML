@@ -2,6 +2,9 @@ package edu.wpi.cs.yaml.demo.db;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.wpi.cs.yaml.demo.model.Alternative;
 
@@ -40,6 +43,7 @@ public class AlternativeDAO {
             throw new Exception("Failed in getting choice: " + e.getMessage());
         }
     }*/
+    
     
 /*    public boolean updateChoice(Choice constant) throws Exception {
         try {
@@ -87,33 +91,36 @@ public class AlternativeDAO {
         }
     }
 
-   /* public List<Choice> getAllConstants() throws Exception {
+    public List<Alternative> getAlternatives(String choiceID) throws Exception {
         
-        List<Choice> allConstants = new ArrayList<>();
+        List<Alternative> alternatives = new ArrayList<Alternative>();
         try {
             Statement statement = conn.createStatement();
-            String query = "SELECT * FROM " + tblName + ";";
-            ResultSet resultSet = statement.executeQuery(query);
+          
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_id=?;");
+            ps.setString(1,  choiceID);
+            //String query = "SELECT * FROM " + tblName + "GROUP BY alternative_id HAVING MAX(choice_id) = " + choiceID + " AND MIN(choice_id) = "+choiceID + ";";
+            ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
-            	Choice c = generateChoice(resultSet);
-                allConstants.add(c);
+             Alternative c = generateAlternative(resultSet);
+            	alternatives.add(c);
             }
             resultSet.close();
             statement.close();
-            return allConstants;
+            return alternatives;
 
         } catch (Exception e) {
-            throw new Exception("Failed in getting constants: " + e.getMessage());
+            throw new Exception("Failed in getting alternatives: " + e.getMessage());
         }
-    }*/
-    /*
+    }
+    
     private Alternative generateAlternative(ResultSet resultSet) throws Exception {
         String alternativeID = resultSet.getString("alternative_ID");
     	String choiceID = resultSet.getString("choice_ID");
-    	String alternativeName = resultSet.getString("alternative_name");
+    	String alternativeName = resultSet.getString("alternative_title");
     	String alternativeDescription = resultSet.getString("alternative_description");
         return new Alternative(alternativeID, choiceID, alternativeName, alternativeDescription);
-    }*/
+    }
 
 }

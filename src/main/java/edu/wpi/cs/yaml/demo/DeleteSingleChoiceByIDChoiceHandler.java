@@ -44,10 +44,10 @@ public class DeleteSingleChoiceByIDChoiceHandler implements RequestHandler<Delet
 			if (dao.deleteChoice(choiceID)) {
 				response = new DeleteSingleChoiceByIDResponse("Succesfully deleted: "+choiceID, 200);
 			} else {
-				response = new DeleteSingleChoiceByIDResponse("Unable to delete constant: " + choiceID, 422);
+				response = new DeleteSingleChoiceByIDResponse("Unable to delete choice: " + choiceID, 422);
 			}
 		} catch (Exception e) {
-			response = new DeleteSingleChoiceByIDResponse("Unable to delete constant: " + choiceID +  " (" + e.getMessage() + ")", 403);
+			response = new DeleteSingleChoiceByIDResponse("Unable to delete choice: " + choiceID +  " (" + e.getMessage() + ")", 403);
 		}
 
 		return response;

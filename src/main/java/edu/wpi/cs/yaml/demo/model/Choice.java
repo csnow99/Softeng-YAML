@@ -1,24 +1,34 @@
 package edu.wpi.cs.yaml.demo.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class Choice {
-	public final String choiceID;
-	public final String choiceName;
-	public final int maxParticipants;
-	public final String choiceDescription;
-	public final Timestamp timeCreated;
-	public final boolean isCompleted;
-	
-	
-	public Choice(String choiceID, String choiceName, int maxParticipants,String choiceDescription, boolean isCompleted) {
+	public  String choiceID;
+	public  String choiceName;
+	public  int maxParticipants;
+	public  String choiceDescription;
+	public  Timestamp timeCreated;
+	public  boolean isCompleted;
+	public Timestamp timeCompleted;
+	public Alternative chosenAlternative;
+		
+	/*Constructor when creating a choice*/
+	public Choice(String choiceID, String choiceName, int maxParticipants,String choiceDescription) {
 		this.choiceID = choiceID;
 		this.choiceName = choiceName;
 		this.maxParticipants = maxParticipants;
 		this.choiceDescription = choiceDescription;
 		timeCreated = new Timestamp(System.currentTimeMillis());
-		this.isCompleted = isCompleted;
+		this.isCompleted = false;
+		this.timeCompleted = null;
+		this.chosenAlternative = null;
 	}
 	
+	public Choice() {
+		timeCreated = null;
+		timeCompleted = null;
+		chosenAlternative = null;
+	}
 	
 }
