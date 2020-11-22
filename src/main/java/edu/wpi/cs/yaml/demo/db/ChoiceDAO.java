@@ -88,7 +88,7 @@ public class ChoiceDAO {
             ps.setString(2,  choice.choiceName);
             ps.setInt(3, choice.maxParticipants);
             ps.setString(4, choice.choiceDescription);
-            ps.setLong(5, choice.dateCreated);
+            ps.setTimestamp(5, new Timestamp(choice.dateCreated));
             ps.setBoolean(6, false);     //a newly created choice is not completed
             ps.setTimestamp(7, null);    //it does not have a completion date
             ps.setString(8, null);       //it does not have a selected alternative
@@ -101,26 +101,7 @@ public class ChoiceDAO {
         }
     }
 
-   /* public List<Choice> getAllConstants() throws Exception {
-        
-        List<Choice> allConstants = new ArrayList<>();
-        try {
-            Statement statement = conn.createStatement();
-            String query = "SELECT * FROM " + tblName + ";";
-            ResultSet resultSet = statement.executeQuery(query);
 
-            while (resultSet.next()) {
-            	Choice c = generateChoice(resultSet);
-                allConstants.add(c);
-            }
-            resultSet.close();
-            statement.close();
-            return allConstants;
-
-        } catch (Exception e) {
-            throw new Exception("Failed in getting constants: " + e.getMessage());
-        }
-    }*/
     
     private Choice generateChoice(ResultSet resultSet) throws Exception {
     	Choice returnChoice = new Choice();

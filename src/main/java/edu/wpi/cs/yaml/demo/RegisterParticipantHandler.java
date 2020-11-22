@@ -8,6 +8,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import edu.wpi.cs.yaml.demo.db.AlternativeDAO;
 import edu.wpi.cs.yaml.demo.db.ChoiceDAO;
+import edu.wpi.cs.yaml.demo.db.ParticipantDAO;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceRequest;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceResponse;
 import edu.wpi.cs.yaml.demo.http.RegisterParticipantRequest;
@@ -20,46 +21,22 @@ import edu.wpi.cs.yaml.demo.model.Choice;
 public class RegisterParticipantHandler implements RequestHandler<RegisterParticipantRequest,RegisterParticipantResponse> {
 	LambdaLogger logger;
 	
-	boolean createChoice(String choiceID, String choiceName, int maxParticipants,String choiceDescription, ArrayList<Alternative> alternatives) throws Exception { 
+	boolean registerChoice(RegisterParticipantRequest req) throws Exception { 
 		if (logger != null) { logger.log("in createChoice"); }
-		ChoiceDAO choiceDao = new ChoiceDAO();
+		ParticipantDAO participantDAO = new ParticipantDAO();
 		
 		// check if present
-		Choice exist = choiceDao.getChoice(choiceID);
-		Choice choice = new Choice(choiceID, choiceName, maxParticipants, choiceDescription);
+		Participant exist = participantDAO.getParticipant(req.getChoiceID(),req.getName());
+		Participant participant = new Participant(req.getChoiceID(), req.getName(), req.getPassword());
 		if (exist == null) {
-			choiceDao.addChoice(choice);
+			participantDAO.addParticipant(participant);
 		} else {
 			return false;
 		}
-		
-		AlternativeDAO altDao = new AlternativeDAO();
-		for (Alternative alt : alternatives) {
-			alt.setChoiceID(choiceID);
-			altDao.addAlternative(alt);
-		} 
 		return true;
 	}
 	
-	/*Returns a newly generated ID for a choice
-	 * 
-	 * */
-	String generateChoiceID(CreateChoiceRequest req) {
-		
-		String nameHashCode = Integer.toString(req.getName().hashCode());					//never longer than 10 digits
-		String descriptionHashCode = Integer.toString(req.getDescription().hashCode());		//never longer than 10 digits
-		String maxParticipants = Integer.toString(req.getMaxParticipants());				//never longer than 10 digits
-		String alternativesHashCode = "";													//never longer than 30 digits
-		for (Alternative alt : req.getAlternatives()) {
-			Integer altHashCode = alt.title.hashCode()%1000000; 								//make these 6 digits long
-			alternativesHashCode = alternativesHashCode.concat(altHashCode.toString());
-		}
-	
-		String newID = "";																	//never longer than 60 digits
-		newID = newID.concat(nameHashCode).concat(descriptionHashCode).concat(maxParticipants).concat(alternativesHashCode);
-		return newID;
-	}
-	
+
 	@Override 
 	public RegisterParticipantResponse handleRequest(RegisterParticipantRequest req, Context context)  {
 		logger = context.getLogger();
@@ -67,12 +44,11 @@ public class RegisterParticipantHandler implements RequestHandler<RegisterPartic
 
 		CreateChoiceResponse response;
 		try {
-			String choiceID = generateChoiceID(req);
-			if (createChoice(choiceID, req.getName(), req.getMaxParticipants(), req.getDescription(), req.getAlternatives()))
+			if (registerChoice(req))
 			{
-				response = new CreateChoiceResponse(choiceID, 200);
+				response = new CreateChoiceResponse("Unable to register participant: "+req.getName(), 200);
 			} else {
-				response = new CreateChoiceResponse("Unable to create choice: " +choiceID, 400);
+				response = new CreateChoiceResponse("Unable to create choice: ", 400);
 			}
 		} catch (Exception e) {
 			response = new CreateChoiceResponse("Unable to create choice: " + req.getName() + "(" + e.getMessage() + ")", 400);
