@@ -115,11 +115,11 @@ public class ParticipantDAO {
     }
     
     private Participant generateParticipant(ResultSet resultSet) throws Exception {
-        int alternativeID = resultSet.getInt("participant_ID");
-    	String choiceID = resultSet.getString("choice_ID");
+        int participantID = resultSet.getInt("participantID");
+    	String choiceID = resultSet.getString("choice_id");
     	String alternativeName = resultSet.getString("username");
     	String alternativeDescription = resultSet.getString("password");
-        return new Participant(alternativeID, choiceID, alternativeName, alternativeDescription);
+        return new Participant(participantID, choiceID, alternativeName, alternativeDescription);
     }
 
 }

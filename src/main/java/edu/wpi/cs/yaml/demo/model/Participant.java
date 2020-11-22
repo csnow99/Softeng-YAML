@@ -38,7 +38,7 @@ public class Participant {
 		if(o instanceof Participant) {
 			result = true;
 			Participant other = (Participant) o;
-			result &= (this.choiceID == other.choiceID);
+			result &= (this.choiceID.equals(other.choiceID));
 			result &= (this.username == other.username);
 		}
 		
