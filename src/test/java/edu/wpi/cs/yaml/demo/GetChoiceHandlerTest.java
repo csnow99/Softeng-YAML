@@ -25,9 +25,9 @@ public class GetChoiceHandlerTest extends LambdaTest{
     	
     	/*We first need to insert a choice in the database*/
     	ArrayList<Alternative> alternatives = new ArrayList<Alternative>();
-    	Alternative alt1 = new Alternative("alt1_ID", "alt1_name", "alt1_description");
-    	Alternative alt2 = new Alternative("alt2_ID", "alt2_name", "alt2_description");
-    	Alternative alt3 = new Alternative("alt3_ID", "alt3_name", "alt3_description");
+    	Alternative alt1 = new Alternative("alt1_name", "alt1_description");
+    	Alternative alt2 = new Alternative("alt2_name", "alt2_description");
+    	Alternative alt3 = new Alternative("alt3_name", "alt3_description");
     	alternatives.add(alt1);
     	alternatives.add(alt2);
     	alternatives.add(alt3);

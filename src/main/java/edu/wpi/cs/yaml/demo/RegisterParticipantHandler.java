@@ -56,12 +56,12 @@ public class RegisterParticipantHandler implements RequestHandler<RegisterPartic
 		try {
 			if (registerParticipant(req))
 			{
-				response = new RegisterParticipantResponse("Unable to register participant: "+req.getName(), 200);
+				response = new RegisterParticipantResponse("Successfully registered participant: "+req.getName(), 200);
 			} else {
-				response = new RegisterParticipantResponse("Unable to create choice: ", 400);
+				response = new RegisterParticipantResponse("Unable to register participant: "+req.getName(), 400);
 			}
 		} catch (Exception e) {
-			response = new RegisterParticipantResponse("Unable to create choice: " + req.getName() + "(" + e.getMessage() + ")", 400);
+			response = new RegisterParticipantResponse("Unable to register participant: " + req.getName() + "(" + e.getMessage() + ")", 400);
 		}
 
 		return response;

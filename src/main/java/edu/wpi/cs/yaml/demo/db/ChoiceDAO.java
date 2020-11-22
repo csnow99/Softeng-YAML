@@ -43,15 +43,26 @@ public class ChoiceDAO {
     
     public int getMaxParticipants(String choice_ID) throws Exception {
     	 try {
-             PreparedStatement ps = conn.prepareStatement("SELECT choice_maxParticipants FROM " + tblName + " WHERE choice_ID=?;");
+             Choice choice = null;
+
+    		 PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_ID=?;");
              ps.setString(1,  choice_ID);
              ResultSet resultSet = ps.executeQuery();
              
-             return resultSet.getInt("choice_maxParticipants");
+             while(resultSet.next()) {
+            	 choice = generateChoice(resultSet);
+             }
+             
+             resultSet.close();
+             ps.close();
+             
+             if(choice == null) {throw new Exception("Couldn't find choice with ID" +choice_ID);}
+             
+             return choice.getMaxParticipants();
 
          } catch (Exception e) {
          	e.printStackTrace();
-             throw new Exception("Failed in getting maxParticipants for choice: " + e.getMessage());
+             throw new Exception("Failed in getting maxParticipants for choice: " + choice_ID + e.getMessage());
          }
     	
     }
@@ -123,9 +134,13 @@ public class ChoiceDAO {
     	returnChoice.choiceName = resultSet.getString("choice_name");
     	returnChoice.maxParticipants = resultSet.getInt("choice_maxParticipants");
     	returnChoice.choiceDescription = resultSet.getString("choice_description");
-    	returnChoice.dateCreated = resultSet.getTimestamp("creation_time").getTime();
+    	Timestamp timeCreated =  resultSet.getTimestamp("creation_time");
+    	if (timeCreated == null) {returnChoice.dateCreated = 0;}
+    	else {returnChoice.dateCreated = timeCreated.getTime();}
     	returnChoice.isCompleted = resultSet.getBoolean("choice_isCompleted");
-    	returnChoice.dateCompleted = resultSet.getTimestamp("completion_time").getTime();
+    	Timestamp timeCompleted =  resultSet.getTimestamp("completion_time");
+    	if (timeCompleted == null) {returnChoice.dateCompleted = 0;}
+    	else {returnChoice.dateCompleted = timeCompleted.getTime();}
     	returnChoice.selectedAlternativeID = resultSet.getString("chosen_alternative");
         return returnChoice;
     }
