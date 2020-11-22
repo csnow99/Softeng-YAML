@@ -32,4 +32,16 @@ public class Participant {
 		this.username = name;
 		this.password = password;
 	}
+	
+	public boolean equals(Object o) {
+		boolean result = false;
+		if(o instanceof Participant) {
+			result = true;
+			Participant other = (Participant) o;
+			result &= (this.choiceID == other.choiceID);
+			result &= (this.username == other.username);
+		}
+		
+		return result;
+	}
 }

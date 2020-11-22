@@ -86,13 +86,13 @@ public class ParticipantDAO {
             return true;
 
         } catch (Exception e) {
-            throw new Exception("Failed to insert constant: " + e.getMessage());
+            throw new Exception("Failed to insert participant: " + e.getMessage());
         }
     }
 
-    public List<Alternative> getAlternatives(String choiceID) throws Exception {
+    public List<Participant> getParticipants(String choiceID) throws Exception {
         
-        List<Alternative> alternatives = new ArrayList<Alternative>();
+        List<Participant> participants = new ArrayList<Participant>();
         try {
             Statement statement = conn.createStatement();
           
@@ -102,24 +102,24 @@ public class ParticipantDAO {
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
-             Alternative c = generateAlternative(resultSet);
-            	alternatives.add(c);
+            	Participant p = generateParticipant(resultSet);
+            	participants.add(p);
             }
             resultSet.close();
             statement.close();
-            return alternatives;
+            return participants;
 
         } catch (Exception e) {
             throw new Exception("Failed in getting alternatives: " + e.getMessage());
         }
     }
     
-    private Alternative generateAlternative(ResultSet resultSet) throws Exception {
-        int alternativeID = resultSet.getInt("alternative_ID");
+    private Participant generateParticipant(ResultSet resultSet) throws Exception {
+        int alternativeID = resultSet.getInt("participant_ID");
     	String choiceID = resultSet.getString("choice_ID");
-    	String alternativeName = resultSet.getString("alternative_title");
-    	String alternativeDescription = resultSet.getString("alternative_description");
-        return new Alternative(alternativeID, choiceID, alternativeName, alternativeDescription);
+    	String alternativeName = resultSet.getString("username");
+    	String alternativeDescription = resultSet.getString("password");
+        return new Participant(alternativeID, choiceID, alternativeName, alternativeDescription);
     }
 
 }

@@ -1,6 +1,7 @@
 package edu.wpi.cs.yaml.demo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
@@ -15,25 +16,34 @@ import edu.wpi.cs.yaml.demo.http.RegisterParticipantRequest;
 import edu.wpi.cs.yaml.demo.http.RegisterParticipantResponse;
 import edu.wpi.cs.yaml.demo.model.Alternative;
 import edu.wpi.cs.yaml.demo.model.Choice;
+import edu.wpi.cs.yaml.demo.model.Participant;
 
 
 
 public class RegisterParticipantHandler implements RequestHandler<RegisterParticipantRequest,RegisterParticipantResponse> {
 	LambdaLogger logger;
 	
-	boolean registerChoice(RegisterParticipantRequest req) throws Exception { 
+	boolean registerParticipant(RegisterParticipantRequest req) throws Exception { 
 		if (logger != null) { logger.log("in createChoice"); }
 		ParticipantDAO participantDAO = new ParticipantDAO();
+		ChoiceDAO choiceDAO = new ChoiceDAO();
+	
+		List<Participant> list = participantDAO.getParticipants(req.getChoiceID());
 		
-		// check if present
-		Participant exist = participantDAO.getParticipant(req.getChoiceID(),req.getName());
+		// check if maxNumber of perticipants is reached
+		int maxParticipants = choiceDAO.getMaxParticipants(req.getChoiceID());
+		if (list.size() >= maxParticipants) {return false;} //no more space
+		
+		// check if it already exists
 		Participant participant = new Participant(req.getChoiceID(), req.getName(), req.getPassword());
-		if (exist == null) {
-			participantDAO.addParticipant(participant);
-		} else {
-			return false;
+		for(Participant p : list) {
+			if (participant.equals(p)) {
+				return false;				//no duplicate names allowed
+			}
 		}
-		return true;
+		
+		//If everything is fine, we may register this new participant
+		return participantDAO.addParticipant(participant);
 	}
 	
 
@@ -42,16 +52,16 @@ public class RegisterParticipantHandler implements RequestHandler<RegisterPartic
 		logger = context.getLogger();
 		logger.log(req.toString());
 
-		CreateChoiceResponse response;
+		RegisterParticipantResponse response;
 		try {
-			if (registerChoice(req))
+			if (registerParticipant(req))
 			{
-				response = new CreateChoiceResponse("Unable to register participant: "+req.getName(), 200);
+				response = new RegisterParticipantResponse("Unable to register participant: "+req.getName(), 200);
 			} else {
-				response = new CreateChoiceResponse("Unable to create choice: ", 400);
+				response = new RegisterParticipantResponse("Unable to create choice: ", 400);
 			}
 		} catch (Exception e) {
-			response = new CreateChoiceResponse("Unable to create choice: " + req.getName() + "(" + e.getMessage() + ")", 400);
+			response = new RegisterParticipantResponse("Unable to create choice: " + req.getName() + "(" + e.getMessage() + ")", 400);
 		}
 
 		return response;

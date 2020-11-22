@@ -41,6 +41,20 @@ public class ChoiceDAO {
         }
     }
     
+    public int getMaxParticipants(String choice_ID) throws Exception {
+    	 try {
+             PreparedStatement ps = conn.prepareStatement("SELECT choice_maxParticipants FROM " + tblName + " WHERE choice_ID=?;");
+             ps.setString(1,  choice_ID);
+             ResultSet resultSet = ps.executeQuery();
+             
+             return resultSet.getInt("choice_maxParticipants");
+
+         } catch (Exception e) {
+         	e.printStackTrace();
+             throw new Exception("Failed in getting maxParticipants for choice: " + e.getMessage());
+         }
+    	
+    }
 /*    public boolean updateChoice(Choice constant) throws Exception {
         try {
         	String query = "UPDATE " + tblName + " SET value=? WHERE name=?;";

@@ -86,7 +86,7 @@ public class AlternativeDAO {
             return true;
 
         } catch (Exception e) {
-            throw new Exception("Failed to insert constant: " + e.getMessage());
+            throw new Exception("Failed to insert alternative: " + e.getMessage());
         }
     }
 
