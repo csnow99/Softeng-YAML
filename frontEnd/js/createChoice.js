@@ -1,11 +1,17 @@
+function updatePageWithChoice() {
+
+    console.log("Test")
+
+}
+
 function loadChoicePage(response) {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", choicePage_url + "/" + name, true);
+    xhr.open("GET", choicePage_url + "/" + response, true);
     xhr.send();
 
-    console.log("sent");
+    console.log("Redirected");
 
-    //Not complete
+    updatePageWithChoice();
 }
 
 function processCreateChoiceResponse(result) {
