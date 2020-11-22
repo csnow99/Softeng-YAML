@@ -35,10 +35,6 @@ public class DeleteSingleChoiceByIDChoiceHandler implements RequestHandler<Delet
 
 		ChoiceDAO dao = new ChoiceDAO();
 
-		// MAKE sure that we prevent attempts to delete system constants...
-		
-		// See how awkward it is to call delete with an object, when you only
-		// have one part of its information?
 		String choiceID = req.getChoiceID();
 		try {
 			if (dao.deleteChoice(choiceID)) {

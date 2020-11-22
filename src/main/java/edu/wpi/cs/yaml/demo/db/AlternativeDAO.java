@@ -77,11 +77,10 @@ public class AlternativeDAO {
 
     public boolean addAlternative(Alternative alternative) throws Exception {
         try {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (alternative_ID, choice_ID, alternative_title,alternative_description) values(?,?,?,?);");
-            ps.setString(1, alternative.alternativeID);
-            ps.setString(2, alternative.choiceID);
-            ps.setString(3, alternative.name);
-            ps.setString(4, alternative.description);       
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (choice_ID, alternative_title,alternative_description) values(?,?,?);");
+            ps.setString(1, alternative.choiceID);
+            ps.setString(2, alternative.name);
+            ps.setString(3, alternative.description);       
             
             ps.execute();
             return true;
@@ -116,7 +115,7 @@ public class AlternativeDAO {
     }
     
     private Alternative generateAlternative(ResultSet resultSet) throws Exception {
-        String alternativeID = resultSet.getString("alternative_ID");
+        int alternativeID = resultSet.getInt("alternative_ID");
     	String choiceID = resultSet.getString("choice_ID");
     	String alternativeName = resultSet.getString("alternative_title");
     	String alternativeDescription = resultSet.getString("alternative_description");
