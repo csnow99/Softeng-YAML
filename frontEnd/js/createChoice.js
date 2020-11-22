@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function updatePageWithChoice() {
 
     console.log("Test")
@@ -15,8 +14,6 @@ function loadChoicePage(response) {
     updatePageWithChoice();
 }
 
-=======
->>>>>>> 8252eba7b9e161f65ba058498d6c06a4e9818670
 function processCreateChoiceResponse(result) {
     console.log("result:" + result);
 
