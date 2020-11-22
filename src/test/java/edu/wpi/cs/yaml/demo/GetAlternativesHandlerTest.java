@@ -47,15 +47,15 @@ public class GetAlternativesHandlerTest extends LambdaTest{
         Assert.assertEquals(3, resp.size());
         
         Assert.assertTrue(resp.get(0).choiceID.equals(choiceID));
-        Assert.assertTrue(resp.get(0).name.equals("alt1_name"));
+        Assert.assertTrue(resp.get(0).title.equals("alt1_name"));
         Assert.assertTrue(resp.get(0).description.equals("alt1_description"));
         
         Assert.assertTrue(resp.get(1).choiceID.equals(choiceID));
-        Assert.assertTrue(resp.get(1).name.equals("alt2_name"));
+        Assert.assertTrue(resp.get(1).title.equals("alt2_name"));
         Assert.assertTrue(resp.get(1).description.equals("alt2_description"));
         
         Assert.assertTrue(resp.get(2).choiceID.equals(choiceID));
-        Assert.assertTrue(resp.get(2).name.equals("alt3_name"));
+        Assert.assertTrue(resp.get(2).title.equals("alt3_name"));
         Assert.assertTrue(resp.get(2).description.equals("alt3_description"));
         
         

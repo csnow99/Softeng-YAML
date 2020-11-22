@@ -79,7 +79,7 @@ public class AlternativeDAO {
         try {
             PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (choice_ID, alternative_title,alternative_description) values(?,?,?);");
             ps.setString(1, alternative.choiceID);
-            ps.setString(2, alternative.name);
+            ps.setString(2, alternative.title);
             ps.setString(3, alternative.description);       
             
             ps.execute();

@@ -7,10 +7,10 @@ public class Choice {
 	public String choiceName;
 	public int maxParticipants;
 	public String choiceDescription;
-	public Timestamp dateCreated;
+	public long dateCreated;
 	public boolean isCompleted;
-	public Timestamp dateCompleted;
-	public String chosenAlternativeID;
+	public long dateCompleted;
+	public String selectedAlternativeID;
 	
 	
 	public String getChoiceID() {return this.choiceID;}
@@ -25,17 +25,17 @@ public class Choice {
 	public String getChoiceDescription() {return this.choiceDescription;};
 	public void setChoiceDescription(String choiceDescription) {this.choiceDescription = choiceDescription;}
  	
-	public Timestamp getDateCreated() {return this.dateCreated;}
-	public void setDateCreated(int dateCreated) {this.dateCreated = new Timestamp(dateCreated);}
+	public long getDateCreated() {return this.dateCreated;}
+	public void setDateCreated(int dateCreated) {this.dateCreated = dateCreated;}
 	
 	public boolean getIsCompleted() {return this.isCompleted;}
 	public void setIsCompleted(boolean isCompleted) {this.isCompleted = isCompleted;}
 	
-	public Timestamp getDateCompleted() {return this.dateCompleted;}
-	public void setDateCompleted(int dateCompleted) {this.dateCompleted = new Timestamp(dateCompleted);}
+	public long getDateCompleted() {return this.dateCompleted;}
+	public void setDateCompleted(int dateCompleted) {this.dateCompleted = dateCompleted;}
 	
-	public String getChosenAlternativeID() {return this.chosenAlternativeID;}
-	public void setChosenAlternativeID(String chosenAlternativeID) {this.chosenAlternativeID = chosenAlternativeID;}
+	public String getSelectedAlternativeID() {return this.selectedAlternativeID;}
+	public void setSelectedAlternativeID(String chosenAlternativeID) {this.selectedAlternativeID = chosenAlternativeID;}
 	
 	
 		
@@ -45,16 +45,15 @@ public class Choice {
 		this.choiceName = choiceName;
 		this.maxParticipants = maxParticipants;
 		this.choiceDescription = choiceDescription;
-		dateCreated = new Timestamp(System.currentTimeMillis());
+		this.dateCreated = System.currentTimeMillis();
 		this.isCompleted = false;
-		this.dateCompleted = null;
-		this.chosenAlternativeID = null;
+		this.dateCompleted = 0;
+		this.selectedAlternativeID = null;
 	}
 	
 	public Choice() {
-		dateCreated = null;
-		dateCompleted = null;
-		chosenAlternativeID = null;
+		this.dateCompleted = 0;
+		selectedAlternativeID = null;
 	}
 	
 }

@@ -88,7 +88,7 @@ public class ChoiceDAO {
             ps.setString(2,  choice.choiceName);
             ps.setInt(3, choice.maxParticipants);
             ps.setString(4, choice.choiceDescription);
-            ps.setTimestamp(5, choice.dateCreated);
+            ps.setLong(5, choice.dateCreated);
             ps.setBoolean(6, false);     //a newly created choice is not completed
             ps.setTimestamp(7, null);    //it does not have a completion date
             ps.setString(8, null);       //it does not have a selected alternative
@@ -128,10 +128,10 @@ public class ChoiceDAO {
     	returnChoice.choiceName = resultSet.getString("choice_name");
     	returnChoice.maxParticipants = resultSet.getInt("choice_maxParticipants");
     	returnChoice.choiceDescription = resultSet.getString("choice_description");
-    	returnChoice.dateCreated = resultSet.getTimestamp("creation_time");
+    	returnChoice.dateCreated = resultSet.getTimestamp("creation_time").getTime();
     	returnChoice.isCompleted = resultSet.getBoolean("choice_isCompleted");
-    	returnChoice.dateCompleted = resultSet.getTimestamp("completion_time");
-    	returnChoice.chosenAlternativeID = resultSet.getString("chosen_alternative");
+    	returnChoice.dateCompleted = resultSet.getTimestamp("completion_time").getTime();
+    	returnChoice.selectedAlternativeID = resultSet.getString("chosen_alternative");
         return returnChoice;
     }
 
