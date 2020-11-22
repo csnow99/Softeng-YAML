@@ -13,7 +13,7 @@ import edu.wpi.cs.yaml.demo.http.CreateChoiceResponse;
 import edu.wpi.cs.yaml.demo.model.Alternative;
 import edu.wpi.cs.yaml.demo.model.Choice;
 
-
+import java.lang.*;
 
 public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,CreateChoiceResponse> {
 	LambdaLogger logger;
@@ -45,12 +45,13 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 	 * */
 	String generateChoiceID(CreateChoiceRequest req) {
 		
-		String nameHashCode = Integer.toString(req.getName().hashCode());					//never longer than 10 digits
-		String descriptionHashCode = Integer.toString(req.getDescription().hashCode());		//never longer than 10 digits
-		String maxParticipants = Integer.toString(req.getMaxParticipants());				//never longer than 10 digits
-		String alternativesHashCode = "";													//never longer than 30 digits
+		
+		String nameHashCode = Integer.toString(Math.abs((req.getName().hashCode())));				//never longer than 10 digits
+		String descriptionHashCode = Integer.toString(Math.abs(req.getDescription().hashCode()));	//never longer than 10 digits
+		String maxParticipants = Integer.toString(Math.abs(req.getMaxParticipants()));				//never longer than 10 digits
+		String alternativesHashCode = "";															//never longer than 30 digits
 		for (Alternative alt : req.getAlternatives()) {
-			Integer altHashCode = alt.title.hashCode()%1000000; 								//make these 6 digits long
+			Integer altHashCode = Math.abs(alt.title.hashCode()%1000000); 							//make these 6 digits long
 			alternativesHashCode = alternativesHashCode.concat(altHashCode.toString());
 		}
 	
