@@ -10,21 +10,23 @@ import edu.wpi.cs.yaml.demo.db.AlternativeDAO;
 import edu.wpi.cs.yaml.demo.db.ChoiceDAO;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceRequest;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceResponse;
+import edu.wpi.cs.yaml.demo.http.RegisterParticipantRequest;
+import edu.wpi.cs.yaml.demo.http.RegisterParticipantResponse;
 import edu.wpi.cs.yaml.demo.model.Alternative;
 import edu.wpi.cs.yaml.demo.model.Choice;
 
 
 
-public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,CreateChoiceResponse> {
+public class RegisterParticipantHandler implements RequestHandler<RegisterParticipantRequest,RegisterParticipantResponse> {
 	LambdaLogger logger;
 	
-	boolean createChoice(String choiceID, CreateChoiceRequest req) throws Exception { 
+	boolean createChoice(String choiceID, String choiceName, int maxParticipants,String choiceDescription, ArrayList<Alternative> alternatives) throws Exception { 
 		if (logger != null) { logger.log("in createChoice"); }
 		ChoiceDAO choiceDao = new ChoiceDAO();
 		
 		// check if present
 		Choice exist = choiceDao.getChoice(choiceID);
-		Choice choice = new Choice(choiceID, req.getName(), req.getMaxParticipants(), req.getDescription());
+		Choice choice = new Choice(choiceID, choiceName, maxParticipants, choiceDescription);
 		if (exist == null) {
 			choiceDao.addChoice(choice);
 		} else {
@@ -32,8 +34,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 		}
 		
 		AlternativeDAO altDao = new AlternativeDAO();
-		ArrayList<Alternative> alternatives = req.getAlternatives();
-		for (Alternative alt :alternatives) {
+		for (Alternative alt : alternatives) {
 			alt.setChoiceID(choiceID);
 			altDao.addAlternative(alt);
 		} 
@@ -60,14 +61,14 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 	}
 	
 	@Override 
-	public CreateChoiceResponse handleRequest(CreateChoiceRequest req, Context context)  {
+	public RegisterParticipantResponse handleRequest(RegisterParticipantRequest req, Context context)  {
 		logger = context.getLogger();
 		logger.log(req.toString());
 
 		CreateChoiceResponse response;
 		try {
 			String choiceID = generateChoiceID(req);
-			if (createChoice(choiceID, req))
+			if (createChoice(choiceID, req.getName(), req.getMaxParticipants(), req.getDescription(), req.getAlternatives()))
 			{
 				response = new CreateChoiceResponse(choiceID, 200);
 			} else {
