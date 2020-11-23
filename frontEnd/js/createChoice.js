@@ -1,6 +1,16 @@
 function updatePageWithChoice() {
 
-    console.log("Test")
+    let queryString = new URLSearchParams(window.location.search)
+
+    console.log(queryString.toString())
+
+    var choiceDiv = document.getElementById('choice')
+
+    choiceDiv.innerHTML = queryString.toString()
+
+    //Get request to get all the information for a choice
+
+    //Update the page with choice information
 
 }
 
@@ -12,14 +22,19 @@ function loadChoicePage(response) {
 
     console.log(choiceID);
 
-    window.location.replace("https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html");
+
+    var choiceURL = new URL("https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html?")
+    var choiceQueryString = new URLSearchParams(choiceURL.search)
+    var urlParams = new URLSearchParams(choiceQueryString)
+
+    urlParams.append("choice", choiceID)
+
+    window.location.replace(choiceURL + urlParams);
 
     /*
-
     var xhr = new XMLHttpRequest();
     xhr.open("GET", choicePage_url + "/" + choiceID, true);
     xhr.send();
-
     */
 
     console.log("Redirected");
