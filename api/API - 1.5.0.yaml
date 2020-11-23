@@ -115,7 +115,7 @@ paths:
         400:
           description: "400 response"
       x-amazon-apigateway-integration:
-        uri: "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:375853300759:function:getAlternatives/invocations"
+          uri: "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:375853300759:function:getAlternatives/invocations"
         responses:
           default:
             statusCode: "200"

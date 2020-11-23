@@ -3,4 +3,5 @@
 var base_url = "https://65y680psjl.execute-api.us-east-2.amazonaws.com/beta/";
 
 var createChoice_url = base_url + "createChoice";    // POST
-var choicePage_url = base_url + "choice" //GET with {choiceID} so we avoid CORS issues
+var choicePage_url = base_url + "html/choice.html"
+

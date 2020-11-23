@@ -5,13 +5,24 @@ function updatePageWithChoice() {
 }
 
 function loadChoicePage(response) {
+
+    var parsedResponse = JSON.parse(response);
+
+    choiceID = parsedResponse["response"]
+
+    console.log(choiceID);
+
+    window.location.replace("https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html");
+
+    /*
+
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", choicePage_url + "/" + response, true);
+    xhr.open("GET", choicePage_url + "/" + choiceID, true);
     xhr.send();
 
-    console.log("Redirected");
+    */
 
-    updatePageWithChoice();
+    console.log("Redirected");
 }
 
 function processCreateChoiceResponse(result) {
