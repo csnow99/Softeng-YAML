@@ -12,7 +12,7 @@ function loadChoicePage(response) {
 
     console.log(choiceID);
 
-    window.location.replace("https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html");
+    window.location.href = "https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html";
 
     /*
 
