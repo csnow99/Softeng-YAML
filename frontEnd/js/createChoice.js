@@ -22,7 +22,7 @@ function loadChoicePage(response) {
 
     console.log(choiceID);
 
-    // window.location.href = "https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html";
+	window.location.href = "https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html";
 
     var choiceURL = new URL("https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html?")
     var choiceQueryString = new URLSearchParams(choiceURL.search)
@@ -30,7 +30,7 @@ function loadChoicePage(response) {
 
     urlParams.append("choice", choiceID)
 
-    // window.location.href = choiceURL + urlParams;
+	window.location.href = choiceURL + urlParams;
 
     /*
     var xhr = new XMLHttpRequest();
