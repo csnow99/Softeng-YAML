@@ -9,7 +9,7 @@ function handleSignInClick(e){
     */
     var form = document.registerForm;
     data = {};
-    var url = windows.location.href;
+    var url = window.location.href;
     var choiceID = url.split("=")[1];
     data["choiceID"] = choiceID;
     data["name"] = form.partName.value;
