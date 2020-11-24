@@ -30,7 +30,7 @@ public class RegisterParticipantHandler implements RequestHandler<RegisterPartic
 	
 		List<Participant> list = participantDAO.getParticipants(req.getChoiceID());
 		
-		// check if maxNumber of perticipants is reached
+		// check if maxNumber of participants is reached
 		int maxParticipants = choiceDAO.getMaxParticipants(req.getChoiceID());
 		if (list.size() >= maxParticipants) {return false;} //no more space
 		

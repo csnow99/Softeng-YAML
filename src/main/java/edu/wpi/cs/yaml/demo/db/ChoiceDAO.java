@@ -56,7 +56,7 @@ public class ChoiceDAO {
              resultSet.close();
              ps.close();
              
-             if(choice == null) {throw new Exception("Couldn't find choice with ID" +choice_ID);}
+             if(choice == null) {throw new Exception("Couldn't find choice with ID: " + choice_ID);}
              
              return choice.getMaxParticipants();
 

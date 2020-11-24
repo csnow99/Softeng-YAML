@@ -5,7 +5,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.wpi.cs.yaml.demo.model.Alternative;
 import edu.wpi.cs.yaml.demo.model.Participant;
 
 public class ParticipantDAO { 
@@ -92,7 +91,7 @@ public class ParticipantDAO {
 
     public List<Participant> getParticipants(String choiceID) throws Exception {
         
-        List<Participant> participants = new ArrayList<Participant>();
+        List<Participant> participants = new ArrayList<>();
         try {
             Statement statement = conn.createStatement();
           

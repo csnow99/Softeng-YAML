@@ -58,9 +58,9 @@ function handleChoiceCreateClick(e) {
     "maxParticipants":10,
     "description":"sample description",
     "alternatives":[
-        {"alternativeID":"alt1_ID","name":"alt5_name","description":"alt1_description"},
-        {"alternativeID":"alt2_ID","name":"alt6_name","description":"alt2_description"},
-        {"alternativeID":"alt3_ID","name":"alt7_name","description":"alt3_description"}
+        {"name":"alt5_name","description":"alt1_description"},
+        {"name":"alt6_name","description":"alt2_description"},
+        {"name":"alt7_name","description":"alt3_description"}
         ]}
 */
 
