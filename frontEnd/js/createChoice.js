@@ -30,7 +30,7 @@ function loadChoicePage(response) {
 
     urlParams.append("choice", choiceID)
 
-    window.location.href(choiceURL + urlParams);
+    window.location.href = choiceURL + urlParams;
 
     /*
     var xhr = new XMLHttpRequest();
