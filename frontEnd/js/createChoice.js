@@ -22,6 +22,10 @@ function loadChoicePage(response) {
 
     console.log(choiceID);
 
+<<<<<<< HEAD
+=======
+    window.location.href = "https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html";
+>>>>>>> afe0b0b969a04c50a3940820798a6805d6de2b28
 
     var choiceURL = new URL("https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html?")
     var choiceQueryString = new URLSearchParams(choiceURL.search)
