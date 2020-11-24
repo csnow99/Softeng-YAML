@@ -8,36 +8,30 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 
 import edu.wpi.cs.yaml.demo.db.AlternativeDAO;
+import edu.wpi.cs.yaml.demo.http.GetAlternativesResponse;
 import edu.wpi.cs.yaml.demo.model.Alternative;
 
 
 
-public class GetAlternativesHandler implements RequestHandler<String, List<Alternative>> {
+public class GetAlternativesHandler implements RequestHandler<String, GetAlternativesResponse> {
 
 	public LambdaLogger logger;
-	
-	List<Alternative> getAlternatives(String choiceID) throws Exception {
-		logger.log("in getAlternatives");
-		AlternativeDAO dao = new AlternativeDAO();
-		
-		return dao.getAlternatives(choiceID);
-	}
+
 	
 	@Override 
-	public List<Alternative> handleRequest(String choiceID, Context context){
+	public GetAlternativesResponse handleRequest(String choiceID, Context context){
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler to list all alternatives for ID: "+ choiceID);
-
-		List<Alternative> response;
+		
 		try {
-			response = getAlternatives(choiceID);
+			AlternativeDAO dao = new AlternativeDAO();
+			List<Alternative> alternatives = dao.getAlternatives(choiceID);;
+			return new GetAlternativesResponse("Succesfully fetched alternatives", alternatives);
 			
 		} catch (Exception e) {
-			response = null;
 			logger.log(e.getMessage());
+			return new GetAlternativesResponse(404, "ChoiceID not found");
 		}
-		
-		return response;
 	}
 	
 }

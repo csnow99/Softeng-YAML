@@ -12,6 +12,7 @@ import edu.wpi.cs.yaml.demo.http.CreateChoiceRequest;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceResponse;
 import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDRequest;
 import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDResponse;
+import edu.wpi.cs.yaml.demo.http.GetChoiceResponse;
 import edu.wpi.cs.yaml.demo.model.Alternative;
 import edu.wpi.cs.yaml.demo.model.Choice;
 
@@ -41,13 +42,15 @@ public class GetChoiceHandlerTest extends LambdaTest{
         
         /*Now that it's inserted we may */
         if(choiceID == null) {Assert.fail("Created ChoiceID is null");}
-        Choice resp = handler.handleRequest(choiceID, createContext("list"));
-        if(resp == null) {Assert.fail("Found Choice is null");}
+        GetChoiceResponse resp = handler.handleRequest(choiceID, createContext("list"));
+        if(resp.httpCode == 404) {Assert.fail("ChoiceID not found");}
         
-        Assert.assertTrue(resp.choiceName.equals("testChoice1"));
-        Assert.assertTrue(resp.maxParticipants == 10);
-        Assert.assertTrue(resp.choiceDescription.equals("sample description"));
-        Assert.assertTrue(resp.selectedAlternativeID == null);
+        Choice choice = resp.choice;
+        
+        Assert.assertTrue(choice.choiceName.equals("testChoice1"));
+        Assert.assertTrue(choice.maxParticipants == 10);
+        Assert.assertTrue(choice.choiceDescription.equals("sample description"));
+        Assert.assertTrue(choice.selectedAlternativeID == null);
         
         
         /*Delete the inserted choice*/

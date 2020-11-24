@@ -13,6 +13,7 @@ import edu.wpi.cs.yaml.demo.http.CreateChoiceRequest;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceResponse;
 import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDRequest;
 import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDResponse;
+import edu.wpi.cs.yaml.demo.http.GetAlternativesResponse;
 import edu.wpi.cs.yaml.demo.model.Alternative;
 
 
@@ -41,22 +42,23 @@ public class GetAlternativesHandlerTest extends LambdaTest{
         
         /*Now that it's inserted we may */
         if(choiceID == null) {Assert.fail("Created ChoiceID is null");}
-        List<Alternative> resp = handler.handleRequest(choiceID, createContext("list"));
-        if(resp == null) {Assert.fail("Found Alternatives are null");}
+        GetAlternativesResponse resp = handler.handleRequest(choiceID, createContext("list"));
+        if(resp.httpCode == 404) {Assert.fail("ChoiceID not found");}
+        List<Alternative> respAlternatives = resp.alternatives;
         
-        Assert.assertEquals(3, resp.size());
+        Assert.assertEquals(3, respAlternatives.size());
         
-        Assert.assertTrue(resp.get(0).choiceID.equals(choiceID));
-        Assert.assertTrue(resp.get(0).title.equals("alt1_name"));
-        Assert.assertTrue(resp.get(0).description.equals("alt1_description"));
+        Assert.assertTrue(respAlternatives.get(0).choiceID.equals(choiceID));
+        Assert.assertTrue(respAlternatives.get(0).title.equals("alt1_name"));
+        Assert.assertTrue(respAlternatives.get(0).description.equals("alt1_description"));
         
-        Assert.assertTrue(resp.get(1).choiceID.equals(choiceID));
-        Assert.assertTrue(resp.get(1).title.equals("alt2_name"));
-        Assert.assertTrue(resp.get(1).description.equals("alt2_description"));
+        Assert.assertTrue(respAlternatives.get(1).choiceID.equals(choiceID));
+        Assert.assertTrue(respAlternatives.get(1).title.equals("alt2_name"));
+        Assert.assertTrue(respAlternatives.get(1).description.equals("alt2_description"));
         
-        Assert.assertTrue(resp.get(2).choiceID.equals(choiceID));
-        Assert.assertTrue(resp.get(2).title.equals("alt3_name"));
-        Assert.assertTrue(resp.get(2).description.equals("alt3_description"));
+        Assert.assertTrue(respAlternatives.get(2).choiceID.equals(choiceID));
+        Assert.assertTrue(respAlternatives.get(2).title.equals("alt3_name"));
+        Assert.assertTrue(respAlternatives.get(2).description.equals("alt3_description"));
         
         
         /*Delete the inserted choice*/
