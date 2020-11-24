@@ -20,7 +20,7 @@ function handleSignInClick(e){
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", register_url, true);
-    xhr.send();
+    xhr.send(js);
     xhr.onloadend = function () {
         console.log(xhr);
         console.log(xhr.request);
