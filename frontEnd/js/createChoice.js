@@ -1,22 +1,6 @@
-function updatePageWithChoice() {
-
-    let queryString = new URLSearchParams(window.location.search)
-
-    console.log(queryString.toString())
-
-    var choiceDiv = document.getElementById('choice')
-
-    choiceDiv.innerHTML = queryString.toString()
-
-    //Get request to get all the information for a choice
-
-    //Update the page with choice information
-
-}
-
 function loadChoicePage(response) {
 
-    var parsedResponse = JSON.parse(response);
+    let parsedResponse = JSON.parse(response);
 
     choiceID = parsedResponse["response"]
 
@@ -24,21 +8,14 @@ function loadChoicePage(response) {
 
 	window.location.href = "https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html";
 
-    var choiceURL = new URL("https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html?")
-    var choiceQueryString = new URLSearchParams(choiceURL.search)
-    var urlParams = new URLSearchParams(choiceQueryString)
+    let choiceURL = new URL("https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html?")
+    let choiceQueryString = new URLSearchParams(choiceURL.search)
+    let urlParams = new URLSearchParams(choiceQueryString)
 
     urlParams.append("choice", choiceID)
 
 	window.location.href = choiceURL + urlParams;
 
-    /*
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", choicePage_url + "/" + choiceID, true);
-    xhr.send();
-    */
-
-    console.log("Redirected");
 }
 
 function processCreateChoiceResponse(result) {
@@ -49,7 +26,7 @@ function processCreateChoiceResponse(result) {
 }
 
 function handleChoiceCreateClick(e) {
-    var form = document.createChoice;
+    let form = document.createChoice;
     /*
     {
     "name":"testChoice4",
@@ -61,7 +38,7 @@ function handleChoiceCreateClick(e) {
         {"name":"alt7_name","description":"alt3_description"}
         ]}
     */
-    var data = {};
+    let data = {};
     data["name"] = form.choiceName.value;
     data["maxParticipants"] = form.partNum.value;
     data["description"] = form.choiceDesc.value;
@@ -131,9 +108,9 @@ function handleChoiceCreateClick(e) {
     var alts = [alt1, alt2];
     data["alternatives"] = alts;
 */
-    var js = JSON.stringify(data);
+    let js = JSON.stringify(data);
     console.log("JS:" + js);
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open("POST", createChoice_url, true);
 
     // send the collected data as JSON

@@ -7,18 +7,18 @@ function handleSignInClick(e){
       "password": "Test1"
     }
     */
-    var form = document.registerForm;
+    let form = document.registerForm;
     data = {};
-    var url = window.location.href;
-    var choiceID = url.split("=")[1];
+    let url = window.location.href;
+    let choiceID = url.split("=")[1];
     data["choiceID"] = choiceID;
     data["name"] = form.partName.value;
     data["password"] = form.partPass.value;
 
-    var js = JSON.stringify(data);
+    let js = JSON.stringify(data);
     console.log("JS: " + js);
 
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open("POST", register_url, true);
     xhr.send(js);
     xhr.onloadend = function () {
@@ -30,8 +30,8 @@ function handleSignInClick(e){
     	      processLogIn(xhr.responseText);
         	 } else {
         		 console.log("actual:" + xhr.responseText)
-    			  var js = JSON.parse(xhr.responseText);
-    			  var err = js["response"];
+    			  let js = JSON.parse(xhr.responseText);
+    			  let err = js["response"];
     			  alert (err);
         	 }
         } else {

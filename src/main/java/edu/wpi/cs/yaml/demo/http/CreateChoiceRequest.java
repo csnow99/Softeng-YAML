@@ -15,6 +15,7 @@ public class CreateChoiceRequest {
 	int maxParticipants;
 	String description;
 	ArrayList<Alternative> alternatives;
+
 	
 	public String getName() {return name;}
 	public void setName(String name) {this.name = name;}

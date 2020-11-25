@@ -6,6 +6,8 @@
     <script type='text/javascript' src='../js/api.js'></script>
     <script type='text/javascript' src='../js/createChoice.js'></script>
     <script type="text/javascript" src='../js/register.js'></script>
+    <script type="text/javascript" src='../js/getChoiceInfo.js'></script>
+    <script type="text/javascript" src='../js/getAlternativeInfo.js'></script>
 </head>
 <body>
 
@@ -23,8 +25,10 @@
 
     <div id="choice"></div>
 
+    <div id="alternatives"></div>
+
     <script type='text/javascript'>
-        window.onload = updatePageWithChoice()
+        window.onload = getChoiceID()
     </script>
 
 </body>
