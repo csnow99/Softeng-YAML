@@ -1,12 +1,4 @@
 function handleSignInClick(e){
-    /*
-    Working JSON
-    {
-      "choiceID": "35912134573272282210196478825629454780",
-      "name": "Bill",
-      "password": "Test1"
-    }
-    */
     let form = document.registerForm;
     data = {};
     let url = window.location.href;

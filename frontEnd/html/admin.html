@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Choices Admin Page</title>
+	<script type='text/javascript' src='../js/api.js'></script>
+	<script type='text/javascript' src='../js/createReport.js'></script>
+
+
 </head>
     <body>
         <p>
@@ -19,39 +23,15 @@
             </form>
         <br>
         <form>
-        <input type="button" id="newReport" value="Create new report">
+        <input type="button" id="RefreshReport" value="Refresh Report"  onclick="JavaScript:createReport()"><br>>
         </form>
         <br>
         <p>Last report:</p>
-        <div id="report">
-		<br>
-		<div id="56293465982346598342652899238">
-			<label>Choice ID:		56293465982346598342652899238</label><br>
-			<label>Date Created:	11/12/2020</label><br>
-			<label>Date Completed:	11/20/2020</label><br>
-			<label>Is Completed:	Yes</label><br>
-		</div>
-		<br>
-		<div id="87209645387425601238512038972194">	
-			<label>Choice ID:		87209645387425601238512038972194<label><br>
-			<label>Date Created:	11/11/2020</label><br>
-			<label>Date Completed:	11/21/2020</label><br>
-			<label>Is Completed:	Yes</label><br>
-		</div>
-		<br>
-		<div id="394283729857394875239816210">
-			<label>Choice ID:		394283729857394875239816210</label><br>
-			<label>Date Created:	10/02/2020</label><br>
-			<label>Date Completed:	NULL</label><br>
-			<label>Is Completed:	No</label><br>
-		</div>
-		<br>
-		<div id="10239812309812834237655283">
-			<label>Choice ID:		10239812309812834237655283</label><br>
-			<label>Date Created:	11/21/2020</label><br>
-			<label>Date Completed:	NULL</label><br>
-			<label>Is Completed:	No</label><br>
-		</div>
-        </div>
+        <div id="report"> </div>
+
+		<script type='text/javascript'>
+			window.onload = createReport()
+		</script>
+
     </body>
 </html>

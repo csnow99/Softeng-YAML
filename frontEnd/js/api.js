@@ -7,4 +7,5 @@ let choicePage_url = base_url + "html/choice.html";
 let register_url = base_url + "registerParticipant"; // POST
 let getChoice_url = base_url + "choice" //GET + /{choiceID}
 let getAlternative_url = base_url + "alternative" //GET
+let createReport_url = base_url + "admin" //GET
 
