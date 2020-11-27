@@ -2,9 +2,6 @@ package edu.wpi.cs.yaml.demo.db;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import edu.wpi.cs.yaml.demo.model.Vote;
 
@@ -22,11 +19,13 @@ public class VoteDAO {
     	}
     }
     
-    public Vote getVote(String vote_ID) throws Exception {
+    public Vote getVote(String alternative_ID, String participant_ID) throws Exception {
         try {
         	Vote vote = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE vote_ID=?;");
-            ps.setString(1,  vote_ID);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_id=? AND participant_id=?;");
+            ps.setString(1,  alternative_ID);
+            ps.setString(1,  participant_ID);
+            
             ResultSet resultSet = ps.executeQuery();
             
             while (resultSet.next()) {
@@ -39,7 +38,7 @@ public class VoteDAO {
 
         } catch (Exception e) {
         	e.printStackTrace();
-            throw new Exception("Failed in getting choice: " + e.getMessage());
+            throw new Exception("Failed in getting vote: " + e.getMessage());
         }
     }
     
@@ -71,14 +70,15 @@ public class VoteDAO {
             throw new Exception("Failed to delete choice: " + e.getMessage());
         }
     }
-    public List<Vote> getVotes(String alternative_id) throws Exception {
+    /*public List<Vote> getVote(String alternative_id, String participant_id) throws Exception {
         
         List<Vote> votes = new ArrayList<Vote>();
         try {
             Statement statement = conn.createStatement();
           
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_id=?;");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_id=? AND participant_id=?;");
             ps.setString(1,  alternative_id);
+            ps.setString(2,  participant_id);
             //String query = "SELECT * FROM " + tblName + "GROUP BY alternative_id HAVING MAX(choice_id) = " + choiceID + " AND MIN(choice_id) = "+choiceID + ";";
             ResultSet resultSet = ps.executeQuery();
 
@@ -91,9 +91,9 @@ public class VoteDAO {
             return votes;
 
         } catch (Exception e) {
-            throw new Exception("Failed in getting alternatives: " + e.getMessage());
+            throw new Exception("Failed in getting vote: " + e.getMessage());
         }
-    }
+    }*/
     private Vote generateVote(ResultSet resultSet) throws Exception {
         int voteID = resultSet.getInt("vote_id");
     	String participantID = resultSet.getString("participant_id");
