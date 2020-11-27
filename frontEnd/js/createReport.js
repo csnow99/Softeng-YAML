@@ -25,7 +25,7 @@ function createReport() {
                 updatePageWithReport("N/A");
             }
         };
-    
+
 }
 
 function updatePageWithReport(response) {

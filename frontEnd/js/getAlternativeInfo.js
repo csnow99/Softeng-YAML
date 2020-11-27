@@ -45,8 +45,11 @@ function updatePageWithAlternative(response) {
 
         count = count + 1
 
+        let alternativeID = alternative["altID"]
         let alternativeName = alternative["title"]
         let alternativeDescription = alternative["description"]
+        createAlternativeButtons(alternativeID, alternativeDiv);
+
 
         output = output + "<h4> Alternative #"+ count + ": " + alternativeName + "</h4>"
         output = output + "<p> <b> Description </b>" + alternativeDescription + "<p>"
