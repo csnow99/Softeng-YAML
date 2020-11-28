@@ -22,9 +22,9 @@ public class VoteDAO {
     public Vote getVote(String alternative_ID, String participant_ID) throws Exception {
         try {
         	Vote vote = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_id=? AND participant_id=?;");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_id = ? AND participant_id = ?;");
             ps.setString(1,  alternative_ID);
-            ps.setString(1,  participant_ID);
+            ps.setString(2,  participant_ID);
             
             ResultSet resultSet = ps.executeQuery();
             
