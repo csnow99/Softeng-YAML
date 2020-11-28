@@ -70,6 +70,21 @@ public class VoteDAO {
             throw new Exception("Failed to delete choice: " + e.getMessage());
         }
     }
+
+    public boolean deleteVote(String alternativeID, String participantID) throws Exception {
+        try {
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE alternative_id = ? AND participant_id = ?;");
+            ps.setString(1, alternativeID);
+            ps.setString(2, participantID);
+            int numAffected = ps.executeUpdate();
+            ps.close();
+
+            return (numAffected == 1);
+
+        } catch (Exception e) {
+            throw new Exception("Failed to delete choice: " + e.getMessage());
+        }
+    }
     /*public List<Vote> getVote(String alternative_id, String participant_id) throws Exception {
         
         List<Vote> votes = new ArrayList<Vote>();
