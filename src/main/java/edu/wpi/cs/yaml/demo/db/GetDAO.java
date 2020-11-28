@@ -45,7 +45,7 @@ public class GetDAO {
         String choiceID = null;
         try {
             PreparedStatement ps = conn.prepareStatement(
-                    "SELECT choice_id FROM " + participantsTable + " WHERE participant_id = ?;");
+                    "SELECT choice_id FROM " + participantsTable + " WHERE participantID = ?;");
             ps.setString(1, participantID);
             ResultSet rs = ps.executeQuery();
 
