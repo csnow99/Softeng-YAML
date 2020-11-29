@@ -72,6 +72,7 @@ public class VoteDAO {
             }
             resultSet.close();
             statement.close();
+            //votes.add()
             votes.add(numUpvotes);
             votes.add(numDownvotes);
             votes.add(upvotes);
