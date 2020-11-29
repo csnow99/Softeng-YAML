@@ -1,27 +1,23 @@
-function loadChoicePage(response) {
+function loadChoicePage(choiceID) {
 
-    let parsedResponse = JSON.parse(response);
-
-    choiceID = parsedResponse["response"]
-    document.getElementById("choiceID").innerText = "choice: "+ choiceID;
-    console.log(choiceID);
-
-	window.location.href = "https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html";
-
-    let choiceURL = new URL("https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html?")
-    let choiceQueryString = new URLSearchParams(choiceURL.search)
-    let urlParams = new URLSearchParams(choiceQueryString)
-
-    urlParams.append("choice", choiceID)
-
-	window.location.href = choiceURL + urlParams;
+    document.getElementById("choiceID").innerText = "Choice ID is: " + choiceID;
 
 }
 
-function processCreateChoiceResponse(result) {
-    console.log("result:" + result);
+function processCreateChoiceResponse(response) {
+    console.log("result:" + response);
+    let parsedResponse = JSON.parse(response);
+    let choiceID = parsedResponse["response"];
+    console.log(choiceID);
+    window.location.href = "https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html";
+    let choiceURL = new URL("https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html?");
+    let choiceQueryString = new URLSearchParams(choiceURL.search);
+    let urlParams = new URLSearchParams(choiceQueryString);
 
-    loadChoicePage(result)
+    urlParams.append("choice", choiceID);
+
+    window.location.href = choiceURL + urlParams;
+    loadChoicePage(choiceID);
 
 }
 
