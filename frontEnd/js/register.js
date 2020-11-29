@@ -15,7 +15,6 @@ function handleSignInClick(e){
     xhr.send(js);
     xhr.onloadend = function () {
         console.log(xhr);
-        console.log(xhr.request);
         if (xhr.readyState == XMLHttpRequest.DONE) {
         	 if (xhr.status == 200) {
     	      console.log ("XHR:" + xhr.responseText);
@@ -33,4 +32,8 @@ function handleSignInClick(e){
 }
 function processLogIn(result){
     console.log(result);
+    let newData = JSON.parse(result);
+    let name = newData["response"].split(":")[1];
+    console.log(name);
+    document.getElementById("mainMessage").innerText = "Welcome," + name;
 }
