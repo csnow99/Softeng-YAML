@@ -3,7 +3,7 @@ function loadChoicePage(response) {
     let parsedResponse = JSON.parse(response);
 
     choiceID = parsedResponse["response"]
-
+    document.getElementById("choiceID").innerText = "choice: "+ choiceID;
     console.log(choiceID);
 
 	window.location.href = "https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html";
