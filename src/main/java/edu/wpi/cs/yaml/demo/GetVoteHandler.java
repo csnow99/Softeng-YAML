@@ -1,33 +1,34 @@
 package edu.wpi.cs.yaml.demo;
 
-import java.util.List;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
-import edu.wpi.cs.yaml.demo.db.AlternativeDAO;
-import edu.wpi.cs.yaml.demo.http.GetAlternativesResponse;
-import edu.wpi.cs.yaml.demo.model.Alternative;
+import edu.wpi.cs.yaml.demo.db.VoteDAO;
+import edu.wpi.cs.yaml.demo.http.GetVoteRequest;
+import edu.wpi.cs.yaml.demo.http.GetVoteResponse;
+import edu.wpi.cs.yaml.demo.model.Vote;
 
-public class GetVoteHandler implements RequestHandler<String, GetAlternativesResponse> {
+public class GetVoteHandler implements RequestHandler<GetVoteRequest, GetVoteResponse> {
 
 	public LambdaLogger logger;
 	
 	@Override 
-	public GetVoteResponse handleRequest(String participantID, String alternativeID, Context context){
+	public GetVoteResponse handleRequest(GetVoteRequest req, Context context){
 		logger = context.getLogger();
-		logger.log("Loading Java Lambda handler to list all alternatives for ID: "+ choiceID);
+		logger.log("Loading Java Lambda handler to get vote");
 		
 		try {
-			AlternativeDAO dao = new AlternativeDAO();
-			List<Alternative> alternatives = dao.getAlternatives(choiceID);;
-			return new GetAlternativesResponse("Succesfully fetched alternatives", alternatives);
+			VoteDAO dao = new VoteDAO();
+			Vote vote = dao.getVote(req.getParticipantID(), req.getAlternativeID());
+			return new GetVoteResponse("Succesfully fetched vote: ", vote);
 			
 		} catch (Exception e) {
 			logger.log(e.getMessage());
-			return new GetAlternativesResponse(404, "ChoiceID not found");
+			return new GetVoteResponse(404, "Vote not found");
 		}
 	}
+	
 	
 }
