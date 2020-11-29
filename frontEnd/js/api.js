@@ -8,4 +8,6 @@ let register_url = base_url + "registerParticipant"; // POST
 let getChoice_url = base_url + "choice" //GET + /{choiceID}
 let getAlternative_url = base_url + "alternative" //GET
 let createReport_url = base_url + "admin" //GET
+let amendVote_url = base_url + "vote" //POST
+
 
