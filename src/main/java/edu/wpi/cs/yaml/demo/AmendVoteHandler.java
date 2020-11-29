@@ -14,7 +14,7 @@ public class AmendVoteHandler implements RequestHandler<AmendVoteRequest, GetVot
     LambdaLogger logger;
 
     @Override
-    public GetVoteResponse handleRequest(AmendVoteRequest req, Context context) {
+    public GetVotesResponse handleRequest(AmendVoteRequest req, Context context) {
 
         logger = context.getLogger();
         logger.log(req.toString());
@@ -23,13 +23,13 @@ public class AmendVoteHandler implements RequestHandler<AmendVoteRequest, GetVot
         try {
             if(amendVote(req)) {
                 Vote vote = voteDAO.getVote(req.getAlternativeID(), req.getParticipantID());
-                return new GetVoteResponse("Successfully amended a Vote", voteDAO.getVotes(alternative_ID));
+                return new GetVotesResponse("Successfully amended a Vote", voteDAO.getVotes(alternative_ID));
             } else {
-                return new GetVoteResponse(400, "Could not amend Vote");
+                return new GetVotesResponse(400, "Could not amend Vote");
             }
         } catch (Exception e) {
             logger.log(e.getMessage());
-            return new GetVoteResponse(400, "Cannot amend Vote: " + e);
+            return new GetVotesResponse(400, "Cannot amend Vote: " + e);
         }
     }
 
