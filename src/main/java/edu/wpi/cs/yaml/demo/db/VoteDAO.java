@@ -124,20 +124,6 @@ public class VoteDAO {
         }
     }
 
-    public boolean deleteVote(String alternativeID, String participantID) throws Exception {
-        try {
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE alternative_id = ? AND participant_id = ?;");
-            ps.setString(1, alternativeID);
-            ps.setString(2, participantID);
-            int numAffected = ps.executeUpdate();
-            ps.close();
-
-            return (numAffected == 1);
-
-        } catch (Exception e) {
-            throw new Exception("Failed to delete vote: " + e.getMessage());
-        }
-    }
     
     private Vote generateVote(ResultSet resultSet) throws Exception {
         int voteID = resultSet.getInt("vote_id");
