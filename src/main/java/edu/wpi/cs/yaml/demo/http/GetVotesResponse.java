@@ -1,16 +1,16 @@
 package edu.wpi.cs.yaml.demo.http;
 
-import java.util.HashMap;
 import java.util.List;
+
+import edu.wpi.cs.yaml.demo.model.VoteInfo;
 
 
 
 public class GetVotesResponse extends GenericResponse{
 	
-	public List<Object> votes;
-	public HashMap<String, List<Object>> voteMap = new HashMap<>();
+	public List<VoteInfo> votes;
 	
-	public GetVotesResponse(String response, List<Object> votes) {
+	public GetVotesResponse(String response, List<VoteInfo> votes) {
 		super(response);
 		this.votes = votes;
 	}

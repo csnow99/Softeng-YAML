@@ -20,12 +20,12 @@ public class GetDAO {
         }
     }
 
-    public String getChoiceIDA(String alternativeID) throws Exception {
+    public String getChoiceIDA(int alternativeID) throws Exception {
         String choiceID = null;
         try {
             PreparedStatement ps = conn.prepareStatement(
                     "SELECT choice_id FROM " + alternativesTable + " WHERE alternative_id = ?;");
-            ps.setString(1, alternativeID);
+            ps.setInt(1, alternativeID);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){

@@ -9,26 +9,25 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import edu.wpi.cs.yaml.demo.db.VoteDAO;
 import edu.wpi.cs.yaml.demo.http.GetVotesResponse;
+import edu.wpi.cs.yaml.demo.model.VoteInfo;
 
 public class GetVotesHandler implements RequestHandler<String, GetVotesResponse> {
 
 	public LambdaLogger logger;
 	
 	@Override 
-	public GetVotesResponse handleRequest(String alternativeID, Context context){
+	public GetVotesResponse handleRequest(String choiceID, Context context){
 		logger = context.getLogger();
-		logger.log("Loading Java Lambda handler to list all votes for ID: "+ alternativeID);
+		logger.log("Loading Java Lambda handler to list all votes for ID: "+ choiceID);
 		
 		try {
 			VoteDAO dao = new VoteDAO();
-			List<Object> votes = dao.getVotes(alternativeID);
+			List<VoteInfo> votes = dao.getVotes(choiceID);
 			return new GetVotesResponse("Succesfully fetched votes: ", votes);
 			
 		} catch (Exception e) {
 			logger.log(e.getMessage());
-			return new GetVotesResponse(404, "Vote not found");
+			return new GetVotesResponse(404, "Choice not found");
 		}
 	}
-	
-	
 }

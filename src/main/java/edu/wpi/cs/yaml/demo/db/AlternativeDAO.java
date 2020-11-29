@@ -22,27 +22,48 @@ public class AlternativeDAO {
     	}
     }
 
-    /*public Alternative getAlternative(String alternative_ID) throws Exception {
-        
-        try {
-        	Alternative alternative = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_ID=?;");
-            ps.setString(1,  alternative_ID);
-            ResultSet resultSet = ps.executeQuery();
-            
-            while (resultSet.next()) {
-            	alternative = generateAlternative(resultSet);
-            }
-            resultSet.close();
-            ps.close();
-            
-            return alternative;
+//    public Alternative getAlternative(int alternative_ID) throws Exception {
+//        
+//        try {
+//        	Alternative alternative = null;
+//            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_ID=?;");
+//            ps.setInt(1,  alternative_ID);
+//            ResultSet resultSet = ps.executeQuery();
+//            
+//            while (resultSet.next()) {
+//            	alternative = generateAlternative(resultSet);
+//            }
+//            resultSet.close();
+//            ps.close();
+//            
+//            return alternative;
+//
+//        } catch (Exception e) {
+//        	e.printStackTrace();
+//            throw new Exception("Failed in getting choice: " + e.getMessage());
+//        }
+//    }
+    
+    public String getAlternativeTitleFromAlternativeID(int alternative_ID) throws Exception {
+    	 try {
+         	Alternative alternative = null;
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_ID=?;");
+             ps.setInt(1,  alternative_ID);
+             ResultSet resultSet = ps.executeQuery();
+             
+             while (resultSet.next()) {
+             	alternative = generateAlternative(resultSet);
+             }
+             resultSet.close();
+             ps.close();
+             
+             return alternative.title;
 
-        } catch (Exception e) {
-        	e.printStackTrace();
-            throw new Exception("Failed in getting choice: " + e.getMessage());
-        }
-    }*/
+         } catch (Exception e) {
+         	e.printStackTrace();
+             throw new Exception("Failed in getting choice: " + e.getMessage());
+         }
+    }
     
     
 /*    public boolean updateChoice(Choice constant) throws Exception {

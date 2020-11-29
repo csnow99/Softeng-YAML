@@ -18,7 +18,7 @@ import java.lang.*;
 public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,CreateChoiceResponse> {
 	LambdaLogger logger;
 	
-	boolean createChoice(String choiceID, CreateChoiceRequest req) throws Exception { 
+	int createChoice(String choiceID, CreateChoiceRequest req) throws Exception { 
 		if (logger != null) { logger.log("in createChoice"); }
 		ChoiceDAO choiceDao = new ChoiceDAO();
 		
@@ -28,7 +28,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 		if (exist == null) {
 			choiceDao.addChoice(choice);
 		} else {
-			return false;
+			return 409;		//duplicate choiceID
 		}
 		
 		AlternativeDAO altDao = new AlternativeDAO();
@@ -37,7 +37,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 			alt.setChoiceID(choiceID);
 			altDao.addAlternative(alt);
 		} 
-		return true;
+		return 200;
 	}
 	
 	/*Returns a newly generated ID for a choice
@@ -68,11 +68,11 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 		CreateChoiceResponse response;
 		try {
 			String choiceID = generateChoiceID(req);
-			if (createChoice(choiceID, req))
+			if (createChoice(choiceID, req) == 200)
 			{
 				response = new CreateChoiceResponse(choiceID, 200);
 			} else {
-				response = new CreateChoiceResponse("Unable to create choice: " +choiceID, 400);
+				response = new CreateChoiceResponse("Unable to create choice, due to dupliate choiceID: " +choiceID, 409);
 			}
 		} catch (Exception e) {
 			response = new CreateChoiceResponse("Unable to create choice: " + req.getName() + "(" + e.getMessage() + ")", 400);

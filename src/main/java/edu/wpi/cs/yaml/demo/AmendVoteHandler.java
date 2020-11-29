@@ -19,11 +19,11 @@ public class AmendVoteHandler implements RequestHandler<AmendVoteRequest, GetVot
         logger = context.getLogger();
         logger.log(req.toString());
         VoteDAO voteDAO = new VoteDAO();
-
+        GetDAO getDAO = new GetDAO();
+        
         try {
             if(amendVote(req)) {
-                Vote vote = voteDAO.getVote(req.getAlternativeID(), req.getParticipantID());
-                return new GetVotesResponse("Successfully amended a Vote", voteDAO.getVotes(alternative_ID));
+                return new GetVotesResponse("Successfully amended a Vote", voteDAO.getVotes(getDAO.getChoiceIDA(req.getAlternativeID())));
             } else {
                 return new GetVotesResponse(400, "Could not amend Vote");
             }

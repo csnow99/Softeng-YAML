@@ -28,7 +28,7 @@ public class VoteInfo {
 	public List<String> getdownvoters() {return this.downvoters;}
 	public void setDownvoters(List<String> downvoters) {this.downvoters = downvoters;}
 	
-	VoteInfo(int alternativeID, String alternativeName, int numUpvotes, int numDownvotes, List<String> upvoters, List<String> downvoters){
+	public VoteInfo(int alternativeID, String alternativeName, int numUpvotes, int numDownvotes, List<String> upvoters, List<String> downvoters){
 		this.alternativeID = alternativeID;
 		this.alternativeName = alternativeName;
 		this.numUpvotes = numUpvotes;

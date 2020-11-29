@@ -44,34 +44,26 @@ public class ParticipantDAO {
     }*/
     
     
-/*    public boolean updateChoice(Choice constant) throws Exception {
-        try {
-        	String query = "UPDATE " + tblName + " SET value=? WHERE name=?;";
-        	PreparedStatement ps = conn.prepareStatement(query);
-            ps.setDouble(1, constant.value);
-            ps.setString(2, constant.name);
-            int numAffected = ps.executeUpdate();
-            ps.close();
-            
-            return (numAffected == 1);
-        } catch (Exception e) {
-            throw new Exception("Failed to update report: " + e.getMessage());
-        }
-    }*/
-    /*
-    public boolean deleteAlternative(Choice choice) throws Exception {
-        try {
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE choice_ID = ?;");
-            ps.setString(1, choice.choiceID);
-            int numAffected = ps.executeUpdate();
-            ps.close();
-            
-            return (numAffected == 1);
+    public String getParticipantNameFromID(int participant_ID) throws Exception {
+    	try {
+    		Participant participant = null;
+    		PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE participantID=?;");
+    		ps.setInt(1,  participant_ID);
+    		ResultSet resultSet = ps.executeQuery();
 
-        } catch (Exception e) {
-            throw new Exception("Failed to delete choice: " + e.getMessage());
-        }
-    }*/
+    		while (resultSet.next()) {
+    			participant = generateParticipant(resultSet);
+    		}
+    		resultSet.close();
+    		ps.close();
+
+    		return participant.getName();
+
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		throw new Exception("Failed in getting participant: " + e.getMessage());
+    	}
+    }
 
 
     public boolean addParticipant(Participant participant) throws Exception {
