@@ -23,27 +23,29 @@ import edu.wpi.cs.yaml.demo.model.Participant;
 public class RegisterParticipantHandler implements RequestHandler<RegisterParticipantRequest,RegisterParticipantResponse> {
 	LambdaLogger logger;
 	
-	boolean registerParticipant(RegisterParticipantRequest req) throws Exception { 
+	int registerParticipant(RegisterParticipantRequest req) throws Exception { 
 		if (logger != null) { logger.log("in createChoice"); }
 		ParticipantDAO participantDAO = new ParticipantDAO();
 		ChoiceDAO choiceDAO = new ChoiceDAO();
 	
 		List<Participant> list = participantDAO.getParticipants(req.getChoiceID());
 		
-		// check if maxNumber of participants is reached
-		int maxParticipants = choiceDAO.getMaxParticipants(req.getChoiceID());
-		if (list.size() >= maxParticipants) {return false;} //no more space
-		
-		// check if it already exists
+		// check if already logged in
 		Participant participant = new Participant(req.getChoiceID(), req.getName(), req.getPassword());
 		for(Participant p : list) {
 			if (participant.equals(p)) {
-				return false;				//no duplicate names allowed
+				if (participant.password.equals(p.password)) {return 200;} //valid login
+				else {return 401;}										   //false password
 			}
 		}
 		
+		// check if maxNumber of participants is reached
+		int maxParticipants = choiceDAO.getMaxParticipants(req.getChoiceID());
+		if (list.size() >= maxParticipants) {return 403;} //no more space
+
 		//If everything is fine, we may register this new participant
-		return participantDAO.addParticipant(participant);
+		if(participantDAO.addParticipant(participant))	{return 201;}		//new entry created
+		else{return 400;}													//failed somehow
 	}
 	
 
@@ -54,13 +56,24 @@ public class RegisterParticipantHandler implements RequestHandler<RegisterPartic
 
 		RegisterParticipantResponse response;
 		try {
-			if (registerParticipant(req))
+			switch (registerParticipant(req))
 			{
-				response = new RegisterParticipantResponse("Successfully registered participant: "+req.getName(), 200);
-			} else {
-				response = new RegisterParticipantResponse("Unable to register participant: "+req.getName(), 400);
-			}
-		} catch (Exception e) {
+				case 200:
+				response = new RegisterParticipantResponse("Successfully logged in as: "+req.getName(), 200);
+				break;
+				case 201:
+				response = new RegisterParticipantResponse("Successfully registered participant: "+req.getName(), 201);
+				break;
+				case 401:
+				response = new RegisterParticipantResponse("Wrong password for participant: "+req.getName(), 401);
+				break;
+				case 403:
+				response = new RegisterParticipantResponse("Maximum number of participants reached for choice: "+req.getName(), 403);
+				break;
+				default:
+				response = new RegisterParticipantResponse("Unable to register participant: " + req.getName(), 400);
+				break;
+			}}catch (Exception e) {
 			response = new RegisterParticipantResponse("Unable to register participant: " + req.getName() + "(" + e.getMessage() + ")", 400);
 		}
 
