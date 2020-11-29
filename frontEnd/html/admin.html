@@ -6,32 +6,21 @@
 	<script type='text/javascript' src='../js/api.js'></script>
 	<script type='text/javascript' src='../js/createReport.js'></script>
 
+    <script type='text/javascript'>
+        function load() {
+            createReport();
+        }
+    </script>
 
 </head>
-    <body>
-        <p>
-            Latest report was created at
-            <label id="createTime">___</label>
-            on
-            <label id="createDate">___</label>
-        </p>
-
-        <p>Delete all choices N days old. N is: </p>
-            <form>
-                <input type="text" id="numDays" name="numDays">
-                <input type="button" id="numDaysBtn" value="Submit">
-            </form>
-        <br>
-        <form>
-        <input type="button" id="RefreshReport" value="Refresh Report"  onclick="JavaScript:createReport()"><br>>
-        </form>
-        <br>
-        <p>Last report:</p>
-        <div id="report"> </div>
-
-		<script type='text/javascript'>
-			window.onload = createReport()
-		</script>
-
+    <body onload="load()">
+    <p>Delete all choices N days old. N is: </p>
+    <form>
+        <input type="text" id="numDays" name="numDays">
+        <input type="button" id="numDaysBtn" value="Delete">
+    </form>
+    <br>
+    <label>All choices: </label>
+    <div id="report"></div>
     </body>
 </html>
