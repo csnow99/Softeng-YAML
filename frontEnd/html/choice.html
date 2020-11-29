@@ -8,13 +8,19 @@
     <script type="text/javascript" src='../js/register.js'></script>
     <script type="text/javascript" src='../js/getChoiceInfo.js'></script>
     <script type="text/javascript" src='../js/getAlternativeInfo.js'></script>
+    <script type="text/javascript">
+        function loadPage() {
+            let choiceURL = window.location.href;
+            let choiceID = choiceURL.split("=")[1];
+            console.log("From url: " + choiceID);
+            loadChoicePage(choiceID);
+        }
+    </script>
 </head>
-<body onload="loadChoicePage()">
-    <h1 id = "choiceID">
+<body onload="loadPage()">
 
-    </h1>
     <h1>Sign In</h1>
-
+    <h2 id="choiceID"></h2>
     <form name="registerForm">
         <label>Name: </label><input type="text" name="partName" value=""><br>
         <label>Password (Optional):  </label><input type="password" name="partPass" value=""><br>
