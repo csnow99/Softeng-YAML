@@ -13,22 +13,26 @@
         <h1>YAML CHOICE</h1>
             <form name="createChoice">
                 <div id="choiceInfo">
-                    <label>Choice Name: </label><input type="text" name="choiceName" value=""><br>
-                    <label>Number of Participants: </label><input type="number" name="partNum" value=""><br>
-                    <label>Choice description: </label><input type="text" name="choiceDesc" value=""><br>
+                    <label>Choice Name: </label><input type="text" name="choiceName"><br>
+                    <label>Number of Participants: </label><input type="number" name="partNum" ><br>
+                    <label>Choice description: </label><input type="text" name="choiceDesc"><br>
                 </div>
                 <br>
                 <div id="alternatives">
-                    <label>Alternative Name: </label><input type="text" name="altName1" value=""><br>
-                    <label>Alternative Description: </label><input type="text" name="altDesc1" value=""><br><br>
-
-                    <label>Alternative Name: </label><input type="text" name="altName2" value=""><br>
-                    <label>Alternative Description: </label><input type="text" name="altDesc2" value=""><br><br>
-
+                    <div id="alternative1">
+                        <label>Alternative Name: </label><input type="text" name="altName1"><br>
+                        <label>Alternative Description: </label><input type="text" name="altDesc1"><br><br>
+                    </div>
+                    <div id="alternative2">
+                        <label>Alternative Name: </label><input type="text" name="altName2"><br>
+                        <label>Alternative Description: </label><input type="text" name="altDesc2"><br><br>
+                    </div>
+                    <div id="alternative3"></div>
+                    <div id="alternative4"></div>
+                    <div id="alternative5"></div>
                     <input type="button" id="altCreate" value="Create another alternative"
-                           onclick="JavaScript:handleAltCreateClick(this)">
+                           onclick="JavaScript:handleAltCreateClick(this)"><br>
                 </div>
-
                 <input type="button" value="Create Choice" onclick="JavaScript:handleChoiceCreateClick(this)">
             </form>
     </body>
