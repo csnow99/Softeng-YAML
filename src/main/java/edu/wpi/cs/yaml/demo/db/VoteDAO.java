@@ -2,6 +2,9 @@ package edu.wpi.cs.yaml.demo.db;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.wpi.cs.yaml.demo.model.Vote;
 
@@ -42,6 +45,43 @@ public class VoteDAO {
         }
     }
     
+    public List<Object> getVotes(String alternative_ID) throws Exception {
+    	List<Object> votes = new ArrayList<Object>();
+    	int numUpvotes = 0;
+    	int numDownvotes = 0;
+    	List<Vote> upvotes = new ArrayList<Vote>();
+    	List<Vote> downvotes = new ArrayList<Vote>();
+        try {
+            Statement statement = conn.createStatement();
+          
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_id=?;");
+            ps.setString(1,  alternative_ID);
+            
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+             Vote c = generateVote(resultSet);
+            	if(c.amendType == 1) {
+            		upvotes.add(c);
+            		numUpvotes++;
+            	}
+            	else if(c.amendType == 0) {
+            		downvotes.add(c);
+            		numDownvotes++;
+            	}
+            }
+            resultSet.close();
+            statement.close();
+            votes.add(numUpvotes);
+            votes.add(numDownvotes);
+            votes.add(upvotes);
+            votes.add(downvotes);
+            return votes;
+
+        } catch (Exception e) {
+            throw new Exception("Failed in getting votes: " + e.getMessage());
+        }
+    }
     
     public boolean addVote(Vote vote) throws Exception {
         try {
@@ -67,7 +107,7 @@ public class VoteDAO {
             return (numAffected == 1);
 
         } catch (Exception e) {
-            throw new Exception("Failed to delete choice: " + e.getMessage());
+            throw new Exception("Failed to delete vote: " + e.getMessage());
         }
     }
 
@@ -82,33 +122,10 @@ public class VoteDAO {
             return (numAffected == 1);
 
         } catch (Exception e) {
-            throw new Exception("Failed to delete choice: " + e.getMessage());
+            throw new Exception("Failed to delete vote: " + e.getMessage());
         }
     }
-    /*public List<Vote> getVote(String alternative_id, String participant_id) throws Exception {
-        
-        List<Vote> votes = new ArrayList<Vote>();
-        try {
-            Statement statement = conn.createStatement();
-          
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_id=? AND participant_id=?;");
-            ps.setString(1,  alternative_id);
-            ps.setString(2,  participant_id);
-            //String query = "SELECT * FROM " + tblName + "GROUP BY alternative_id HAVING MAX(choice_id) = " + choiceID + " AND MIN(choice_id) = "+choiceID + ";";
-            ResultSet resultSet = ps.executeQuery();
-
-            while (resultSet.next()) {
-             Vote c = generateVote(resultSet);
-            	votes.add(c);
-            }
-            resultSet.close();
-            statement.close();
-            return votes;
-
-        } catch (Exception e) {
-            throw new Exception("Failed in getting vote: " + e.getMessage());
-        }
-    }*/
+    
     private Vote generateVote(ResultSet resultSet) throws Exception {
         int voteID = resultSet.getInt("vote_id");
     	String participantID = resultSet.getString("participant_id");
