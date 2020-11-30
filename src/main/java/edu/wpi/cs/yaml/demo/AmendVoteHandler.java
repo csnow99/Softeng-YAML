@@ -42,15 +42,14 @@ public class AmendVoteHandler implements RequestHandler<AmendVoteRequest, GetVot
         Vote aVote = new Vote(req.getAlternativeID(), req.getParticipantID(), req.getAmendType());
         if (exist == null){
         	voteDAO.addVote(aVote);
-        	return true;
         } else {
-        	voteDAO.deleteVote(req.getAlternativeID(), req.getParticipantID());	//if vote already exists delete it
-        	if (exist.getAmendType() != req.getAmendType()){					//if we changed our vote preference
+        	voteDAO.deleteVote(req.getAlternativeID(), req.getParticipantID());	// if vote already exists delete it
+        	if (exist.getAmendType() != req.getAmendType()){					// if we changed our vote preference
         		Vote v = new Vote(req.getAlternativeID(), req.getParticipantID(), req.getAmendType()); 
-        		voteDAO.addVote(v); 											//add a new vote with the now different preference
+        		voteDAO.addVote(v); 											// add a new vote with the now different preference
         	}
-        	return true;														//return true
         }
+        return true;
     }
 }
 
