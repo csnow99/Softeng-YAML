@@ -1,6 +1,7 @@
 package edu.wpi.cs.yaml.demo;
 
 import com.google.gson.Gson;
+import edu.wpi.cs.yaml.demo.db.DeleteDAO;
 import edu.wpi.cs.yaml.demo.http.AmendVoteRequest;
 import edu.wpi.cs.yaml.demo.http.GetVotesResponse;
 import edu.wpi.cs.yaml.demo.model.VoteInfo;
@@ -258,5 +259,11 @@ public class AmendVoteHandlerTest extends LambdaTest {
 
         Assert.assertEquals(400, response1.httpCode);
         Assert.assertEquals(200, response2.httpCode);
+    }
+
+    @Test
+    public void deleteFromDB() throws Exception {
+        DeleteDAO deleteDAO = new DeleteDAO();
+        deleteDAO.deleteVotes();
     }
 }
