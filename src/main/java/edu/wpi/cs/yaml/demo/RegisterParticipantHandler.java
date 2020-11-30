@@ -59,24 +59,24 @@ public class RegisterParticipantHandler implements RequestHandler<RegisterPartic
 			switch (registerParticipant(req))
 			{
 				case 200:
-				response = new RegisterParticipantResponse("Successfully logged in as: "+req.getName(), 200);
-				break;
+					response = new RegisterParticipantResponse("Successfully logged in as: "+req.getName(), 200);
+					break;
 				case 201:
-				response = new RegisterParticipantResponse("Successfully registered participant: "+req.getName(), 201);
-				break;
+					response = new RegisterParticipantResponse("Successfully registered participant: "+req.getName(), 201);
+					break;
 				case 401:
-				response = new RegisterParticipantResponse("Wrong password for participant: "+req.getName(), 401);
-				break;
+					response = new RegisterParticipantResponse("Wrong password for participant: "+req.getName(), 401);
+					break;
 				case 403:
-				response = new RegisterParticipantResponse("Maximum number of participants reached for choice: "+req.getName(), 403);
-				break;
+					response = new RegisterParticipantResponse("Maximum number of participants reached for choice: "+req.getName(), 403);
+					break;
 				default:
-				response = new RegisterParticipantResponse("Unable to register participant: " + req.getName(), 400);
-				break;
-			}}catch (Exception e) {
+					response = new RegisterParticipantResponse("Unable to register participant: " + req.getName(), 400);
+					break;
+			}
+		} catch (Exception e) {
 			response = new RegisterParticipantResponse("Unable to register participant: " + req.getName() + "(" + e.getMessage() + ")", 400);
 		}
-
 		return response;
 	}
 
