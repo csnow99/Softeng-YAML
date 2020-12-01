@@ -40,7 +40,7 @@ public class GetVotesHandlerTest extends LambdaTest {
 			String choiceID = null;
 
 			CreateChoiceHandler createHandler = new CreateChoiceHandler();
-			CreateChoiceRequest ccr = new CreateChoiceRequest("testChoiceRegisterParticipant", 3, "sample description", alternatives);
+			CreateChoiceRequest ccr = new CreateChoiceRequest("testGetVotesHandler", 3, "sample description", alternatives);
 			CreateChoiceResponse createResp = createHandler.handleRequest(ccr, createContext("create"));
 			choiceID = createResp.response;
 
@@ -97,8 +97,35 @@ public class GetVotesHandlerTest extends LambdaTest {
 			
 			List<VoteInfo> voteInfos = getVotesResponse.votes;
 			
-			System.out.println(new Gson().toJson(voteInfos));
+			VoteInfo alt1Info = voteInfos.get(0);
+			VoteInfo alt2Info = voteInfos.get(1);
+			VoteInfo alt3Info = voteInfos.get(2);
 			
+			Assert.assertEquals(alt1ID, alt1Info.getAlternativeID());
+			Assert.assertEquals(alt2ID, alt2Info.getAlternativeID());
+			Assert.assertEquals(alt3ID, alt3Info.getAlternativeID());
+			
+			Assert.assertEquals(alt1.getTitle(), alt1Info.getAlternativeName());
+			Assert.assertEquals(alt2.getTitle(), alt2Info.getAlternativeName());
+			Assert.assertEquals(alt3.getTitle(), alt3Info.getAlternativeName());
+			
+			Assert.assertEquals(2, alt1Info.getNumUpvotes());
+			Assert.assertEquals(1, alt2Info.getNumUpvotes());
+			Assert.assertEquals(0, alt3Info.getNumUpvotes());
+			
+			Assert.assertEquals(0, alt1Info.getNumDownvotes());
+			Assert.assertEquals(1, alt2Info.getNumDownvotes());
+			Assert.assertEquals(2, alt3Info.getNumDownvotes());
+			
+			Assert.assertEquals(2, alt1Info.getUpvoters().size());
+			Assert.assertEquals(1, alt2Info.getUpvoters().size());
+			Assert.assertEquals(0, alt3Info.getUpvoters().size());
+			
+			Assert.assertEquals(0, alt1Info.getdownvoters().size());
+			Assert.assertEquals(1, alt2Info.getdownvoters().size());
+			Assert.assertEquals(2, alt3Info.getdownvoters().size());
+			
+
 			/*Delete the inserted choice*/
 			if (choiceID != null) {
 				DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
