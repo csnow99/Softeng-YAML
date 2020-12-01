@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.IOException;
+
 
 public class AmendVoteHandlerTest extends LambdaTest {
 
@@ -20,250 +22,207 @@ public class AmendVoteHandlerTest extends LambdaTest {
         VoteTypes: 1 for Upvote 0 for DownVote
      */
 
-    @Test
-    public void testUpVote() {
+    void testInput(String incoming, List<VoteInfo> result) throws IOException {
+        try {
+            deleteFromDB();
+        } catch (Exception e) {
+            Assert.fail("Could not delete from Votes: " + e.getMessage());
+        }
 
-        String voteInput1 = "{\n" +
-                "  \"alternativeID\": 32,\n" +
-                "  \"participantID\": 18,\n" +
-                "  \"amendType\": 1\n" +
-                "}";
-        String voteInput2 = "{\n" +
-                "  \"alternativeID\": 32,\n" +
-                "  \"participantID\": 19,\n" +
-                "  \"amendType\": 1\n" +
-                "}";
-        String JSONString1 = new Gson().toJson(voteInput1);
-        String JSONString2 = new Gson().toJson(voteInput2);
+        AmendVoteRequest req = new Gson().fromJson(incoming, AmendVoteRequest.class);
+        AmendVoteHandler handler = new AmendVoteHandler();
+        GetVotesResponse response = handler.handleRequest(req, createContext("vote"));
 
-        AmendVoteRequest req1 = new Gson().fromJson(JSONString1, AmendVoteRequest.class);
-        AmendVoteRequest req2 = new Gson().fromJson(JSONString2, AmendVoteRequest.class);
+        Assert.assertEquals(200, response.httpCode);
+        Assert.assertEquals("Successfully amended a Vote", response.response);
+        Assert.assertEquals(result, response.votes);
+    }
+    void testTwoInput(String incoming, String incoming2,
+                      List<VoteInfo> result, List<VoteInfo> result2) throws IOException {
+        try {
+            deleteFromDB();
+        } catch (Exception e) {
+            Assert.fail("Could not delete from Votes: " + e.getMessage());
+        }
 
-        AmendVoteHandler avh = new AmendVoteHandler();
+        AmendVoteRequest req = new Gson().fromJson(incoming, AmendVoteRequest.class);
+        AmendVoteHandler handler = new AmendVoteHandler();
+        GetVotesResponse response = handler.handleRequest(req, createContext("vote"));
 
-        GetVotesResponse response1 = avh.handleRequest(req1, createContext("vote"));
-        GetVotesResponse response2 = avh.handleRequest(req2, createContext("vote"));
+        Assert.assertEquals(200, response.httpCode);
+        Assert.assertEquals("Successfully amended a Vote", response.response);
+        Assert.assertEquals(result, response.votes);
 
-        List<String> namesUp1 = new ArrayList<>();
-        namesUp1.add("Bill");
-        namesUp1.add("Bill2");
+        AmendVoteRequest req2 = new Gson().fromJson(incoming2, AmendVoteRequest.class);
+        AmendVoteHandler handler2 = new AmendVoteHandler();
+        GetVotesResponse response2 = handler2.handleRequest(req2, createContext("vote"));
 
-        List<String> namesDown1 = new ArrayList<>();
+        Assert.assertEquals(200, response.httpCode);
+        Assert.assertEquals("Successfully amended a Vote", response.response);
+        Assert.assertEquals(result2, response2.votes);
 
-        List<String> emptyList = new ArrayList<>();
-
-        VoteInfo vi1 = new VoteInfo(32, "UpVote",
-                2, 0, namesUp1, namesDown1);
-        VoteInfo vi2 = new VoteInfo(33, "DownVote",
-                0, 0, emptyList, emptyList);
-        VoteInfo vi3 = new VoteInfo(34, "BothCombined",
-                0, 0, emptyList, emptyList);
-
-        List<VoteInfo> allVotes = new ArrayList<>();
-        allVotes.add(vi1);
-        allVotes.add(vi2);
-        allVotes.add(vi3);
-
-        Assert.assertEquals(200, response1.httpCode);
-        Assert.assertEquals(200, response2.httpCode);
-        Assert.assertEquals(allVotes, response2.votes);
     }
 
-    @Test
-    public void testDownVote() {
-
-        String voteInput1 = "{\n" +
-                "  \"alternativeID\": 33,\n" +
-                "  \"participantID\": 18,\n" +
-                "  \"amendType\": 0\n" +
-                "}";
-        String voteInput2 = "{\n" +
-                "  \"alternativeID\": 33,\n" +
-                "  \"participantID\": 19,\n" +
-                "  \"amendType\": 0\n" +
-                "}";
-
-        String JSONString1 = new Gson().toJson(voteInput1);
-        String JSONString2 = new Gson().toJson(voteInput2);
-
-        AmendVoteRequest req1 = new Gson().fromJson(JSONString1, AmendVoteRequest.class);
-        AmendVoteRequest req2 = new Gson().fromJson(JSONString2, AmendVoteRequest.class);
-
-        AmendVoteHandler avh = new AmendVoteHandler();
-
-        GetVotesResponse response1 = avh.handleRequest(req1, createContext("vote"));
-        GetVotesResponse response2 = avh.handleRequest(req2, createContext("vote"));
-
-        List<String> namesUp1 = new ArrayList<>();
-        namesUp1.add("Bill");
-        namesUp1.add("Bill2");
-        List<String> namesDown1 = new ArrayList<>();
-        List<String> namesUp2 = new ArrayList<>();
-        List<String> namesDown2 = new ArrayList<>();
-        namesDown2.add("Bill");
-        namesDown2.add("Bill2");
-        List<String> emptyList = new ArrayList<>();
-
-        VoteInfo vi1 = new VoteInfo(32, "UpVote",
-                2, 0, namesUp1, namesDown1);
-        VoteInfo vi2 = new VoteInfo(33, "DownVote",
-                0, 2, namesUp2, namesDown2);
-        VoteInfo vi3 = new VoteInfo(34, "BothCombined",
-                0, 0, emptyList, emptyList);
-
-        List<VoteInfo> allVotes = new ArrayList<>();
-        allVotes.add(vi1);
-        allVotes.add(vi2);
-        allVotes.add(vi3);
-
-        Assert.assertEquals(200, response1.httpCode);
-        Assert.assertEquals(200, response2.httpCode);
-        Assert.assertEquals(allVotes, response2.votes);
-    }
-
-    @Test
-    public void testBothCombined() {
-
-        String voteInput1 = "{\n" +
-                "  \"alternativeID\": 34,\n" +
-                "  \"participantID\": 18,\n" +
-                "  \"amendType\": 1\n" +
-                "}";
-        String voteInput2 = "{\n" +
-                "  \"alternativeID\": 34,\n" +
-                "  \"participantID\": 19,\n" +
-                "  \"amendType\": 0\n" +
-                "}";
-
-        String JSONString1 = new Gson().toJson(voteInput1);
-        String JSONString2 = new Gson().toJson(voteInput2);
-
-        AmendVoteRequest req1 = new Gson().fromJson(JSONString1, AmendVoteRequest.class);
-        AmendVoteRequest req2 = new Gson().fromJson(JSONString2, AmendVoteRequest.class);
-
-        AmendVoteHandler avh = new AmendVoteHandler();
-
-        GetVotesResponse response1 = avh.handleRequest(req1, createContext("vote"));
-        GetVotesResponse response2 = avh.handleRequest(req2, createContext("vote"));
-
-        List<String> namesUp1 = new ArrayList<>();
-        namesUp1.add("Bill");
-        namesUp1.add("Bill2");
-        List<String> namesDown1 = new ArrayList<>();
-        List<String> namesUp2 = new ArrayList<>();
-        List<String> namesDown2 = new ArrayList<>();
-        namesDown2.add("Bill");
-        namesDown2.add("Bill2");
-        List<String> namesUp3 = new ArrayList<>();
-        namesUp3.add("Bill");
-        List<String> namesDown3 = new ArrayList<>();
-        namesDown3.add("Bill2");
-
-        VoteInfo vi1 = new VoteInfo(32, "UpVote",
-                2, 0, namesUp1, namesDown1);
-        VoteInfo vi2 = new VoteInfo(33, "DownVote",
-                0, 2, namesUp2, namesDown2);
-        VoteInfo vi3 = new VoteInfo(34, "BothCombined",
-                1, 1, namesUp3, namesDown3);
-
-        List<VoteInfo> allVotes = new ArrayList<>();
-        allVotes.add(vi1);
-        allVotes.add(vi2);
-        allVotes.add(vi3);
-
-        Assert.assertEquals(200, response1.httpCode);
-        Assert.assertEquals(200, response2.httpCode);
-        Assert.assertEquals(allVotes, response2.votes);
-    }
-
-    @Test
-    public void testDeleteAndChange() {
-
-        // Changing Vote
-        String voteInput1 = "{\n" +
-                "  \"alternativeID\": 34,\n" +
-                "  \"participantID\": 18,\n" +
-                "  \"amendType\": 0\n" +
-                "}";
-        // Deleting Vote
-        String voteInput2 = "{\n" +
-                "  \"alternativeID\": 34,\n" +
-                "  \"participantID\": 19,\n" +
-                "  \"amendType\": 1\n" +
-                "}";
-
-        String JSONString1 = new Gson().toJson(voteInput1);
-        String JSONString2 = new Gson().toJson(voteInput2);
-
-        AmendVoteRequest req1 = new Gson().fromJson(JSONString1, AmendVoteRequest.class);
-        AmendVoteRequest req2 = new Gson().fromJson(JSONString2, AmendVoteRequest.class);
-
-        AmendVoteHandler avh = new AmendVoteHandler();
-
-        GetVotesResponse response1 = avh.handleRequest(req1, createContext("vote"));
-        GetVotesResponse response2 = avh.handleRequest(req2, createContext("vote"));
-
-        List<String> namesUp1 = new ArrayList<>();
-        namesUp1.add("Bill");
-        namesUp1.add("Bill2");
-        List<String> namesDown1 = new ArrayList<>();
-        List<String> namesUp2 = new ArrayList<>();
-        List<String> namesDown2 = new ArrayList<>();
-        namesDown2.add("Bill");
-        namesDown2.add("Bill2");
-        List<String> namesUp4 = new ArrayList<>();
-        List<String> namesDown4 = new ArrayList<>();
-        namesDown4.add("Bill");
-
-        VoteInfo vi1 = new VoteInfo(32, "UpVote",
-                2, 0, namesUp1, namesDown1);
-        VoteInfo vi2 = new VoteInfo(33, "DownVote",
-                0, 2, namesUp2, namesDown2);
-        VoteInfo vi4 = new VoteInfo(34, "BothCombined",
-                0, 1, namesUp4, namesDown4);
-
-        List<VoteInfo> allVotes = new ArrayList<>();
-        allVotes.add(vi1);
-        allVotes.add(vi2);
-        allVotes.add(vi4);
-
-        Assert.assertEquals(200, response1.httpCode);
-        Assert.assertEquals(200, response2.httpCode);
-        Assert.assertEquals(allVotes, response2.votes);
-    }
-
-    @Test
-    public void testWrongInput() {
-        // Fail
-        String voteInput1 = "{\n" +
-                "  \"participantID\": 18,\n" +
-                "  \"amendType\": 0\n" +
-                "}";
-        // Success
-        String voteInput2 = "{\n" +
-                "  \"alternativeID\": 34,\n" +
-                "  \"participantID\": 19,\n" +
-                "  \"amendType\": 1\n" +
-                "}";
-
-        String JSONString1 = new Gson().toJson(voteInput1);
-        String JSONString2 = new Gson().toJson(voteInput2);
-
-        AmendVoteRequest req1 = new Gson().fromJson(JSONString1, AmendVoteRequest.class);
-        AmendVoteRequest req2 = new Gson().fromJson(JSONString2, AmendVoteRequest.class);
-
-        AmendVoteHandler avh = new AmendVoteHandler();
-
-        GetVotesResponse response1 = avh.handleRequest(req1, createContext("vote"));
-        GetVotesResponse response2 = avh.handleRequest(req2, createContext("vote"));
-
-        Assert.assertEquals(400, response1.httpCode);
-        Assert.assertEquals(200, response2.httpCode);
-    }
-
-    @Test
-    public void deleteFromDB() throws Exception {
+    void deleteFromDB() throws Exception {
         DeleteDAO deleteDAO = new DeleteDAO();
         deleteDAO.deleteVotes();
+    }
+
+    @Test
+    public void upVoteTest() {
+        String voteInput = "{\n" +
+                "  \"alternativeID\": 32,\n" +
+                "  \"participantID\": 18,\n" +
+                "  \"amendType\": 1\n" +
+                "}";
+
+        List<String> namesUp1 = new ArrayList<>();
+        namesUp1.add("Bill");
+
+        List<String> emptyList = new ArrayList<>();
+
+        VoteInfo vi1 = new VoteInfo(32, "UpVote",
+                1, 0, namesUp1, emptyList);
+        VoteInfo vi2 = new VoteInfo(33, "DownVote",
+                0, 0, emptyList, emptyList);
+        VoteInfo vi3 = new VoteInfo(34, "BothCombined",
+                0, 0, emptyList, emptyList);
+
+        List<VoteInfo> allVotes = new ArrayList<>();
+        allVotes.add(vi1);
+        allVotes.add(vi2);
+        allVotes.add(vi3);
+
+        try {
+            testInput(voteInput, allVotes);
+        } catch (IOException ioe) {
+            Assert.fail("Invalid:" + ioe.getMessage());
+        }
+    }
+
+    @Test
+    public void downVoteTest() {
+        String voteInput = "{\n" +
+                "  \"alternativeID\": 33,\n" +
+                "  \"participantID\": 19,\n" +
+                "  \"amendType\": 0\n" +
+                "}";
+
+        List<String> names = new ArrayList<>();
+        names.add("Bill2");
+
+        List<String> emptyList = new ArrayList<>();
+
+        VoteInfo vi1 = new VoteInfo(32, "UpVote",
+                0, 0, emptyList, emptyList);
+        VoteInfo vi2 = new VoteInfo(33, "DownVote",
+                0, 1, emptyList, names);
+        VoteInfo vi3 = new VoteInfo(34, "BothCombined",
+                0, 0, emptyList, emptyList);
+
+        List<VoteInfo> allVotes = new ArrayList<>();
+        allVotes.add(vi1);
+        allVotes.add(vi2);
+        allVotes.add(vi3);
+
+        try {
+            testInput(voteInput, allVotes);
+        } catch (IOException ioe) {
+            Assert.fail("Invalid:" + ioe.getMessage());
+        }
+
+    }
+
+    @Test
+    public void deleteVoteTest() {
+        String voteInput = "{\n" +
+                "  \"alternativeID\": 34,\n" +
+                "  \"participantID\": 18,\n" +
+                "  \"amendType\": 0\n" +
+                "}";
+
+        List<String> names = new ArrayList<>();
+        names.add("Bill");
+
+        List<String> emptyList = new ArrayList<>();
+
+        VoteInfo vi1 = new VoteInfo(32, "UpVote",
+                0, 0, emptyList, emptyList);
+        VoteInfo vi2 = new VoteInfo(33, "DownVote",
+                0, 0, emptyList, emptyList);
+        VoteInfo vi3 = new VoteInfo(34, "BothCombined",
+                0, 1, emptyList, names);
+
+        List<VoteInfo> allVotes = new ArrayList<>();
+        allVotes.add(vi1);
+        allVotes.add(vi2);
+        allVotes.add(vi3);
+
+        VoteInfo vi4 = new VoteInfo(32, "UpVote",
+                0, 0, emptyList, emptyList);
+        VoteInfo vi5 = new VoteInfo(33, "DownVote",
+                0, 0, emptyList, emptyList);
+        VoteInfo vi6 = new VoteInfo(34, "BothCombined",
+                0, 0, emptyList, emptyList);
+
+        List<VoteInfo> allVotes2 = new ArrayList<>();
+        allVotes2.add(vi4);
+        allVotes2.add(vi5);
+        allVotes2.add(vi6);
+
+        try {
+            testTwoInput(voteInput, voteInput, allVotes, allVotes2);
+        } catch (IOException ioe) {
+            Assert.fail("Invalid:" + ioe.getMessage());
+        }
+    }
+
+    @Test
+    public void changeVoteTest() {
+        String voteInput = "{\n" +
+                "  \"alternativeID\": 34,\n" +
+                "  \"participantID\": 18,\n" +
+                "  \"amendType\": 0\n" +
+                "}";
+        String voteInput2 = "{\n" +
+                "  \"alternativeID\": 34,\n" +
+                "  \"participantID\": 18,\n" +
+                "  \"amendType\": 1\n" +
+                "}";
+
+        List<String> names = new ArrayList<>();
+        names.add("Bill");
+
+        List<String> emptyList = new ArrayList<>();
+
+        VoteInfo vi1 = new VoteInfo(32, "UpVote",
+                0, 0, emptyList, emptyList);
+        VoteInfo vi2 = new VoteInfo(33, "DownVote",
+                0, 0, emptyList, emptyList);
+        VoteInfo vi3 = new VoteInfo(34, "BothCombined",
+                0, 1, emptyList, names);
+
+        List<VoteInfo> allVotes = new ArrayList<>();
+        allVotes.add(vi1);
+        allVotes.add(vi2);
+        allVotes.add(vi3);
+
+        VoteInfo vi4 = new VoteInfo(32, "UpVote",
+                0, 0, emptyList, emptyList);
+        VoteInfo vi5 = new VoteInfo(33, "DownVote",
+                0, 0, emptyList, emptyList);
+        VoteInfo vi6 = new VoteInfo(34, "BothCombined",
+                1, 0, names, emptyList);
+
+        List<VoteInfo> allVotes2 = new ArrayList<>();
+        allVotes2.add(vi4);
+        allVotes2.add(vi5);
+        allVotes2.add(vi6);
+
+        try {
+            testTwoInput(voteInput, voteInput2, allVotes, allVotes2);
+        } catch (IOException ioe) {
+            Assert.fail("Invalid: " + ioe.getMessage());
+        }
     }
 }
