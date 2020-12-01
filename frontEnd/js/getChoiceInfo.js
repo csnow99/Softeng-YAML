@@ -1,10 +1,11 @@
-function getChoiceID() {
+function loadChoicePage() {
 
     let queryString = new URLSearchParams(window.location.search)
 
     queryString = queryString.get("choice")
 
     let finalChoiceID = queryString.toString()
+    console.log(finalChoiceID)
 
     requestChoiceInfo(finalChoiceID)
 
@@ -13,15 +14,15 @@ function getChoiceID() {
 
 function requestChoiceInfo(choiceID) {
 
-    data = {};
-
-    data["choiceID"] = choiceID;
-
-     let js = JSON.stringify(data);
-     console.log("JS: " + js);
+    // data = {};
+    //
+    // data["choiceID"] = choiceID;
+    //
+    //  let js = JSON.stringify(data);
+    //  console.log("JS: " + js);
      let xhr = new XMLHttpRequest();
      xhr.open("GET", getChoice_url + "/" + choiceID, true);
-     xhr.send(js);
+     xhr.send();
 
      xhr.onloadend = function () {
          console.log(xhr);
@@ -51,10 +52,12 @@ function updatePageWithChoice(response) {
     parsedResponse = parsedResponse["choice"]
 
     let choiceName = parsedResponse["choiceName"]
+    let choiceID = parsedResponse["choiceID"]
     let choiceDescription = parsedResponse["choiceDescription"]
 
     output = output + "<h2>" + choiceName + "</h2>"
     output = output + "<p>" + choiceDescription + "<p>"
 
     choiceDiv.innerHTML = output
+    document.getElementById("choiceID").innerText = "Choice ID is: " + choiceID;
 }

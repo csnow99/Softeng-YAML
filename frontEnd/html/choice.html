@@ -10,10 +10,7 @@
     <script type="text/javascript" src='../js/getAlternativeInfo.js'></script>
     <script type="text/javascript">
         function loadPage() {
-            let choiceURL = window.location.href;
-            let choiceID = choiceURL.split("=")[1];
-            console.log("From url: " + choiceID);
-            loadChoicePage(choiceID);
+            loadChoicePage();
         }
     </script>
 </head>

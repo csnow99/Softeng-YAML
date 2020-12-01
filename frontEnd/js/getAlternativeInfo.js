@@ -8,13 +8,13 @@ function requestAlternativeInfo(choiceID) {
      console.log("JS: " + js);
      let xhr = new XMLHttpRequest();
      xhr.open("GET", getAlternative_url + "/" + choiceID, true);
-     xhr.send(js);
+     xhr.send();
 
      xhr.onloadend = function () {
          console.log(xhr);
          console.log(xhr.request);
-         if (xhr.readyState == XMLHttpRequest.DONE) {
-             if (xhr.status == 200) {
+         if (xhr.readyState === XMLHttpRequest.DONE) {
+             if (xhr.status === 200) {
               console.log ("XHR:" + xhr.responseText);
               updatePageWithAlternative(xhr.responseText);
              } else {
@@ -33,15 +33,15 @@ function updatePageWithAlternative(response) {
 
     let parsedResponse = JSON.parse(response);
     let alternativeDiv = document.getElementById("alternatives")
-    var i, output = ""
-    var count = 0
+    let i, output = ""
+    let count = 0
     //let output = document.getElementById("alternatives").innerHTML;
 
     parsedResponse = parsedResponse["alternatives"]
 
     for(i in parsedResponse) {
 
-        var alternative = parsedResponse[i]
+        let alternative = parsedResponse[i]
 
         count = count + 1
 
