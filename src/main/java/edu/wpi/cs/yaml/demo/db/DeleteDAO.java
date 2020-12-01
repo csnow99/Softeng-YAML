@@ -1,9 +1,6 @@
 package edu.wpi.cs.yaml.demo.db;
 
-import edu.wpi.cs.yaml.demo.model.Vote;
-
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class DeleteDAO {
 
@@ -23,8 +20,7 @@ public class DeleteDAO {
         try {
             PreparedStatement ps = conn.prepareStatement("delete from Choices;");
 
-            ResultSet resultSet = ps.executeQuery();
-            resultSet.close();
+            ps.executeUpdate();
             ps.close();
 
         } catch (Exception e) {
@@ -37,8 +33,7 @@ public class DeleteDAO {
         try {
             PreparedStatement ps = conn.prepareStatement("delete from Alternatives; ALTER TABLE Alternatives AUTO_INCREMENT = 1;");
 
-            ResultSet resultSet = ps.executeQuery();
-            resultSet.close();
+            ps.executeUpdate();
             ps.close();
 
         } catch (Exception e) {
@@ -51,8 +46,7 @@ public class DeleteDAO {
         try {
             PreparedStatement ps = conn.prepareStatement("delete from Participants; ALTER TABLE Participants AUTO_INCREMENT = 1;");
 
-            ResultSet resultSet = ps.executeQuery();
-            resultSet.close();
+            ps.executeUpdate();
             ps.close();
 
         } catch (Exception e) {
@@ -65,8 +59,7 @@ public class DeleteDAO {
         try {
             PreparedStatement ps = conn.prepareStatement("delete from Votes; ALTER TABLE Votes AUTO_INCREMENT = 1;");
 
-            ResultSet resultSet = ps.executeQuery();
-            resultSet.close();
+            ps.executeUpdate();
             ps.close();
 
         } catch (Exception e) {
@@ -79,8 +72,7 @@ public class DeleteDAO {
         try {
             PreparedStatement ps = conn.prepareStatement("delete from Feedback; ALTER TABLE Feedback AUTO_INCREMENT = 1;");
 
-            ResultSet resultSet = ps.executeQuery();
-            resultSet.close();
+            ps.executeUpdate();
             ps.close();
 
         } catch (Exception e) {
