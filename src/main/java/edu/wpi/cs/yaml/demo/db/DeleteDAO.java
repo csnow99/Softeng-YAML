@@ -21,9 +21,7 @@ public class DeleteDAO {
 
     public void deleteChoices() throws Exception {
         try {
-            PreparedStatement ps = conn.prepareStatement(
-                    "set sql_safe_updates = 0; \n" +
-                    "delete from Choices;");
+            PreparedStatement ps = conn.prepareStatement("delete from Choices;");
 
             ResultSet resultSet = ps.executeQuery();
             resultSet.close();
@@ -37,10 +35,7 @@ public class DeleteDAO {
 
     public void deleteAlternatives() throws Exception {
         try {
-            PreparedStatement ps = conn.prepareStatement(
-                    "set sql_safe_updates = 0;\n" +
-                            "delete from Alternatives;\n" +
-                    "ALTER TABLE Alternatives AUTO_INCREMENT = 1;");
+            PreparedStatement ps = conn.prepareStatement("delete from Alternatives; ALTER TABLE Alternatives AUTO_INCREMENT = 1;");
 
             ResultSet resultSet = ps.executeQuery();
             resultSet.close();
@@ -54,10 +49,7 @@ public class DeleteDAO {
 
     public void deleteParticipants() throws Exception {
         try {
-            PreparedStatement ps = conn.prepareStatement(
-                    "set sql_safe_updates = 0;\n" +
-                            "delete from Participants;\n" +
-                    "ALTER TABLE Participants AUTO_INCREMENT = 1;");
+            PreparedStatement ps = conn.prepareStatement("delete from Participants; ALTER TABLE Participants AUTO_INCREMENT = 1;");
 
             ResultSet resultSet = ps.executeQuery();
             resultSet.close();
@@ -71,10 +63,7 @@ public class DeleteDAO {
 
     public void deleteVotes() throws Exception {
         try {
-            PreparedStatement ps = conn.prepareStatement(
-                    "set sql_safe_updates = 0;\n" +
-                            "delete from Votes;\n" +
-                            "ALTER TABLE Votes AUTO_INCREMENT = 1;");
+            PreparedStatement ps = conn.prepareStatement("delete from Votes; ALTER TABLE Votes AUTO_INCREMENT = 1;");
 
             ResultSet resultSet = ps.executeQuery();
             resultSet.close();
@@ -88,10 +77,7 @@ public class DeleteDAO {
 
     public void deleteFeedback() throws Exception {
         try {
-            PreparedStatement ps = conn.prepareStatement(
-                    "set sql_safe_updates = 0;\n" +
-                            "delete from Feedback;\n" +
-                            "ALTER TABLE Feedback AUTO_INCREMENT = 1;");
+            PreparedStatement ps = conn.prepareStatement("delete from Feedback; ALTER TABLE Feedback AUTO_INCREMENT = 1;");
 
             ResultSet resultSet = ps.executeQuery();
             resultSet.close();
