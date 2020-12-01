@@ -1,11 +1,5 @@
 function requestAlternativeInfo(choiceID) {
 
-    data = {};
-
-    data["choiceID"] = choiceID;
-
-     let js = JSON.stringify(data);
-     console.log("JS: " + js);
      let xhr = new XMLHttpRequest();
      xhr.open("GET", getAlternative_url + "/" + choiceID, true);
      xhr.send();
@@ -33,27 +27,36 @@ function updatePageWithAlternative(response) {
 
     let parsedResponse = JSON.parse(response);
     let alternativeDiv = document.getElementById("alternatives")
-    let i, output = ""
+    let output = ""
     let count = 0
-    //let output = document.getElementById("alternatives").innerHTML;
 
     parsedResponse = parsedResponse["alternatives"]
+    let choiceID
 
-    for(i in parsedResponse) {
+    for(let i in parsedResponse) {
 
         let alternative = parsedResponse[i]
 
         count = count + 1
 
-        let alternativeID = alternative["altID"]
+        let alternativeID = alternative["alternativeID"]
         let alternativeName = alternative["title"]
         let alternativeDescription = alternative["description"]
-        createAlternativeButtons(alternativeID, alternativeDiv);
+        choiceID = alternative["choiceID"]
 
-
-        output = output + "<h4> Alternative #"+ count + ": " + alternativeName + "</h4>"
-        output = output + "<p> <b> Description </b>" + alternativeDescription + "<p>"
+        output = output + "<label><b> Alternative #"+ count + ": " + alternativeName + "</b></label>"
+        output = output + "<label> <b> Description: </b>" + alternativeDescription + "</label><br>"
+        output = output + "<input id=\"likeAltID#"+ count +"\" type=\"image\" src=\"../img/like.png\" \n" +
+            "           width=\"30\" height=\"30\" \n" +
+            "           onclick=\"JavaScript:handleAmendVoteClick(\"likeAltID#"+ count +"\")\">\n" +
+            "    <label id=\"numLikeAltID#"+ alternativeID +"\"></label><br>\n" +
+            "    <input id=\"dislikeAltID#"+ count +"\" type=\"image\" src=\"../img/dislike.png\" \n" +
+            "           width=\"30\" height=\"30\" \n" +
+            "           onclick=\"JavaScript:handleAmendVoteClick(\"dislikeAltID#"+ count +"\")\">\n" +
+            "    <label id=\"numDislikeAltID#"+ alternativeID +"\"></label><br>"
     }
 
     alternativeDiv.innerHTML = output
+
+    requestVoteInfo(choiceID);
 }

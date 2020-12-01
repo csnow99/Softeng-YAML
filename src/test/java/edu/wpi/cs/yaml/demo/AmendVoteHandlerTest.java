@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
@@ -263,8 +262,6 @@ public class AmendVoteHandlerTest extends LambdaTest {
 			//We need alternativeID's
 			AlternativeDAO altDAO = new AlternativeDAO();
 			int alt1ID = altDAO.getAlternativeIDFromChoiceIDandTitle(choiceID, "alt1_name");
-			int alt2ID = altDAO.getAlternativeIDFromChoiceIDandTitle(choiceID, "alt2_name");
-			int alt3ID = altDAO.getAlternativeIDFromChoiceIDandTitle(choiceID, "alt3_name");
 
 			/*Now that it's inserted we can try to register the creator */
 

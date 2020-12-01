@@ -14,12 +14,6 @@ function loadChoicePage() {
 
 function requestChoiceInfo(choiceID) {
 
-    // data = {};
-    //
-    // data["choiceID"] = choiceID;
-    //
-    //  let js = JSON.stringify(data);
-    //  console.log("JS: " + js);
      let xhr = new XMLHttpRequest();
      xhr.open("GET", getChoice_url + "/" + choiceID, true);
      xhr.send();
@@ -27,8 +21,8 @@ function requestChoiceInfo(choiceID) {
      xhr.onloadend = function () {
          console.log(xhr);
          console.log(xhr.request);
-         if (xhr.readyState == XMLHttpRequest.DONE) {
-             if (xhr.status == 200) {
+         if (xhr.readyState === XMLHttpRequest.DONE) {
+             if (xhr.status === 200) {
               console.log ("XHR:" + xhr.responseText);
               updatePageWithChoice(xhr.responseText);
              } else {
