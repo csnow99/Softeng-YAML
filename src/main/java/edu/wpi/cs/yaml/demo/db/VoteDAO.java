@@ -130,7 +130,7 @@ public class VoteDAO {
     	int participantID = resultSet.getInt("participant_id");
     	int alternativeID = resultSet.getInt("alternative_id");
     	int amendType = resultSet.getInt("vote_type");
-        return new Vote(voteID, participantID, alternativeID, amendType);
+        return new Vote(voteID, alternativeID, participantID, amendType);
     }
 }
 

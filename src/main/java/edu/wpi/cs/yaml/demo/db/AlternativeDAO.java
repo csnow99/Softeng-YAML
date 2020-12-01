@@ -65,6 +65,29 @@ public class AlternativeDAO {
          }
     }
     
+    public int getAlternativeIDFromChoiceIDandTitle(String choiceID, String title) throws Exception {
+    	try {
+         	 Alternative alternative = null;
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_id=? AND alternative_title=?;");
+             ps.setString(1,  choiceID);
+             ps.setString(2, title);
+             
+             ResultSet resultSet = ps.executeQuery();
+             
+             while (resultSet.next()) {
+             	alternative = generateAlternative(resultSet);
+             }
+             resultSet.close();
+             ps.close();
+             
+             return alternative.getAlternativeID();
+
+         } catch (Exception e) {
+         	e.printStackTrace();
+             throw new Exception("Failed in getting choice: " + e.getMessage());
+         }
+    }
+    
     
 /*    public boolean updateChoice(Choice constant) throws Exception {
         try {
