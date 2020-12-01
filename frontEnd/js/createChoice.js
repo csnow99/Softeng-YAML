@@ -1,9 +1,3 @@
-function loadChoicePage(choiceID) {
-
-    document.getElementById("choiceID").innerText = "Choice ID is: " + choiceID;
-
-}
-
 function processCreateChoiceResponse(response) {
     console.log("result:" + response);
     let parsedResponse = JSON.parse(response);
@@ -17,7 +11,7 @@ function processCreateChoiceResponse(response) {
     urlParams.append("choice", choiceID);
 
     window.location.href = choiceURL + urlParams;
-    loadChoicePage(choiceID);
+    loadChoicePage();
 
 }
 

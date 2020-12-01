@@ -41,12 +41,12 @@ public class GetDAO {
         }
     }
 
-    public String getChoiceIDP(String participantID) throws Exception {
+    public String getChoiceIDP(int participantID) throws Exception {
         String choiceID = null;
         try {
             PreparedStatement ps = conn.prepareStatement(
                     "SELECT choice_id FROM " + participantsTable + " WHERE participantID = ?;");
-            ps.setString(1, participantID);
+            ps.setInt(1, participantID);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){

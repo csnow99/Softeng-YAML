@@ -1,5 +1,7 @@
 package edu.wpi.cs.yaml.demo.model;
 
+import java.sql.Timestamp;
+
 public class ChoiceInfo {
 	public String choiceID;
 	public long creationDate;
@@ -23,5 +25,12 @@ public class ChoiceInfo {
 		this.creationDate = creationDate;
 		this.completionDate = completionDate;
 		this.completed = completed;
+	}
+	
+	public String toString() {
+		Timestamp creationDate = new Timestamp(this.creationDate);
+		Timestamp completionDate = new Timestamp(this.completionDate);
+		
+		return ("ChoiceID: "+ID+" \tCreation date: "+ creationDate.toString() + "\tIs Completed: "+ Boolean.toString(completed) + "\tCompletion date: "+ completionDate.toString());
 	}
 }

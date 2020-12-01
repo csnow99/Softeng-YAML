@@ -8,12 +8,11 @@
     <script type="text/javascript" src='../js/register.js'></script>
     <script type="text/javascript" src='../js/getChoiceInfo.js'></script>
     <script type="text/javascript" src='../js/getAlternativeInfo.js'></script>
+    <script type="text/javascript" src='../js/amendVote.js'></script>
+    <script type="text/javascript" src="../js/getVoteInfo.js"></script>
     <script type="text/javascript">
         function loadPage() {
-            let choiceURL = window.location.href;
-            let choiceID = choiceURL.split("=")[1];
-            console.log("From url: " + choiceID);
-            loadChoicePage(choiceID);
+            loadChoicePage();
         }
     </script>
 </head>
@@ -35,8 +34,6 @@
     <div id="choice"></div>
 
     <div id="alternatives"></div>
-
-
 
 </body>
 </html>

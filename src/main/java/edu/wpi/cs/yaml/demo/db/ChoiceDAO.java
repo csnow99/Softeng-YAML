@@ -66,6 +66,31 @@ public class ChoiceDAO {
          }
     	
     }
+    
+    public boolean getIsCompleted(String choice_ID) throws Exception {
+    	 try {
+             Choice choice = null;
+
+    		 PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_ID=?;");
+             ps.setString(1,  choice_ID);
+             ResultSet resultSet = ps.executeQuery();
+             
+             while(resultSet.next()) {
+            	 choice = generateChoice(resultSet);
+             }
+             
+             resultSet.close();
+             ps.close();
+             
+             if(choice == null) {throw new Exception("Couldn't find choice with ID: " + choice_ID);}
+             
+             return choice.getIsCompleted();
+
+         } catch (Exception e) {
+         	e.printStackTrace();
+             throw new Exception("Failed in getting maxParticipants for choice: " + choice_ID + e.getMessage());
+         }
+    }
 /*    public boolean updateChoice(Choice constant) throws Exception {
         try {
         	String query = "UPDATE " + tblName + " SET value=? WHERE name=?;";
