@@ -4,7 +4,7 @@ import java.util.List;
 
 import edu.wpi.cs.yaml.demo.model.Alternative;
 
-public class GetAlternativesResponse extends GenericResponse{
+public class  GetAlternativesResponse extends GenericResponse{
 	public List<Alternative> alternatives;
 	
 	public GetAlternativesResponse(String response, List<Alternative> alternatives) {

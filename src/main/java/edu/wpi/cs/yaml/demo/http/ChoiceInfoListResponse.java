@@ -4,15 +4,16 @@ import java.util.List;
 
 import edu.wpi.cs.yaml.demo.model.ChoiceInfo;
 
-public class ChoiceInfoList {
+public class ChoiceInfoListResponse {
 	public int statusCode;
 	public String response;
 	public List<ChoiceInfo> infos;
 	
 	//Setter and getters
+
 	//Other constructors
 	
-	public ChoiceInfoList() {
+	public ChoiceInfoListResponse() {
 		
 	}
 }

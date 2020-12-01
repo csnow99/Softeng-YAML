@@ -11,7 +11,7 @@ schemes:
 paths:
   /admin:
     get:
-      operationId: "createReport"
+      operationId: "createt"
       produces:
       - "application/json"
       responses:
