@@ -56,26 +56,27 @@ public class RegisterParticipantHandler implements RequestHandler<RegisterPartic
 
 		RegisterParticipantResponse response;
 		try {
+			ParticipantDAO participantDAO = new ParticipantDAO();
 			switch (registerParticipant(req))
 			{
 				case 200:
-					response = new RegisterParticipantResponse("Successfully logged in as: "+req.getName(), 200);
+					response = new RegisterParticipantResponse("Successfully logged in as: "+req.getName(), 200, participantDAO.getParticipantIDFromChoiceIDAndParticipantName(req.getChoiceID(), req.getName()));
 					break;
 				case 201:
-					response = new RegisterParticipantResponse("Successfully registered participant: "+req.getName(), 201);
+					response = new RegisterParticipantResponse("Successfully registered participant: "+req.getName(), 201, participantDAO.getParticipantIDFromChoiceIDAndParticipantName(req.getChoiceID(), req.getName()));
 					break;
 				case 401:
-					response = new RegisterParticipantResponse("Wrong password for participant: "+req.getName(), 401);
+					response = new RegisterParticipantResponse("Wrong password for participant: "+req.getName(), 401, 0);
 					break;
 				case 403:
-					response = new RegisterParticipantResponse("Maximum number of participants reached for choice: "+req.getName(), 403);
+					response = new RegisterParticipantResponse("Maximum number of participants reached for choice: "+req.getName(), 403, 0);
 					break;
 				default:
-					response = new RegisterParticipantResponse("Unable to register participant: " + req.getName(), 400);
+					response = new RegisterParticipantResponse("Unable to register participant: " + req.getName(), 400, 0);
 					break;
 			}
 		} catch (Exception e) {
-			response = new RegisterParticipantResponse("Unable to register participant: " + req.getName() + "(" + e.getMessage() + ")", 400);
+			response = new RegisterParticipantResponse("Unable to register participant: " + req.getName() + "(" + e.getMessage() + ")", 400, 0);
 		}
 		return response;
 	}

@@ -64,6 +64,28 @@ public class ParticipantDAO {
     		throw new Exception("Failed in getting participant: " + e.getMessage());
     	}
     }
+    
+    public int getParticipantIDFromChoiceIDAndParticipantName(String choice_ID, String participant_name) throws Exception{
+    	try {
+    		Participant participant = null;
+    		PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_id=? AND username=?;");
+    		ps.setString(1,  choice_ID);
+    		ps.setString(2, participant_name);
+    		ResultSet resultSet = ps.executeQuery();
+
+    		while (resultSet.next()) {
+    			participant = generateParticipant(resultSet);
+    		}
+    		resultSet.close();
+    		ps.close();
+
+    		return participant.getParticipantID();
+
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		throw new Exception("Failed in getting participant: " + e.getMessage());
+    	}
+    }
 
 
     public boolean addParticipant(Participant participant) throws Exception {

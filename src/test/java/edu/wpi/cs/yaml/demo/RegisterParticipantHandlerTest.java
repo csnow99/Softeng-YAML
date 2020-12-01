@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
 
+import edu.wpi.cs.yaml.demo.db.ParticipantDAO;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceRequest;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceResponse;
 import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDRequest;
 import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDResponse;
 import edu.wpi.cs.yaml.demo.http.RegisterParticipantRequest;
+import edu.wpi.cs.yaml.demo.http.RegisterParticipantResponse;
 import edu.wpi.cs.yaml.demo.model.Alternative;
 import edu.wpi.cs.yaml.demo.model.Participant;
 
@@ -42,22 +44,43 @@ public class RegisterParticipantHandlerTest extends LambdaTest{
     Participant participant2 = new Participant(choiceID, "name2", "password2");
     Participant participant3 = new Participant(choiceID, "name3", "password3");
     Participant participant4 = new Participant(choiceID, "name4", "password4");
-    Participant duplicateParticipant1 = new Participant(choiceID, "name1", "password5");
+    Participant loginParticipant1 = new Participant(choiceID, "name1", "password1");
+    Participant incorrectPasswordParticipant1 = new Participant(choiceID, "name1", "password2");
     
     RegisterParticipantRequest reg1 = new RegisterParticipantRequest(participant1.choiceID, participant1.username, participant1.password);
     RegisterParticipantRequest reg2 = new RegisterParticipantRequest(participant2.choiceID, participant2.username, participant1.password);
-    RegisterParticipantRequest reg3 = new RegisterParticipantRequest(participant3.choiceID, participant3.username, participant1.password);
-    RegisterParticipantRequest reg4 = new RegisterParticipantRequest(participant4.choiceID, participant4.username, participant1.password);
-    RegisterParticipantRequest reg5 = new RegisterParticipantRequest(duplicateParticipant1.choiceID, duplicateParticipant1.username, duplicateParticipant1.password);
+    RegisterParticipantRequest reg3 = new RegisterParticipantRequest(loginParticipant1.choiceID, loginParticipant1.username, loginParticipant1.password);
+    RegisterParticipantRequest reg4 = new RegisterParticipantRequest(incorrectPasswordParticipant1.choiceID, incorrectPasswordParticipant1.username, incorrectPasswordParticipant1.password);
+    RegisterParticipantRequest reg5 = new RegisterParticipantRequest(participant3.choiceID, participant3.username, participant1.password);
+    RegisterParticipantRequest reg6 = new RegisterParticipantRequest(participant4.choiceID, participant4.username, participant1.password);
 
-    
     if(choiceID == null) {Assert.fail("Created ChoiceID is null");}
     
-    Assert.assertEquals(200, handler.handleRequest(reg1, createContext("register1")).httpCode);
-    Assert.assertEquals(200, handler.handleRequest(reg2, createContext("register2")).httpCode);
-    Assert.assertEquals(400, handler.handleRequest(reg5, createContext("registerDuplicate")).httpCode);	//fail at duplicates
-    Assert.assertEquals(200, handler.handleRequest(reg3, createContext("register3")).httpCode);
-    Assert.assertEquals(400, handler.handleRequest(reg4, createContext("register4")).httpCode);			//too many 
+    RegisterParticipantResponse resp1 = handler.handleRequest(reg1, createContext("register1"));
+    RegisterParticipantResponse resp2 = handler.handleRequest(reg2, createContext("register2"));
+    RegisterParticipantResponse resp3 = handler.handleRequest(reg3, createContext("login1"));
+    RegisterParticipantResponse resp4 = handler.handleRequest(reg4, createContext("falsePassword1"));
+    RegisterParticipantResponse resp5 = handler.handleRequest(reg5, createContext("register3"));
+    RegisterParticipantResponse resp6 = handler.handleRequest(reg6, createContext("maxReached4"));
+    
+    Assert.assertEquals(201, resp1.httpCode);			//register 201
+    Assert.assertEquals(201, resp2.httpCode);			//register 201
+    Assert.assertEquals(200, resp3.httpCode);			//login 200
+    Assert.assertEquals(401, resp4.httpCode);			//wrong password 401
+    Assert.assertEquals(201, resp5.httpCode);			//register 201
+    Assert.assertEquals(403, resp6.httpCode);			//too many 403
+    
+    ParticipantDAO participantDAO = new ParticipantDAO();
+    try {
+    Assert.assertEquals(participantDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID, "name1"), resp1.getParticipantID());	//
+    Assert.assertEquals(participantDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID, "name2"), resp2.getParticipantID());			//
+    Assert.assertEquals(participantDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID, "name1"), resp3.getParticipantID());			//
+    Assert.assertEquals(0, resp4.getParticipantID());			//
+    Assert.assertEquals(participantDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID, "name3"), resp5.getParticipantID());			//
+    Assert.assertEquals(0, resp6.getParticipantID());
+    } catch (Exception e) {
+    	Assert.fail();
+    }
     
     /*Delete the inserted choice*/
     if (choiceID != null) {

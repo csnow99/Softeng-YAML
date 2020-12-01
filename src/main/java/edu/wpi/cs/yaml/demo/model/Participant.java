@@ -6,8 +6,8 @@ public class Participant {
 	public String username;
 	public String password;
 	
-	public int getChoiceID() {return this.participantID;}
-	public String getParticipantID() {return this.choiceID;}
+	public int getParticipantID() {return this.participantID;}
+	public String getChoiceID() {return this.choiceID;}
 	public String getName() {return this.username;}
 	public String getPassword() {return this.password;}
 	
@@ -39,7 +39,7 @@ public class Participant {
 			result = true;
 			Participant other = (Participant) o;
 			result &= (this.choiceID.equals(other.choiceID));
-			result &= (this.username == other.username);
+			result &= (this.username.equals(other.username));
 		}
 		
 		return result;
