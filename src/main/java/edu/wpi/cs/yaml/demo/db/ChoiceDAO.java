@@ -175,16 +175,18 @@ public class ChoiceDAO {
 
     public ChoiceInfo generateChoiceInfo(ResultSet resultSet) throws Exception {
 
-        ChoiceInfo returnChoiceInfo = new ChoiceInfo();
-        Timestamp timeCreated =  resultSet.getTimestamp("creation_time");
-        Timestamp timeCompleted =  resultSet.getTimestamp("completion_time");
+        String choiceID = resultSet.getString("choice_id");
+        Timestamp timeCreated = resultSet.getTimestamp("creation_time");
+        long createTime = 0;
+        if (timeCreated != null) { createTime = timeCreated.getTime(); }
+        boolean isComplete = resultSet.getBoolean("choice_isCompleted");
+        Timestamp timeCompleted = resultSet.getTimestamp("completion_time");
+        long completeTime = 0;
+        if (timeCompleted != null) { completeTime = timeCompleted.getTime(); }
 
-        returnChoiceInfo.choiceID = resultSet.getString("choice_ID");
-        returnChoiceInfo.creationDate = timeCreated.getTime();
-        returnChoiceInfo.completionDate = timeCompleted.getTime();
-        returnChoiceInfo.completed = resultSet.getBoolean("choice_isCompleted");
+        ChoiceInfo choiceInfo = new ChoiceInfo(choiceID, createTime, completeTime, isComplete);
 
-        return returnChoiceInfo;
+        return choiceInfo;
     }
 
     public List<ChoiceInfo> getAllChoices() throws Exception {
@@ -193,13 +195,15 @@ public class ChoiceDAO {
 
         try{
             Statement statement = conn.createStatement();
-            String query = "SELECT * FROM" + tblName + ";";
+            String query = "SELECT * FROM " + tblName + ";";
             ResultSet resultSet = statement.executeQuery(query);
 
             while(resultSet.next()) {
                 ChoiceInfo c = generateChoiceInfo(resultSet);
+                System.out.println(c.toString());
                 allChoices.add(c);
             }
+
             resultSet.close();
             statement.close();
             return allChoices;

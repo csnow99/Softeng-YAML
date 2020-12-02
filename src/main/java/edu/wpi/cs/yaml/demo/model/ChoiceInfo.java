@@ -34,7 +34,14 @@ public class ChoiceInfo {
 	public String toString() {
 		Timestamp creationDate = new Timestamp(this.creationDate);
 		Timestamp completionDate = new Timestamp(this.completionDate);
+
+		String result = "";
+		if (this.completionDate == 0) {
+			result = ("ChoiceID: "+ choiceID +" \tCreation date: "+ creationDate.toString() + "\tIs Completed: "+ Boolean.toString(completed));
+		} else {
+			result = ("ChoiceID: "+ choiceID +" \tCreation date: "+ creationDate.toString() + "\tIs Completed: "+ Boolean.toString(completed) + "\tCompletion date: "+ completionDate.toString());
+		}
 		
-		return ("ChoiceID: "+ choiceID +" \tCreation date: "+ creationDate.toString() + "\tIs Completed: "+ Boolean.toString(completed) + "\tCompletion date: "+ completionDate.toString());
+		return result;
 	}
 }
