@@ -1,8 +1,11 @@
 package edu.wpi.cs.yaml.demo.db;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.wpi.cs.yaml.demo.model.Choice;
+import edu.wpi.cs.yaml.demo.model.ChoiceInfo;
 
 
 public class ChoiceDAO { 
@@ -168,6 +171,42 @@ public class ChoiceDAO {
     	else {returnChoice.dateCompleted = timeCompleted.getTime();}
     	returnChoice.selectedAlternativeID = resultSet.getString("chosen_alternative");
         return returnChoice;
+    }
+
+    public ChoiceInfo generateChoiceInfo(ResultSet resultSet) throws Exception {
+
+        ChoiceInfo returnChoiceInfo = new ChoiceInfo();
+        Timestamp timeCreated =  resultSet.getTimestamp("creation_time");
+        Timestamp timeCompleted =  resultSet.getTimestamp("completion_time");
+
+        returnChoiceInfo.choiceID = resultSet.getString("choice_ID");
+        returnChoiceInfo.creationDate = timeCreated.getTime();
+        returnChoiceInfo.completionDate = timeCompleted.getTime();
+        returnChoiceInfo.completed = resultSet.getBoolean("choice_isCompleted");
+
+        return returnChoiceInfo;
+    }
+
+    public List<ChoiceInfo> getAllChoices() throws Exception {
+
+        List<ChoiceInfo> allChoices = new ArrayList<>();
+
+        try{
+            Statement statement = conn.createStatement();
+            String query = "SELECT * FROM" + tblName + ";";
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while(resultSet.next()) {
+                ChoiceInfo c = generateChoiceInfo(resultSet);
+                allChoices.add(c);
+            }
+            resultSet.close();
+            statement.close();
+            return allChoices;
+
+        } catch(Exception e) {
+            throw new Exception("Failed in getting choices: " + e.getMessage());
+        }
     }
 
 }

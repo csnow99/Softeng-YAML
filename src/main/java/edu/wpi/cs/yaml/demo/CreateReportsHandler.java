@@ -1,18 +1,42 @@
 package edu.wpi.cs.yaml.demo;
 
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
+import edu.wpi.cs.yaml.demo.db.ChoiceDAO;
 import edu.wpi.cs.yaml.demo.http.ChoiceInfoListResponse;
+import edu.wpi.cs.yaml.demo.model.ChoiceInfo;
+
+import java.util.List;
 
 
 public class CreateReportsHandler implements  RequestHandler<Object, ChoiceInfoListResponse> {
 
+    public LambdaLogger logger;
+
+    List<ChoiceInfo> getAllChoices() throws Exception {
+        logger.log("in getAllChoices");
+        ChoiceDAO dao = new ChoiceDAO();
+
+        return dao.getAllChoices();
+    }
+
     @Override
     public ChoiceInfoListResponse handleRequest(Object input, Context context) {
-        return null;
+
+        logger = context.getLogger();
+        logger.log("Loading Java Lambda handler to list all choices");
+
+        ChoiceInfoListResponse response;
+
+        try{
+            List<ChoiceInfo> list = getAllChoices();
+            response = new ChoiceInfoListResponse(list, 200);
+        } catch (Exception e) {
+            response = new ChoiceInfoListResponse(403, e.getMessage());
+        }
+        return response;
     }
-    //make DAO return a list of all choices
-	//put these in a choiceInfo list
-	//return the list
+
 }

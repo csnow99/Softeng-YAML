@@ -26,11 +26,15 @@ public class ChoiceInfo {
 		this.completionDate = completionDate;
 		this.completed = completed;
 	}
+
+	public ChoiceInfo() {
+
+	}
 	
 	public String toString() {
 		Timestamp creationDate = new Timestamp(this.creationDate);
 		Timestamp completionDate = new Timestamp(this.completionDate);
 		
-		return ("ChoiceID: "+ID+" \tCreation date: "+ creationDate.toString() + "\tIs Completed: "+ Boolean.toString(completed) + "\tCompletion date: "+ completionDate.toString());
+		return ("ChoiceID: "+ choiceID +" \tCreation date: "+ creationDate.toString() + "\tIs Completed: "+ Boolean.toString(completed) + "\tCompletion date: "+ completionDate.toString());
 	}
 }

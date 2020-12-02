@@ -1,5 +1,6 @@
 package edu.wpi.cs.yaml.demo.http;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.cs.yaml.demo.model.ChoiceInfo;
@@ -11,9 +12,15 @@ public class ChoiceInfoListResponse {
 	
 	//Setter and getters
 
-	//Other constructors
-	
-	public ChoiceInfoListResponse() {
-		
+	public ChoiceInfoListResponse(List<ChoiceInfo> infos, int code) {
+		this.statusCode = code;
+		this.infos = infos;
+		this.response = "";
+	}
+
+	public ChoiceInfoListResponse(int code, String errorMessage) {
+		this.statusCode = code;
+		this.response = errorMessage;
+		this.infos = new ArrayList<ChoiceInfo>();
 	}
 }
