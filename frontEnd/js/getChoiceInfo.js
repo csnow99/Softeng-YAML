@@ -4,6 +4,15 @@ function loadChoicePage() {
 
     queryString = queryString.get("choice")
 
+    //get querystring with the key "user"
+
+    //if this qs does not exist in the url then just load the normal page
+        //else if the qs exists then
+            //first check if the user with this id exists if not then load normal page
+                //else if they exist then
+                    // Go to database and find entry that matches the querystring return the username and or password in a response
+                    // Use this response to then do the register user request and log the user in
+
     let finalChoiceID = queryString.toString()
     console.log(finalChoiceID)
 
