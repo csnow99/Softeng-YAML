@@ -94,6 +94,10 @@ public class ChoiceDAO {
              throw new Exception("Failed in getting maxParticipants for choice: " + choice_ID + e.getMessage());
          }
     }
+    
+    /*public boolean deleteOldChoices(double howOld) {
+    	
+    }*/
 /*    public boolean updateChoice(Choice constant) throws Exception {
         try {
         	String query = "UPDATE " + tblName + " SET value=? WHERE name=?;";

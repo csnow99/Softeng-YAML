@@ -43,6 +43,29 @@ public class ParticipantDAO {
         }
     }*/
     
+    public boolean belongsToChoiceID(String choiceID, int participantID) throws Exception {
+    	try {
+    		Participant participant = null;
+    		PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_id=? AND participantID=?;");
+    		ps.setString(1,  choiceID);
+    		ps.setInt(2, participantID);
+    		ResultSet resultSet = ps.executeQuery();
+    		
+    		while (resultSet.next()) {
+    			participant = generateParticipant(resultSet);
+    		}
+    		resultSet.close();
+    		ps.close();
+
+    		if (participant == null) {return false;}
+    		
+    		return true;
+
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		throw new Exception("Failed in getting participant: " + e.getMessage());
+    	}
+    }
     
     public String getParticipantNameFromID(int participant_ID) throws Exception {
     	try {
