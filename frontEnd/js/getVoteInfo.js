@@ -30,10 +30,10 @@ function updatePageWithVotes(response){
         let vote = parsedResponse[i]
         console.log(vote["alternativeID"])
 
-        let altLikes = document.getElementById("numLikeAltID#" + vote["alternativeID"])
+        let altLikes = document.getElementById("likeDesc" + vote["alternativeID"])
         altLikes.innerText = "Number of Votes: " + vote["numUpvotes"] +
             " Users who approve: " + vote["upvoters"]
-        let altDislikes = document.getElementById("numDislikeAltID#" + vote["alternativeID"])
+        let altDislikes = document.getElementById("dislikeDesc" + vote["alternativeID"])
         altDislikes.innerText = "Number of Votes: " + vote["numDownvotes"] +
             " Users who approve: " + vote["downvoters"]
     }
