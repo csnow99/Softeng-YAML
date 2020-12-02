@@ -31,18 +31,21 @@ public class getChoiceLoginHandler implements RequestHandler<GetChoiceLoginReque
 				logger.log(e.getMessage());
 				return new GetChoiceResponse(404, "ChoiceID could not be found");
 			}
+		
+			// check if participantID is associated with choiceID
 			try {
 				if (!participantDAO.belongsToChoiceID(request.getChoiceID(), request.getParticipantID())) {
-					return new GetChoiceResponse(404, "ChoiceID could not be found");
+					return new GetChoiceResponse(404, "Participant ID does not belong to choiceID");
 				}
 			} catch (Exception e) {
 				logger.log(e.getMessage());
 				return new GetChoiceResponse(404, "ChoiceID could not be found");
 			}
-			// check if present
+			
 			try {
 				Choice choice = choiceDAO.getChoice(request.getChoiceID());
-				return new GetChoiceResponse("Succesfully fetched choice", choice);
+				String name = participantDAO.getParticipantNameFromID(request.getParticipantID());
+				return new GetChoiceResponse("Login successful", choice, name);
 			}catch (Exception e) {
 				logger.log(e.getMessage());
 				return new GetChoiceResponse(404, "ChoiceID could not be found");
