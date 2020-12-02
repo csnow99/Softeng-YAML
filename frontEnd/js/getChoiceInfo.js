@@ -10,6 +10,8 @@ function loadChoicePage() {
     requestChoiceInfo(finalChoiceID)
 
     requestAlternativeInfo(finalChoiceID)
+
+    //requestVoteInfo
 }
 
 function requestChoiceInfo(choiceID) {
