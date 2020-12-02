@@ -46,12 +46,14 @@ function updatePageWithAlternative(response) {
 
         output = output + "<label><b> Alternative #"+ count + ": " + alternativeName + "</b></label>"
         output = output + "<label> <b> Description: </b>" + alternativeDescription + "</label><br>"
-        output = output + "<div id='buttons" + alternativeID + "'><a href='javaScript:handleAmendVoteClick(\"likeImage" + alternativeID + "\")'><img " +
-            "id=\"likeImage" + alternativeID + "\" src=\"../img/like.png\"></a>\n" +
-            "        <label id=\"likeDesc" + alternativeID + "\"></label><br>\n" +
-            "        <a href='javaScript:handleAmendVoteClick(\"dislikeImage" + alternativeID + "\")'><img " +
-            "id=\"dislikeImage" + alternativeID + "\" src=\"../img/dislike.png\"></a>\n" +
-            "        <label id=\"dislikeDesc" + alternativeID + "\"></label><br></div>"
+        output = output + "<div id=\"buttons\">\n" +
+            "        <a href='#' onclick='handleAmendVoteClick(\"like" + alternativeID + "\")'>\n" +
+            "            <img src=\"../img/like.png\" id=\"like" + alternativeID + "\" alt=\"like\">\n" +
+            "        </a><label id=\"likeDesc" + alternativeID + "\"></label><br>\n" +
+            "        <a href='#' onclick='handleAmendVoteClick(\"dislike" + alternativeID + "\")'>\n" +
+            "            <img src=\"../img/dislike.png\" id=\"dislike" + alternativeID + "\" alt=\"dislike\">\n" +
+            "        </a><label id=\"dislikeDesc" + alternativeID + "\"></label><br>\n" +
+            "    </div>"
     }
 
     alternativeDiv.innerHTML = output
