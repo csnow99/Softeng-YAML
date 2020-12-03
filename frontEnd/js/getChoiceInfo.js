@@ -2,15 +2,15 @@ function loadChoicePage() {
 
     let queryString = new URLSearchParams(window.location.search)
 
-    choiceQueryString = queryString.get("choice")
-    userQueryString = queryString.get("user")
+    let choiceQueryString = queryString.get("choice")
+    let userQueryString = queryString.get("user")
 
     let finalChoiceID = choiceQueryString.toString()
     let finalParticipantID = userQueryString.toString()
 
 
 
-    if(finalParticipantID == 0) {
+    if(finalParticipantID === "0") {
         requestChoiceInfo(finalChoiceID)
         requestAlternativeInfo(finalChoiceID)
     }else {

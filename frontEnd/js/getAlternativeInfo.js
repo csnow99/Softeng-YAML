@@ -30,6 +30,10 @@ function updatePageWithAlternative(response) {
     let output = ""
     let count = 0
 
+    let queryString = new URLSearchParams(window.location.search)
+    let userQueryString = queryString.get("user")
+    let finalParticipantID = userQueryString.toString()
+
     parsedResponse = parsedResponse["alternatives"]
     let choiceID
 
@@ -46,17 +50,21 @@ function updatePageWithAlternative(response) {
 
         output = output + "<label><b> Alternative #"+ count + ": " + alternativeName + "</b></label>"
         output = output + "<label> <b> Description: </b>" + alternativeDescription + "</label><br>"
-        output = output + "<div id=\"buttons\">\n" +
-            "        <a href='#' onclick='handleAmendVoteClick(\"like" + alternativeID + "\")'>\n" +
-            "            <img src=\"../img/like.png\" id=\"like" + alternativeID + "\" alt=\"like\">\n" +
-            "        </a><label id=\"likeDesc" + alternativeID + "\"></label><br>\n" +
-            "        <a href='#' onclick='handleAmendVoteClick(\"dislike" + alternativeID + "\")'>\n" +
-            "            <img src=\"../img/dislike.png\" id=\"dislike" + alternativeID + "\" alt=\"dislike\">\n" +
-            "        </a><label id=\"dislikeDesc" + alternativeID + "\"></label><br>\n" +
-            "    </div>"
+        if (finalParticipantID != 0){
+            output = output + "<div id=\"buttons\">\n" +
+                "        <a href='#' onclick='handleAmendVoteClick(\"like" + alternativeID + "\")'>\n" +
+                "            <img src=\"../img/like.png\" id=\"like" + alternativeID + "\" alt=\"like\">\n" +
+                "        </a><label id=\"likeDesc" + alternativeID + "\"></label><br>\n" +
+                "        <a href='#' onclick='handleAmendVoteClick(\"dislike" + alternativeID + "\")'>\n" +
+                "            <img src=\"../img/dislike.png\" id=\"dislike" + alternativeID + "\" alt=\"dislike\">\n" +
+                "        </a><label id=\"dislikeDesc" + alternativeID + "\"></label><br>\n" +
+                "    </div>"
+        }
     }
 
     alternativeDiv.innerHTML = output
 
-    requestVoteInfo(choiceID);
+    if (finalParticipantID !== "0"){
+        requestVoteInfo(choiceID);
+    }
 }

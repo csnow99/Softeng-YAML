@@ -9,7 +9,7 @@ function processCreateChoiceResponse(response) {
     let urlParams = new URLSearchParams(choiceQueryString);
 
     urlParams.append("choice", choiceID);
-    urlParams.append("user",0);
+    urlParams.append("user","0");
 
     window.location.href = choiceURL + urlParams;
     loadChoicePage();

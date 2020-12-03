@@ -1,6 +1,6 @@
 function handleSignInClick(e){
     let form = document.registerForm;
-    data = {};
+    let data = {};
     let queryString = new URLSearchParams(window.location.search)
     queryString = queryString.get("choice")
     let finalChoiceID = queryString.toString()
@@ -33,7 +33,6 @@ function handleSignInClick(e){
 }
 function processLogIn(result){
 
-    let urlPathname = window.location
     let stateObj = {user: "0"}
 
     let queryString = new URLSearchParams(window.location.search)
