@@ -49,4 +49,6 @@ function processLogIn(result){
 
     window.history.replaceState(stateObj,"", "choice.html?" + queryString)
 
+    loadChoicePage();
+
 }
