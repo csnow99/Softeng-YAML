@@ -7,6 +7,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import edu.wpi.cs.yaml.demo.db.VoteDAO;
 import edu.wpi.cs.yaml.demo.db.ChoiceDAO;
 import edu.wpi.cs.yaml.demo.db.GetDAO;
+import edu.wpi.cs.yaml.demo.db.ParticipantDAO;
 import edu.wpi.cs.yaml.demo.http.AmendVoteRequest;
 import edu.wpi.cs.yaml.demo.http.GetVotesResponse;
 import edu.wpi.cs.yaml.demo.model.Choice;
@@ -23,12 +24,16 @@ public class AmendVoteHandler implements RequestHandler<AmendVoteRequest, GetVot
         VoteDAO voteDAO = new VoteDAO();
         GetDAO getDAO = new GetDAO();
         ChoiceDAO choiceDAO = new ChoiceDAO();
-       
+        ParticipantDAO partDao = new ParticipantDAO();
         
         
         
         try {
         	String choiceID = getDAO.getChoiceIDP(req.getParticipantID());
+        	
+        	/*If the participantID does not belong to the choiceID (someone trying to hack in)*/
+        	if (!partDao.belongsToChoiceID(choiceID, req.getParticipantID())) {return new GetVotesResponse(403, "ParticipantID not associated with choiceID");}
+        	
         	/*If the choice has been completed, then return a 403 i.e. forbidden*/
         	if (choiceDAO.getIsCompleted(choiceID)) {return new GetVotesResponse(403, "Choice has been completed");}
         	
