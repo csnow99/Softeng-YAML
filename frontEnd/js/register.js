@@ -1,9 +1,10 @@
 function handleSignInClick(e){
     let form = document.registerForm;
     data = {};
-    let url = window.location.href;
-    let choiceID = url.split("=")[1];
-    data["choiceID"] = choiceID;
+    let queryString = new URLSearchParams(window.location.search)
+    queryString = queryString.get("choice")
+    let finalChoiceID = queryString.toString()
+    data["choiceID"] = finalChoiceID;
     data["name"] = form.partName.value;
     data["password"] = form.partPass.value;
 
@@ -31,9 +32,22 @@ function handleSignInClick(e){
     };
 }
 function processLogIn(result){
-    console.log(result);
+
+    let urlPathname = window.location
+    let stateObj = {user: "0"}
+
+    let queryString = new URLSearchParams(window.location.search)
     let newData = JSON.parse(result);
-    let name = newData["response"].split(":")[1];
-    console.log(name);
-    document.getElementById("mainMessage").innerText = "Welcome," + name;
+    let name = newData["response"].split(":")[1]
+    let user = newData["participantID"]
+
+    console.log(user)
+
+    queryString.set("user", user)
+    queryString.toString()
+
+    document.getElementById("mainMessage").innerText = "Welcome," + name
+
+    window.history.replaceState(stateObj,"", "choice.html?" + queryString)
+
 }

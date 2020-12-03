@@ -2,7 +2,22 @@ function loadChoicePage() {
 
     let queryString = new URLSearchParams(window.location.search)
 
-    queryString = queryString.get("choice")
+    choiceQueryString = queryString.get("choice")
+    userQueryString = queryString.get("user")
+
+    let finalChoiceID = choiceQueryString.toString()
+    let finalParticipantID = userQueryString.toString()
+
+
+
+    if(finalParticipantID == 0) {
+        requestChoiceInfo(finalChoiceID)
+        requestAlternativeInfo(finalChoiceID)
+    }else {
+        requestChoiceInfo(finalChoiceID)
+        requestAlternativeInfo(finalChoiceID)
+        
+    }
 
     //get querystring with the key "user"
 
@@ -12,13 +27,6 @@ function loadChoicePage() {
                 //else if they exist then
                     // Go to database and find entry that matches the querystring return the username and or password in a response
                     // Use this response to then do the register user request and log the user in
-
-    let finalChoiceID = queryString.toString()
-    console.log(finalChoiceID)
-
-    requestChoiceInfo(finalChoiceID)
-
-    requestAlternativeInfo(finalChoiceID)
 
     //requestVoteInfo
 }
@@ -61,8 +69,8 @@ function updatePageWithChoice(response) {
     let choiceDescription = parsedResponse["choiceDescription"]
 
     output = output + "<h2>" + choiceName + "</h2>"
-    output = output + "<p>" + choiceDescription + "<p>"
+    output = output + "<p>" + choiceDescription + "</p>"
 
     choiceDiv.innerHTML = output
-    document.getElementById("choiceID").innerText = "Choice ID is: " + choiceID;
+    document.getElementById("choiceID").innerText = "To invite your friends to participate in this choice, share with them the following link: https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html?choice=" + choiceID + "&user=0";
 }
