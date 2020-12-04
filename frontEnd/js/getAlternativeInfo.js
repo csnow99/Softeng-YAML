@@ -50,14 +50,14 @@ function updatePageWithAlternative(response) {
 
         output = output + "<label><b> Alternative #"+ count + ": " + alternativeName + "</b></label>"
         output = output + "<label> <b> Description: </b>" + alternativeDescription + "</label><br>"
-        if (finalParticipantID != 0){
-            output = output + "<div id=\"buttons\">\n" +
-                "        <a href='#' onclick='handleAmendVoteClick(\"like" + alternativeID + "\")'>\n" +
-                "            <img src=\"../img/like.png\" id=\"like" + alternativeID + "\" alt=\"like\">\n" +
-                "        </a><label id=\"likeDesc" + alternativeID + "\"></label><br>\n" +
-                "        <a href='#' onclick='handleAmendVoteClick(\"dislike" + alternativeID + "\")'>\n" +
-                "            <img src=\"../img/dislike.png\" id=\"dislike" + alternativeID + "\" alt=\"dislike\">\n" +
-                "        </a><label id=\"dislikeDesc" + alternativeID + "\"></label><br>\n" +
+        if (finalParticipantID !== "0"){
+            output = output + "<div id=\"buttons"+ count +"\">\n" +
+                "        <a onclick='handleAmendVoteClick(\"like:" + alternativeID + "\")'>\n" +
+                "            <img src=\"../img/like.png\" id=\"like:" + alternativeID + "\" alt=\"like\">\n" +
+                "        </a><label id=\"likeDesc" + count + "\"></label><br>\n" +
+                "        <a onclick='handleAmendVoteClick(\"dislike:" + alternativeID + "\")'>\n" +
+                "            <img src=\"../img/dislike.png\" id=\"dislike:" + alternativeID + "\" alt=\"dislike\">\n" +
+                "        </a><label id=\"dislikeDesc" + count + "\"></label><br>\n" +
                 "    </div>"
         }
     }

@@ -26,15 +26,17 @@ function updatePageWithVotes(response){
     let parsedResponse = JSON.parse(response);
     parsedResponse = parsedResponse["votes"];
 
+    let count = 0;
     for (let i in parsedResponse){
+        count = count + 1
         let vote = parsedResponse[i]
         console.log(vote["alternativeID"])
 
-        let altLikes = document.getElementById("likeDesc" + vote["alternativeID"])
+        let altLikes = document.getElementById("likeDesc" + count)
         altLikes.innerText = "Number of Votes: " + vote["numUpvotes"] +
             " Users who approve: " + vote["upvoters"]
-        let altDislikes = document.getElementById("dislikeDesc" + vote["alternativeID"])
+        let altDislikes = document.getElementById("dislikeDesc" + count)
         altDislikes.innerText = "Number of Votes: " + vote["numDownvotes"] +
-            " Users who approve: " + vote["downvoters"]
+            " Users who disapprove: " + vote["downvoters"]
     }
 }

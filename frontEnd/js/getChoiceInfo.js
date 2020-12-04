@@ -11,11 +11,11 @@ function loadChoicePage() {
     console.log(finalChoiceID)
     console.log(finalParticipantID)
 
-    if(finalParticipantID == "0") {
+    if(finalParticipantID === "0") {
         requestChoiceInfo(finalChoiceID)
         requestAlternativeInfo(finalChoiceID)
         console.log(finalParticipantID)
-    }else {
+    } else {
         requestChoiceInfo(finalChoiceID)
         requestAlternativeInfo(finalChoiceID)
         requestUsername(finalParticipantID, finalChoiceID)
