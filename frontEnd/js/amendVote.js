@@ -14,6 +14,17 @@ function changeImage(id) {
         image.alt = "dislike";
     }
 }
+function setImage(id) {
+    let image = document.getElementById(id);
+    let isDislike = id.includes("dislike");
+    if (isDislike) {
+        image.src = "../img/disliked.png";
+        image.alt = "disliked";
+    } else {
+        image.src = "../img/liked.png";
+        image.alt = "liked";
+    }
+}
 function handleAmendVoteClick(id) {
     changeImage(id);
     let voteType = null;
@@ -44,21 +55,17 @@ function sendVote(voteType, altID) {
     data["amendType"] = voteType;
 
     let js = JSON.stringify(data);
-    console.log(js);
+    console.log("Sending vote with JSON:" + js);
     let xhr = new XMLHttpRequest();
     xhr.open("POST",amendVote_url + "/" + finalChoiceID + "/" + finalParticipantID, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(js);
 
     xhr.onloadend = function () {
-        console.log(xhr);
-        console.log(xhr.request);
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                console.log ("XHR:" + xhr.responseText);
                 processVote(xhr.responseText);
             } else {
-                console.log("actual:" + xhr.responseText)
                 let js = JSON.parse(xhr.responseText);
                 let err = js["response"];
                 alert (err);
@@ -70,7 +77,6 @@ function sendVote(voteType, altID) {
 }
 
 function processVote(response) {
-    console.log(response);
-    updatePageWithVotes(response);
+    console.log("The response after sending Vote: " + response);
     updatePageWithVotes(response);
 }

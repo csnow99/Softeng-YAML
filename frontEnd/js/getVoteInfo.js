@@ -4,14 +4,10 @@ function requestVoteInfo(choiceID){
     xhr.send();
 
     xhr.onloadend = function () {
-        console.log(xhr);
-        console.log(xhr.request);
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                console.log ("XHR:" + xhr.responseText);
                 updatePageWithVotes(xhr.responseText);
             } else {
-                console.log("actual:" + xhr.responseText)
                 let js = JSON.parse(xhr.responseText);
                 let err = js["response"];
                 alert (err);
@@ -23,6 +19,7 @@ function requestVoteInfo(choiceID){
 }
 
 function updatePageWithVotes(response){
+    console.log("The response after retrieving Votes Info: "+ response);
     let parsedResponse = JSON.parse(response);
     parsedResponse = parsedResponse["votes"];
 
@@ -30,15 +27,14 @@ function updatePageWithVotes(response){
     for (let i in parsedResponse){
         count = count + 1
         let vote = parsedResponse[i]
-        console.log(vote["alternativeID"])
 
         // check if voted
         let partName = document.getElementById("mainMessage").innerText.split(" ")[1];
-        if (vote["upvoters"].includes(partName)){
-            changeImage("like:" + vote["alternativeID"]);
+        if (vote["upvoters"].includes(partName)) {
+            setImage("like:" + vote["alternativeID"]);
         }
-        if (vote["downvoters"].includes(partName)){
-            changeImage("dislike:" + vote["alternativeID"]);
+        if (vote["downvoters"].includes(partName)) {
+            setImage("dislike:" + vote["alternativeID"]);
         }
 
         let altLikes = document.getElementById("likeDesc" + count)

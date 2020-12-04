@@ -9,19 +9,16 @@ function handleSignInClick(e){
     data["password"] = form.partPass.value;
 
     let js = JSON.stringify(data);
-    console.log("JS: " + js);
+    console.log("Requesting to register/log in the user with JSON: " + js);
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", register_url, true);
     xhr.send(js);
     xhr.onloadend = function () {
-        console.log(xhr);
-        if (xhr.readyState == XMLHttpRequest.DONE) {
-        	 if (xhr.status == 200) {
-    	      console.log ("XHR:" + xhr.responseText);
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+        	 if (xhr.status === 200) {
     	      processLogIn(xhr.responseText);
         	 } else {
-        		 console.log("actual:" + xhr.responseText)
     			  let js = JSON.parse(xhr.responseText);
     			  let err = js["response"];
     			  alert (err);
@@ -33,14 +30,13 @@ function handleSignInClick(e){
 }
 function processLogIn(result){
 
+    console.log("The response after logging in / signing up: " + result);
     let stateObj = {user: "0"}
 
     let queryString = new URLSearchParams(window.location.search)
     let newData = JSON.parse(result);
     let name = newData["response"].split(":")[1]
     let user = newData["participantID"]
-
-    console.log(user)
 
     queryString.set("user", user)
     queryString.toString()

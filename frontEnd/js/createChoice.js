@@ -1,8 +1,7 @@
 function processCreateChoiceResponse(response) {
-    console.log("result:" + response);
+    console.log("The response after creating Choice:" + response);
     let parsedResponse = JSON.parse(response);
     let choiceID = parsedResponse["response"];
-    console.log(choiceID);
     window.location.href = "https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html";
     let choiceURL = new URL("https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html?");
     let choiceQueryString = new URLSearchParams(choiceURL.search);
@@ -18,17 +17,6 @@ function processCreateChoiceResponse(response) {
 
 function handleChoiceCreateClick(e) {
     let form = document.createChoice;
-    /*
-    {
-    "name":"testChoice4",
-    "maxParticipants":10,
-    "description":"sample description",
-    "alternatives":[
-        {"name":"alt5_name","description":"alt1_description"},
-        {"name":"alt6_name","description":"alt2_description"},
-        {"name":"alt7_name","description":"alt3_description"}
-        ]}
-    */
     let data = {};
     data["name"] = form.choiceName.value;
     data["maxParticipants"] = form.partNum.value;
@@ -36,7 +24,6 @@ function handleChoiceCreateClick(e) {
 
     let alternatives = document.getElementById("alternatives").innerHTML;
     let count = (alternatives.match(/<label>/g) || []).length / 2;
-    console.log(count);
 
     let alts = [];
 
@@ -88,37 +75,18 @@ function handleChoiceCreateClick(e) {
             break;
     }
     data["alternatives"] = alts;
-/*
-    var alt1 = {};
-    var alt2 = {};
-    alt1["name"] = form.altName1.value;
-    alt1["description"] = form.altDesc1.value;
-    alt2["name"] = form.altName2.value;
-    alt2["description"] = form.altDesc2.value;
-
-    var alts = [alt1, alt2];
-    data["alternatives"] = alts;
-*/
     let js = JSON.stringify(data);
-    console.log("JS:" + js);
+    console.log("Creating a choice with JSON: " + js);
     let xhr = new XMLHttpRequest();
     xhr.open("POST", createChoice_url, true);
-
-    // send the collected data as JSON
     xhr.send(js);
-
-    // This will process results and update HTML as appropriate.
     xhr.onloadend = function () {
-        console.log(xhr);
-        console.log(xhr.request);
-        if (xhr.readyState == XMLHttpRequest.DONE) {
-             if (xhr.status == 200) {
-                  console.log ("XHR:" + xhr.responseText);
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+             if (xhr.status === 200) {
                   processCreateChoiceResponse(xhr.responseText);
              } else {
-                console.log("actual:" + xhr.responseText)
-                var js = JSON.parse(xhr.responseText);
-                var err = js["response"];
+                let js = JSON.parse(xhr.responseText);
+                let err = js["response"];
                 alert (err);
              }
         } else {

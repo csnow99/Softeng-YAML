@@ -5,11 +5,8 @@ function requestUsername(participantID, choiceID) {
     xhr.send();
 
     xhr.onloadend = function () {
-     console.log(xhr);
-     console.log(xhr.request);
      if (xhr.readyState === XMLHttpRequest.DONE) {
          if (xhr.status === 200) {
-          console.log ("XHR:" + xhr.responseText);
           updatePageWithUsername(xhr.responseText);
          } else {
              console.log("actual:" + xhr.responseText)
@@ -25,10 +22,9 @@ function requestUsername(participantID, choiceID) {
 
 function updatePageWithUsername(response) {
 
+    console.log("The response after getting the User " + response)
     let parsedResponse = JSON.parse(response);
-
     parsedResponse = parsedResponse["participantName"]
-
     document.getElementById("mainMessage").innerText = "Welcome, " + parsedResponse
 
 }

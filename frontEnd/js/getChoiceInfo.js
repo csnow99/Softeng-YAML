@@ -8,16 +8,13 @@ function loadChoicePage() {
     let finalChoiceID = choiceQueryString.toString()
     let finalParticipantID = userQueryString.toString()
 
-    console.log(finalChoiceID)
-    console.log(finalParticipantID)
-
     if(finalParticipantID === "0") {
         requestChoiceInfo(finalChoiceID)
         requestAlternativeInfo(finalChoiceID)
-        console.log(finalParticipantID)
     } else {
         requestChoiceInfo(finalChoiceID)
         requestAlternativeInfo(finalChoiceID)
+        requestVoteInfo(finalChoiceID)
         requestUsername(finalParticipantID, finalChoiceID)
     }
 
@@ -40,14 +37,10 @@ function requestChoiceInfo(choiceID) {
      xhr.send();
 
      xhr.onloadend = function () {
-         console.log(xhr);
-         console.log(xhr.request);
          if (xhr.readyState === XMLHttpRequest.DONE) {
              if (xhr.status === 200) {
-              console.log ("XHR:" + xhr.responseText);
               updatePageWithChoice(xhr.responseText);
              } else {
-                 console.log("actual:" + xhr.responseText)
                   let js = JSON.parse(xhr.responseText);
                   let err = js["response"];
                   alert (err);
@@ -59,6 +52,8 @@ function requestChoiceInfo(choiceID) {
 }
 
 function updatePageWithChoice(response) {
+
+    console.log("The response after retrieving Choice Info: " + response)
 
     let parsedResponse = JSON.parse(response);
     let choiceDiv = document.getElementById("choice")
