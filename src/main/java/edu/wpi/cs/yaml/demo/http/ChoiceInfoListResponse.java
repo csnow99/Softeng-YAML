@@ -15,7 +15,7 @@ public class ChoiceInfoListResponse {
 	public ChoiceInfoListResponse(List<ChoiceInfo> infos, int code) {
 		this.statusCode = code;
 		this.infos = infos;
-		this.response = "";
+		this.response = "Success";
 	}
 
 	public ChoiceInfoListResponse(int code, String errorMessage) {

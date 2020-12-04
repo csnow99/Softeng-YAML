@@ -6,7 +6,7 @@ function createReport() {
     xhr.onloadend = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    updatePageWithAlternative(xhr.responseText);
+                    updatePageWithReport(xhr.responseText);
                 } else {
                     let js = JSON.parse(xhr.responseText);
                     let err = js["response"];
@@ -21,12 +21,13 @@ function createReport() {
 
 function updatePageWithReport(response) {
 
+    console.log("The response after retrieving the Choices Info for the report: " + response)
     let parsedResponse = JSON.parse(response);
     let reportDiv = document.getElementById("report")
     let i, output = ""
     let count = 0
 
-    parsedResponse = parsedResponse["listOfChoiceInfos"]
+    parsedResponse = parsedResponse["infos"]
 
     for (i in parsedResponse) {
 
@@ -34,9 +35,9 @@ function updatePageWithReport(response) {
 
         count = count + 1
 
-        let choiceID = choice["ID"]
+        let choiceID = choice["choiceID"]
         let choiceCompleted = choice["isCompleted"]
-        let choiceDateCreated = choice["dateCreated"]
+        let choiceDateCreated = choice["creationDate"]
 
         output = output + "<h4> ChoiceID: " + choiceID + " | Date Created: " + choiceDateCreated + " Completed: " + choiceCompleted + "</h4>"
     }

@@ -28,15 +28,15 @@ public class CreateReportsHandler implements  RequestHandler<Object, ChoiceInfoL
         logger = context.getLogger();
         logger.log("Loading Java Lambda handler to list all choices");
 
-        ChoiceInfoListResponse response;
+        
 
         try{
             List<ChoiceInfo> list = getAllChoices();
-            response = new ChoiceInfoListResponse(list, 200);
+            return new ChoiceInfoListResponse(list, 200);
         } catch (Exception e) {
-            response = new ChoiceInfoListResponse(403, e.getMessage());
+        	return new ChoiceInfoListResponse(403, e.getMessage());
         }
-        return response;
+        
     }
 
 }
