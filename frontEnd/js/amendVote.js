@@ -1,45 +1,54 @@
-function handleAmendVoteClick(id){
-    console.log("Clicked!");
+function changeImage(id) {
     let image = document.getElementById(id);
-    let voteType = null;
-    let altID = id.split(":")[1];
     if(image.alt === "like"){
         image.src = "../img/liked.png";
         image.alt = "liked";
-        voteType = 1;
     } else if(image.alt === "liked"){
         image.src = "../img/like.png";
         image.alt = "like";
-        voteType = 1;
     } else if (image.alt === "dislike") {
         image.src = "../img/disliked.png";
         image.alt = "disliked";
-        voteType = 0;
     } else if (image.alt === "disliked") {
         image.src = "../img/dislike.png";
         image.alt = "dislike";
-        voteType = 0;
     }
-    if (voteType !== null){
+}
+function handleAmendVoteClick(id) {
+    changeImage(id);
+    let voteType = null;
+    let voteKind = id.split(":")[0];
+    let altID = id.split(":")[1];
+    if (voteKind.includes("dislike")) {
+        voteType = 0;
+    } else if (voteKind.includes("like")) {
+        voteType = 1;
+    }
+    if (voteType !== null) {
         sendVote(voteType, altID);
     }
 }
 
 function sendVote(voteType, altID) {
     let queryString = new URLSearchParams(window.location.search);
-    let userQueryString = queryString.get("user");
-    let finalParticipantID = userQueryString.toString();
+    let choiceQueryString = queryString.get("choice")
+    let userQueryString = queryString.get("user")
+    let finalChoiceID = choiceQueryString.toString()
+    let finalParticipantID = userQueryString.toString()
+    console.log(finalChoiceID);
     console.log(finalParticipantID);
 
     let data = {};
+    data["participantID"] = finalParticipantID;
     data["alternativeID"] = altID;
     data["amendType"] = voteType;
 
     let js = JSON.stringify(data);
-
+    console.log(js);
     let xhr = new XMLHttpRequest();
-    xhr.open("POST",amendVote_url + "//" + finalParticipantID);
-    xhr.send(js)
+    xhr.open("POST",amendVote_url + "/" + finalChoiceID + "/" + finalParticipantID, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(js);
 
     xhr.onloadend = function () {
         console.log(xhr);
@@ -62,5 +71,6 @@ function sendVote(voteType, altID) {
 
 function processVote(response) {
     console.log(response);
+    updatePageWithVotes(response);
     updatePageWithVotes(response);
 }

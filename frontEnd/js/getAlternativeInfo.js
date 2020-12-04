@@ -48,7 +48,7 @@ function updatePageWithAlternative(response) {
         let alternativeDescription = alternative["description"]
         choiceID = alternative["choiceID"]
 
-        output = output + "<label><b> Alternative #"+ count + ": " + alternativeName + "</b></label>"
+        output = output + "<label><b> Alternative #"+ count + ": " + alternativeName + "</b></label><br>"
         output = output + "<label> <b> Description: </b>" + alternativeDescription + "</label><br>"
         if (finalParticipantID !== "0"){
             output = output + "<div id=\"buttons"+ count +"\">\n" +

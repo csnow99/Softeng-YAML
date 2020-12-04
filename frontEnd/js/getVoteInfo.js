@@ -32,6 +32,15 @@ function updatePageWithVotes(response){
         let vote = parsedResponse[i]
         console.log(vote["alternativeID"])
 
+        // check if voted
+        let partName = document.getElementById("mainMessage").innerText.split(" ")[1];
+        if (vote["upvoters"].includes(partName)){
+            changeImage("like:" + vote["alternativeID"]);
+        }
+        if (vote["downvoters"].includes(partName)){
+            changeImage("dislike:" + vote["alternativeID"]);
+        }
+
         let altLikes = document.getElementById("likeDesc" + count)
         altLikes.innerText = "Number of Votes: " + vote["numUpvotes"] +
             " Users who approve: " + vote["upvoters"]
