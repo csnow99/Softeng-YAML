@@ -21,20 +21,22 @@
 
     <h1 id="mainMessage">Sign In</h1>
     <p id="choiceID"></p>
-    <form name="registerForm">
-        <label>Name: </label><input type="text" name="partName" value=""><br>
-        <label>Password (Optional):  </label><input type="password" name="partPass" value=""><br>
-        <input type="button" value="Sign In" onclick="JavaScript:handleSignInClick(this)"><br>
-    </form>
-    <p>
-        Name/Password are only for this choice. <br>
-        New to this choice? Make up a name (and password). <br>
-        Returning? Use the same name (and password). <br>
-    </p>
+    <div id="loginStuff">
+        <form name="registerForm">
+            <label>Name: </label><input type="text" name="partName" value=""><br>
+            <label>Password (Optional):  </label><input type="password" name="partPass" value=""><br>
+            <input type="button" value="Sign In" onclick="JavaScript:handleSignInClick(this)"><br>
+        </form>
+        <p>
+            Name/Password are only for this choice. <br>
+            New to this choice? Make up a name (and password). <br>
+            Returning? Use the same name (and password). <br>
+        </p>
+    </div>
 
-    <div id="choice"></div>
+    <div id="choice"> LOADING ...</div>
 
-    <div id="alternatives"></div>
+    <div id="alternatives"> LOADING ...</div>
 
 
 </body>

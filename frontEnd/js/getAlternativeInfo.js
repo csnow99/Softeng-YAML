@@ -61,7 +61,4 @@ function updatePageWithAlternative(response) {
 
     alternativeDiv.innerHTML = output
 
-    if (finalParticipantID !== "0"){
-        requestVoteInfo(choiceID);
-    }
 }

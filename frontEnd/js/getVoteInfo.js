@@ -31,9 +31,13 @@ function updatePageWithVotes(response){
         // check if voted
         let partName = document.getElementById("mainMessage").innerText.split(" ")[1];
         if (vote["upvoters"].includes(partName)) {
+            setImageD("like:" + vote["alternativeID"]);
+        } else {
             setImage("like:" + vote["alternativeID"]);
         }
         if (vote["downvoters"].includes(partName)) {
+            setImageD("dislike:" + vote["alternativeID"]);
+        } else {
             setImage("dislike:" + vote["alternativeID"]);
         }
 

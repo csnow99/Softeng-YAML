@@ -12,6 +12,8 @@ function loadChoicePage() {
         requestChoiceInfo(finalChoiceID)
         requestAlternativeInfo(finalChoiceID)
     } else {
+        let element = document.getElementById("loginStuff")
+        element.parentElement.removeChild(element)
         requestChoiceInfo(finalChoiceID)
         requestAlternativeInfo(finalChoiceID)
         requestVoteInfo(finalChoiceID)
@@ -57,7 +59,7 @@ function updatePageWithChoice(response) {
 
     let parsedResponse = JSON.parse(response);
     let choiceDiv = document.getElementById("choice")
-    let output = document.getElementById("choice").innerHTML;
+    let output = "";
 
     parsedResponse = parsedResponse["choice"]
 

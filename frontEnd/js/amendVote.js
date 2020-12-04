@@ -14,7 +14,7 @@ function changeImage(id) {
         image.alt = "dislike";
     }
 }
-function setImage(id) {
+function setImageD(id) {
     let image = document.getElementById(id);
     let isDislike = id.includes("dislike");
     if (isDislike) {
@@ -23,6 +23,17 @@ function setImage(id) {
     } else {
         image.src = "../img/liked.png";
         image.alt = "liked";
+    }
+}
+function setImage(id) {
+    let image = document.getElementById(id);
+    let isDislike = id.includes("dislike");
+    if (isDislike) {
+        image.src = "../img/dislike.png";
+        image.alt = "dislike";
+    } else {
+        image.src = "../img/like.png";
+        image.alt = "like";
     }
 }
 function handleAmendVoteClick(id) {
