@@ -45,7 +45,7 @@ function processLogIn(result){
     queryString.set("user", user)
     queryString.toString()
 
-    document.getElementById("mainMessage").innerText = "Welcome," + name
+    document.getElementById("mainMessage").innerText = "Welcome, " + name
 
     window.history.replaceState(stateObj,"", "choice.html?" + queryString)
 
