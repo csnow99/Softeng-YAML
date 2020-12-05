@@ -38,8 +38,13 @@ function updatePageWithReport(response) {
         let choiceID = choice["choiceID"]
         let choiceCompleted = choice["isCompleted"]
         let choiceDateCreated = choice["creationDate"]
+        let date = new Date(choiceDateCreated)
+        date = date.toLocaleString()
 
-        output = output + "<h4> ChoiceID: " + choiceID + " | Date Created: " + choiceDateCreated + " Completed: " + choiceCompleted + "</h4>"
+        output = output + "<p> " +
+            "<b>ChoiceID: </b>" + choiceID +
+            " | <b>Date Created: </b>" + date +
+            " | <b>Completed: </b>" + choiceCompleted + "</p>"
     }
 
     reportDiv.innerHTML = output
