@@ -11,7 +11,7 @@ function processCreateChoiceResponse(response) {
     urlParams.append("user","0");
 
     window.location.href = choiceURL + urlParams;
-    loadChoicePage();
+    loadChoicePage(2000);
 
 }
 

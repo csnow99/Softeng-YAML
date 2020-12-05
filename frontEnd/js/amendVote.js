@@ -1,19 +1,3 @@
-function changeImage(id) {
-    let image = document.getElementById(id);
-    if(image.alt === "like"){
-        image.src = "../img/liked.png";
-        image.alt = "liked";
-    } else if(image.alt === "liked"){
-        image.src = "../img/like.png";
-        image.alt = "like";
-    } else if (image.alt === "dislike") {
-        image.src = "../img/disliked.png";
-        image.alt = "disliked";
-    } else if (image.alt === "disliked") {
-        image.src = "../img/dislike.png";
-        image.alt = "dislike";
-    }
-}
 function setImageD(id) {
     let image = document.getElementById(id);
     let isDislike = id.includes("dislike");
@@ -37,7 +21,6 @@ function setImage(id) {
     }
 }
 function handleAmendVoteClick(id) {
-    changeImage(id);
     let voteType = null;
     let voteKind = id.split(":")[0];
     let altID = id.split(":")[1];
@@ -57,8 +40,6 @@ function sendVote(voteType, altID) {
     let userQueryString = queryString.get("user")
     let finalChoiceID = choiceQueryString.toString()
     let finalParticipantID = userQueryString.toString()
-    console.log(finalChoiceID);
-    console.log(finalParticipantID);
 
     let data = {};
     data["participantID"] = finalParticipantID;

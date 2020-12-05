@@ -1,4 +1,4 @@
-function requestUsername(participantID, choiceID) {
+function requestUsername(participantID, choiceID, callback) {
 
     let xhr = new XMLHttpRequest();
     xhr.open("GET", getUsername_url + "/" + choiceID + "/" + participantID, true);
@@ -18,6 +18,9 @@ function requestUsername(participantID, choiceID) {
        updatePageWithUsername("N/A");
      }
     };
+    setTimeout( function(){
+        callback(choiceID, requestAlternativeInfo)
+    }, 1000 );
 }
 
 function updatePageWithUsername(response) {

@@ -7,6 +7,7 @@ function loadChoicePage() {
 
     let finalChoiceID = choiceQueryString.toString()
     let finalParticipantID = userQueryString.toString()
+    console.log(finalParticipantID)
 
     if(finalParticipantID === "0") {
         requestChoiceInfo(finalChoiceID)
@@ -14,10 +15,7 @@ function loadChoicePage() {
     } else {
         let element = document.getElementById("loginStuff")
         element.parentElement.removeChild(element)
-        requestChoiceInfo(finalChoiceID)
-        requestAlternativeInfo(finalChoiceID)
-        requestVoteInfo(finalChoiceID)
-        requestUsername(finalParticipantID, finalChoiceID)
+        requestUsername(finalParticipantID, finalChoiceID, requestChoiceInfo)
     }
 
     //get querystring with the key "user"
@@ -32,7 +30,7 @@ function loadChoicePage() {
     //requestVoteInfo
 }
 
-function requestChoiceInfo(choiceID) {
+function requestChoiceInfo(choiceID, callback) {
 
      let xhr = new XMLHttpRequest();
      xhr.open("GET", getChoice_url + "/" + choiceID, true);
@@ -51,6 +49,9 @@ function requestChoiceInfo(choiceID) {
            updatePageWithChoice("N/A");
          }
      };
+    setTimeout( function(){
+        callback(choiceID, requestVoteInfo)
+    }, 1000 );
 }
 
 function updatePageWithChoice(response) {

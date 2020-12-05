@@ -1,4 +1,4 @@
-function requestAlternativeInfo(choiceID) {
+function requestAlternativeInfo(choiceID, callback) {
 
      let xhr = new XMLHttpRequest();
      xhr.open("GET", getAlternative_url + "/" + choiceID, true);
@@ -17,6 +17,9 @@ function requestAlternativeInfo(choiceID) {
            updatePageWithAlternative("N/A");
          }
      };
+    setTimeout( function(){
+        callback(choiceID, requestVoteInfo)
+    }, 1000 );
 }
 
 function updatePageWithAlternative(response) {
@@ -51,10 +54,10 @@ function updatePageWithAlternative(response) {
             output = output + "<div id=\"buttons"+ count +"\">\n" +
                 "        <a onclick='handleAmendVoteClick(\"like:" + alternativeID + "\")'>\n" +
                 "            <img src=\"../img/like.png\" id=\"like:" + alternativeID + "\" alt=\"like\">\n" +
-                "        </a><label id=\"likeDesc" + count + "\"></label><br>\n" +
+                "        </a><label id=\"likeDesc" + count + "\"> LOADING ... </label><br>\n" +
                 "        <a onclick='handleAmendVoteClick(\"dislike:" + alternativeID + "\")'>\n" +
                 "            <img src=\"../img/dislike.png\" id=\"dislike:" + alternativeID + "\" alt=\"dislike\">\n" +
-                "        </a><label id=\"dislikeDesc" + count + "\"></label><br>\n" +
+                "        </a><label id=\"dislikeDesc" + count + "\"> LOADING ... </label><br>\n" +
                 "    </div>"
         }
     }
