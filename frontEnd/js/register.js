@@ -5,6 +5,9 @@ function handleSignInClick(e){
     queryString = queryString.get("choice")
     let finalChoiceID = queryString.toString()
     data["choiceID"] = finalChoiceID;
+    if (form.partName.value === "") {
+        return
+    }
     data["name"] = form.partName.value;
     data["password"] = form.partPass.value;
 
@@ -31,20 +34,26 @@ function handleSignInClick(e){
 function processLogIn(result){
 
     console.log("The response after logging in / signing up: " + result);
-    let stateObj = {user: "0"}
 
-    let queryString = new URLSearchParams(window.location.search)
     let newData = JSON.parse(result);
-    let name = newData["response"].split(":")[1]
-    let user = newData["participantID"]
+    if (newData["httpCode"] >= 200 && newData["httpCode"] < 400) {
 
-    queryString.set("user", user)
-    queryString.toString()
+        let stateObj = {user: "0"}
+        let queryString = new URLSearchParams(window.location.search)
 
-    document.getElementById("mainMessage").innerText = "Welcome, " + name
+        let name = newData["response"].split(":")[1]
+        let user = newData["participantID"]
 
-    window.history.replaceState(stateObj,"", "choice.html?" + queryString)
-
+        queryString.set("user", user)
+        queryString.toString()
+        document.getElementById("mainMessage").innerText = "Welcome, " + name
+        window.history.replaceState(stateObj,"", "choice.html?" + queryString)
+    } else {
+        document.registerForm.form.partName.value = ""
+        document.registerForm.form.partPass.value = ""
+        alert(newData["response"])
+    }
     loadChoicePage();
+
 
 }

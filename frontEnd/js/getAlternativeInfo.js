@@ -19,7 +19,7 @@ function requestAlternativeInfo(choiceID, callback) {
      };
      if (callback !== null) {
          setTimeout( function(){
-             callback(choiceID, requestVoteInfo)
+             callback(choiceID)
          }, 1000 );
      }
 }

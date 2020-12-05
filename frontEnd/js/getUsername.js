@@ -1,22 +1,19 @@
 function requestUsername(participantID, choiceID, callback) {
 
     let xhr = new XMLHttpRequest();
-    let responseCode = {}
     xhr.open("GET", getUsername_url + "/" + choiceID + "/" + participantID, true);
     xhr.send();
 
     xhr.onloadend = function () {
      if (xhr.readyState === XMLHttpRequest.DONE) {
          if (xhr.status === 200) {
-          responseCode = JSON.parse(xhr.responseText)
-          console.log(responseCode)
-          updatePageWithUsername(xhr.responseText);
+             checkQuality(xhr.responseText, participantID, choiceID)
+             updatePageWithUsername(xhr.responseText);
          } else {
              console.log("actual:" + xhr.responseText)
-              let js = JSON.parse(xhr.responseText);
-              let err = js["response"];
-              alert (err);
-              responseCode = JSON.parse(xhr.responseText)
+             let js = JSON.parse(xhr.responseText);
+             let err = js["response"];
+             alert (err);
          }
      } else {
        updatePageWithUsername("N/A");
@@ -28,22 +25,18 @@ function requestUsername(participantID, choiceID, callback) {
             callback(choiceID, requestAlternativeInfo)
         }, 1000 );
     }
-
-    console.log(responseCode)
-    return responseCode
 }
 
 function updatePageWithUsername(response) {
 
     console.log("The response after getting the User " + response)
     let parsedResponse = JSON.parse(response);
-    parsedResponse = parsedResponse["participantName"]
-    document.getElementById("mainMessage").innerText = "Welcome, " + parsedResponse
+    if (parsedResponse["httpCode"] === 200) {
+        parsedResponse = parsedResponse["participantName"]
+        document.getElementById("mainMessage").innerText = "Welcome, " + parsedResponse
+    } else {
+        alert(parsedResponse["response"])
+    }
 
-}
-
-function useless(response) {
-
-    return response
 
 }
