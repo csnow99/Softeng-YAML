@@ -25,4 +25,10 @@ public class GetChoiceResponse extends GenericResponse{
 		this.participantName = "";
 	}
 	
+	public GetChoiceResponse(int code, String response, Choice c) {
+		super(response,code);
+		this.choice = c;
+		this.participantName = "";
+	}
+	
 }

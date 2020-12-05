@@ -25,7 +25,7 @@ public class getChoiceLoginHandler implements RequestHandler<GetChoiceLoginReque
 		try {
 			if (request.getParticipantID() == 0) {
 				Choice choice = choiceDAO.getChoice(request.getChoiceID());
-				return new GetChoiceResponse("Succesfully fetched choice", choice);
+				return new GetChoiceResponse(206, "Succesfully fetched choice", choice);
 			}
 			}catch (Exception e) {
 				logger.log(e.getMessage());
