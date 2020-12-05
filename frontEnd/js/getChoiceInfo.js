@@ -10,8 +10,8 @@ function loadChoicePage() {
     console.log(finalParticipantID)
 
     if(finalParticipantID === "0") {
-        requestChoiceInfo(finalChoiceID)
-        requestAlternativeInfo(finalChoiceID)
+        requestChoiceInfo(finalChoiceID, null)
+        requestAlternativeInfo(finalChoiceID, null)
     } else {
         let element = document.getElementById("loginStuff")
         element.parentElement.removeChild(element)
@@ -49,9 +49,11 @@ function requestChoiceInfo(choiceID, callback) {
            updatePageWithChoice("N/A");
          }
      };
-    setTimeout( function(){
-        callback(choiceID, requestVoteInfo)
-    }, 1000 );
+     if (callback !== null) {
+         setTimeout( function(){
+             callback(choiceID, requestVoteInfo)
+         }, 1000 );
+     }
 }
 
 function updatePageWithChoice(response) {

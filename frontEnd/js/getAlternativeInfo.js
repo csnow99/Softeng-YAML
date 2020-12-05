@@ -17,9 +17,11 @@ function requestAlternativeInfo(choiceID, callback) {
            updatePageWithAlternative("N/A");
          }
      };
-    setTimeout( function(){
-        callback(choiceID, requestVoteInfo)
-    }, 1000 );
+     if (callback !== null) {
+         setTimeout( function(){
+             callback(choiceID, requestVoteInfo)
+         }, 1000 );
+     }
 }
 
 function updatePageWithAlternative(response) {
