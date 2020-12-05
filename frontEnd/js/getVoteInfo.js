@@ -29,7 +29,7 @@ function updatePageWithVotes(response){
         let vote = parsedResponse[i]
 
         // check if voted
-        let partName = document.getElementById("mainMessage").innerText.split(" ")[1];
+        let partName = document.getElementById("mainMessage").innerText.split(", ")[1];
         console.log(partName)
         if (vote["upvoters"].includes(partName)) {
             setImageD("like:" + vote["alternativeID"]);
