@@ -13,9 +13,20 @@ function loadChoicePage() {
         requestChoiceInfo(finalChoiceID, null)
         requestAlternativeInfo(finalChoiceID, null)
     } else {
-        let element = document.getElementById("loginStuff")
-        element.parentElement.removeChild(element)
-        requestUsername(finalParticipantID, finalChoiceID, requestChoiceInfo)
+        let responseCode = requestUsername(finalParticipantID, finalChoiceID, null)
+        setTimeout(function() {
+            let code = responseCode["httpCode"]
+            console.log(responseCode)
+            console.log(code)
+
+            if(code === "404") { // Not found
+                alert(responseCode["response"])
+            } else {
+                let element = document.getElementById("loginStuff")
+                element.parentElement.removeChild(element)
+                requestUsername(finalParticipantID, finalChoiceID, requestChoiceInfo)
+            }
+        }, 5000)
     }
 
     //get querystring with the key "user"
