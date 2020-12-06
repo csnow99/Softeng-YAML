@@ -26,7 +26,7 @@ public class DeleteDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Failed deleting all choices older than "+days);
+            throw new Exception("Failed deleting all choices older than "+days+" days");
         }
     }
     
