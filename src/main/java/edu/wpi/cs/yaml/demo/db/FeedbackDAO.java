@@ -6,8 +6,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.wpi.cs.yaml.demo.model.Alternative;
 import edu.wpi.cs.yaml.demo.model.Feedback;
 import edu.wpi.cs.yaml.demo.model.FeedbackInfo;
+import edu.wpi.cs.yaml.demo.model.VoteInfo;
 
 public class FeedbackDAO {
 	
@@ -79,16 +81,37 @@ public class FeedbackDAO {
             PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (participant_id,alternative_id,feedback_text) values(?,?,?);");
             ps.setInt(1, feedback.participantID);
             ps.setInt(2, feedback.alternativeID);
-            ps.setString(3, feedback.feedbackText);       
-            
-            //NEEDS TO CHECK FOR CHOICE COMPLETION HERE
-            
-            ps.execute();
-            return true;
+            ps.setString(3, feedback.feedbackText); 
+            ChoiceDAO choiceDAO = new ChoiceDAO();
+            String choiceID = null;
+            String ps2 = "select choice_id from Alternatives natural join Feedback where alternative_id="+feedback.alternativeID;
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(ps2);
+            while(rs.next()) {
+            	choiceID=rs.getString("choice_id");
+            }
+            boolean isComp = choiceDAO.getIsCompleted(choiceID);
+            if(!isComp) {
+            	ps.execute();
+            	return true;
+            }
+            return false;
 
         } catch (Exception e) {
             throw new Exception("Failed to insert feedback: " + e.getMessage());
         }
+    }
+    
+    public List<FeedbackInfo> getFeedback(String choice_ID) throws Exception {
+    	List<FeedbackInfo> feedback = new ArrayList<FeedbackInfo>();
+    	AlternativeDAO altDAO = new AlternativeDAO();
+    	
+    	List<Alternative> alternatives = altDAO.getAlternatives(choice_ID);
+    	for(Alternative alt : alternatives) {
+    		feedback.add(getFeedbackForAlternative(alt.getAlternativeID()));
+    	}
+    	
+    	return feedback;
     }
     
     private Feedback generateFeedback(ResultSet resultSet) throws Exception {
