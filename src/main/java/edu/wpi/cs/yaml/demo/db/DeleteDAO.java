@@ -15,20 +15,6 @@ public class DeleteDAO {
             conn = null;
         }
     }
-
-    public void deleteChoicesOlderThan(int days) throws Exception{
-    	try {
-            PreparedStatement ps = conn.prepareStatement("delete from Choices where datediff(creation_time, date_sub(now(), interval ? day)) <= 0;");
-            ps.setInt(1,  days);
-            
-            ps.executeUpdate();
-            ps.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("Failed deleting all choices older than "+days+" days");
-        }
-    }
     
     public void deleteChoices() throws Exception {
         try {
