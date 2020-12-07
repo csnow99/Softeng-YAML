@@ -3,7 +3,6 @@ package edu.wpi.cs.yaml.demo;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.yaml.demo.db.AlternativeDAO;
-import edu.wpi.cs.yaml.demo.db.DeleteDAO;
 import edu.wpi.cs.yaml.demo.db.ParticipantDAO;
 import edu.wpi.cs.yaml.demo.db.VoteDAO;
 import edu.wpi.cs.yaml.demo.http.AmendVoteRequest;
@@ -37,12 +36,7 @@ public class AmendVoteHandlerTest extends LambdaTest {
      */
 
     void testInput(String incoming, List<VoteInfo> result) throws IOException {
-        try {
-            deleteFromDB();
-        } catch (Exception e) {
-            Assert.fail("Could not delete from Votes: " + e.getMessage());
-        }
-
+        
         AmendVoteRequest req = new Gson().fromJson(incoming, AmendVoteRequest.class);
         AmendVoteHandler handler = new AmendVoteHandler();
         GetVotesResponse response = handler.handleRequest(req, createContext("vote"));
@@ -53,11 +47,7 @@ public class AmendVoteHandlerTest extends LambdaTest {
     }
     void testTwoInput(String incoming, String incoming2,
                       List<VoteInfo> result, List<VoteInfo> result2) throws IOException {
-        try {
-            deleteFromDB();
-        } catch (Exception e) {
-            Assert.fail("Could not delete from Votes: " + e.getMessage());
-        }
+        
 
         AmendVoteRequest req = new Gson().fromJson(incoming, AmendVoteRequest.class);
         AmendVoteHandler handler = new AmendVoteHandler();
@@ -75,11 +65,6 @@ public class AmendVoteHandlerTest extends LambdaTest {
         Assert.assertEquals("Successfully amended a Vote", response.response);
         Assert.assertEquals(result2, response2.votes);
 
-    }
-
-    void deleteFromDB() throws Exception {
-        DeleteDAO deleteDAO = new DeleteDAO();
-        deleteDAO.deleteVotes();
     }
 
     @Test
