@@ -91,7 +91,7 @@ public class ChoiceDAO {
 
          } catch (Exception e) {
          	e.printStackTrace();
-             throw new Exception("Failed in getting maxParticipants for choice: " + choice_ID + e.getMessage());
+             throw new Exception("Failed in getting completion status for choice: " + choice_ID + e.getMessage());
          }
     }
     public boolean deleteChoice(String choiceID) throws Exception {

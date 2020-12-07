@@ -24,11 +24,11 @@ public class Feedback {
     	feedbackID = 0;
     }
 
-    public Feedback(int altID, int partID, String fText, long fStamp){
+    public Feedback(int altID, int partID, String fText){
         this.alternativeID = altID;
         this.participantID = partID;
         this.feedbackText = fText;
-        this.feedbackTimestamp = fStamp;
+        this.feedbackTimestamp = System.currentTimeMillis();;
     }
     
     public Feedback(int fID, int altID, int partID, String fText, long fStamp){
