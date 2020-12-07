@@ -24,8 +24,16 @@ function updatePageWithReport(response) {
     console.log("The response after retrieving the Choices Info for the report: " + response)
     let parsedResponse = JSON.parse(response);
     let reportDiv = document.getElementById("report")
-    let i, output = ""
+    let i = ""
     let count = 0
+
+    let output =
+        "<table>" +
+        "   <tr>" +
+        "       <th>Choice ID</th>" +
+        "       <th>Date Created</th>" +
+        "       <th>Is Completed</th>" +
+        "   </tr>"
 
     parsedResponse = parsedResponse["infos"]
 
@@ -41,11 +49,17 @@ function updatePageWithReport(response) {
         let date = new Date(choiceDateCreated)
         date = date.toLocaleString()
 
-        output = output + "<p> " +
-            "<b>ChoiceID: </b>" + choiceID +
-            " | <b>Date Created: </b>" + date +
-            " | <b>Completed: </b>" + choiceCompleted + "</p>"
+        // output = output + "<p> " +
+        //     "<b>ChoiceID: </b>" + choiceID +
+        //     " | <b>Date Created: </b>" + date +
+        //     " | <b>Completed: </b>" + choiceCompleted + "</p>"
+        output +=
+            "<tr>" +
+            "   <td>" + choiceID + "</td>" +
+            "   <td>" + date + "</td>" +
+            "   <td>" + choiceCompleted + "</td>" +
+            "</tr>"
     }
-
+    output += "</table>"
     reportDiv.innerHTML = output
 }
