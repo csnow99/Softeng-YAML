@@ -21,27 +21,6 @@ public class ParticipantDAO {
     	}
     }
 
-    /*public Alternative getAlternative(String alternative_ID) throws Exception {
-        
-        try {
-        	Alternative alternative = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_ID=?;");
-            ps.setString(1,  alternative_ID);
-            ResultSet resultSet = ps.executeQuery();
-            
-            while (resultSet.next()) {
-            	alternative = generateAlternative(resultSet);
-            }
-            resultSet.close();
-            ps.close();
-            
-            return alternative;
-
-        } catch (Exception e) {
-        	e.printStackTrace();
-            throw new Exception("Failed in getting choice: " + e.getMessage());
-        }
-    }*/
     
     public boolean belongsToChoiceID(String choiceID, int participantID) throws Exception {
     	try {
@@ -134,7 +113,6 @@ public class ParticipantDAO {
           
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_id=?;");
             ps.setString(1,  choiceID);
-            //String query = "SELECT * FROM " + tblName + "GROUP BY alternative_id HAVING MAX(choice_id) = " + choiceID + " AND MIN(choice_id) = "+choiceID + ";";
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {

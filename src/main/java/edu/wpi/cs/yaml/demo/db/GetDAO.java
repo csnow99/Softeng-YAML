@@ -1,7 +1,5 @@
 package edu.wpi.cs.yaml.demo.db;
 
-import com.mysql.cj.protocol.Resultset;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 

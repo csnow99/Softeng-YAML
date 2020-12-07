@@ -21,28 +21,6 @@ public class AlternativeDAO {
     		conn = null;
     	}
     }
-
-//    public Alternative getAlternative(int alternative_ID) throws Exception {
-//        
-//        try {
-//        	Alternative alternative = null;
-//            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_ID=?;");
-//            ps.setInt(1,  alternative_ID);
-//            ResultSet resultSet = ps.executeQuery();
-//            
-//            while (resultSet.next()) {
-//            	alternative = generateAlternative(resultSet);
-//            }
-//            resultSet.close();
-//            ps.close();
-//            
-//            return alternative;
-//
-//        } catch (Exception e) {
-//        	e.printStackTrace();
-//            throw new Exception("Failed in getting choice: " + e.getMessage());
-//        }
-//    }
     
     public String getAlternativeTitleFromAlternativeID(int alternative_ID) throws Exception {
     	 try {
@@ -87,36 +65,6 @@ public class AlternativeDAO {
              throw new Exception("Failed in getting choice: " + e.getMessage());
          }
     }
-    
-    
-/*    public boolean updateChoice(Choice constant) throws Exception {
-        try {
-        	String query = "UPDATE " + tblName + " SET value=? WHERE name=?;";
-        	PreparedStatement ps = conn.prepareStatement(query);
-            ps.setDouble(1, constant.value);
-            ps.setString(2, constant.name);
-            int numAffected = ps.executeUpdate();
-            ps.close();
-            
-            return (numAffected == 1);
-        } catch (Exception e) {
-            throw new Exception("Failed to update report: " + e.getMessage());
-        }
-    }*/
-    /*
-    public boolean deleteAlternative(Choice choice) throws Exception {
-        try {
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE choice_ID = ?;");
-            ps.setString(1, choice.choiceID);
-            int numAffected = ps.executeUpdate();
-            ps.close();
-            
-            return (numAffected == 1);
-
-        } catch (Exception e) {
-            throw new Exception("Failed to delete choice: " + e.getMessage());
-        }
-    }*/
 
 
     public boolean addAlternative(Alternative alternative) throws Exception {

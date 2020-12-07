@@ -94,24 +94,6 @@ public class ChoiceDAO {
              throw new Exception("Failed in getting maxParticipants for choice: " + choice_ID + e.getMessage());
          }
     }
-    
-    /*public boolean deleteOldChoices(double howOld) {
-    	
-    }*/
-/*    public boolean updateChoice(Choice constant) throws Exception {
-        try {
-        	String query = "UPDATE " + tblName + " SET value=? WHERE name=?;";
-        	PreparedStatement ps = conn.prepareStatement(query);
-            ps.setDouble(1, constant.value);
-            ps.setString(2, constant.name);
-            int numAffected = ps.executeUpdate();
-            ps.close();
-            
-            return (numAffected == 1);
-        } catch (Exception e) {
-            throw new Exception("Failed to update report: " + e.getMessage());
-        }
-    }*/
     public boolean deleteChoice(String choiceID) throws Exception {
         try {
             PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE choice_ID = ?;");
