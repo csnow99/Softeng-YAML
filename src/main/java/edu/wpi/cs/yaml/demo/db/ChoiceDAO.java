@@ -142,7 +142,7 @@ public class ChoiceDAO {
 
 
     
-    private Choice generateChoice(ResultSet resultSet) throws Exception {
+    public Choice generateChoice(ResultSet resultSet) throws Exception {
     	Choice returnChoice = new Choice();
     	returnChoice.choiceID = resultSet.getString("choice_ID");
     	returnChoice.choiceName = resultSet.getString("choice_name");

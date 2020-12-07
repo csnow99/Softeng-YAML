@@ -2,6 +2,8 @@ package edu.wpi.cs.yaml.demo;
 
 import static org.junit.Assert.assertEquals;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import org.junit.Assert;
@@ -13,8 +15,36 @@ import edu.wpi.cs.yaml.demo.http.CreateChoiceResponse;
 import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDRequest;
 import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDResponse;
 import edu.wpi.cs.yaml.demo.model.Alternative;
+import edu.wpi.cs.yaml.demo.model.Choice;
 
 public class ChoiceDAOTest extends LambdaTest {
+	/*Test addChoice, getChoice and deleteChoice*/
+	java.sql.Connection conn;
+
+	@Test 
+	public void testChoiceDAOBasics() {
+		String choiceID = "001";
+		String choiceName = "ChoiceDAOTest1";
+		int maxParticipants = 5;
+		String choiceDescription = "ChoiceDAOTest1Description";
+	
+		Choice choice = new Choice(choiceID,  choiceName,  maxParticipants, choiceDescription);
+		
+		/*Test addChoice*/
+		ChoiceDAO dao = new ChoiceDAO();
+		try {
+			dao.addChoice(choice);
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM Choice WHERE choice_ID=001;");
+			ResultSet rs = ps.executeQuery();
+			/*Test generateChoice*/
+			Choice result = dao.generateChoice(rs);
+		} catch (Exception e) {
+			
+		}
+		
+		
+	}
+	
 	/*Test getting max Participants*/
 	@Test
 	public void testGetMaxParticipants() {
