@@ -3,6 +3,7 @@ package edu.wpi.cs.yaml.demo.db;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class FeedbackDAO {
             ps.setInt(1, feedback.participantID);
             ps.setInt(2, feedback.alternativeID);
             ps.setString(3, feedback.feedbackText); 
-            ps.setLong(4, feedback.feedbackTimestamp);
+            ps.setTimestamp(4, new Timestamp(feedback.feedbackTimestamp));
             ChoiceDAO choiceDAO = new ChoiceDAO();
             String choiceID = null;
             String ps2 = "select choice_id from Alternatives where alternative_id="+feedback.alternativeID;
