@@ -38,6 +38,8 @@ public class ChoiceDAOTest extends LambdaTest {
 			ResultSet rs = ps.executeQuery();
 			/*Test generateChoice*/
 			Choice result = dao.generateChoice(rs);
+			Assert.assertEquals("001", result.getChoiceID());
+			Assert.assertEquals(expected, actual);
 		} catch (Exception e) {
 			
 		}
