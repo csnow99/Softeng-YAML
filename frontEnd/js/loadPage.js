@@ -10,7 +10,7 @@ function loadChoicePage() {
     console.log(finalParticipantID)
 
     if(finalParticipantID === "0") {
-        requestChoiceInfo(finalChoiceID, null)
+        requestChoiceInfo(finalChoiceID, finalParticipantID, null)
         requestAlternativeInfo(finalChoiceID, null)
     } else {
         requestUsername(finalParticipantID, finalChoiceID, null)

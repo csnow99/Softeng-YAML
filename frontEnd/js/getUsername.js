@@ -7,7 +7,9 @@ function requestUsername(participantID, choiceID, callback) {
     xhr.onloadend = function () {
      if (xhr.readyState === XMLHttpRequest.DONE) {
          if (xhr.status === 200) {
-             checkQuality(xhr.responseText, participantID, choiceID)
+             if (callback === null) {
+                 checkQuality(xhr.responseText, participantID, choiceID);
+             }
              updatePageWithUsername(xhr.responseText);
          } else {
              console.log("actual:" + xhr.responseText)
@@ -22,7 +24,7 @@ function requestUsername(participantID, choiceID, callback) {
 
     if(callback !== null) {
         setTimeout( function(){
-            callback(choiceID, requestAlternativeInfo)
+            callback(choiceID, participantID, requestAlternativeInfo)
         }, 1000 );
     }
 }

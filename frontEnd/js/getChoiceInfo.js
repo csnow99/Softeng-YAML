@@ -1,7 +1,7 @@
-function requestChoiceInfo(choiceID, callback) {
+function requestChoiceInfo(choiceID, participantID, callback) {
 
      let xhr = new XMLHttpRequest();
-     xhr.open("GET", getChoice_url + "/" + choiceID, true);
+     xhr.open("GET", getChoice_url + "/" + choiceID + "/" + participantID, true);
      xhr.send();
 
      xhr.onloadend = function () {
