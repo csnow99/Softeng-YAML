@@ -51,6 +51,7 @@ public class FeedbackDAO {
         try {
         	List<String> participants = new ArrayList<String>();
         	List<String> feedback = new ArrayList<String>();
+        	List<Long> timestamps = new ArrayList<Long>();
         	ParticipantDAO participantDAO = new ParticipantDAO();
         	AlternativeDAO alternativeDAO = new AlternativeDAO();
         	Statement statement = conn.createStatement();
@@ -64,11 +65,12 @@ public class FeedbackDAO {
             	Feedback f = generateFeedback(resultSet);
             	participants.add(participantDAO.getParticipantNameFromID(f.getParticipantID()));
             	feedback.add(f.feedbackText);
+            	timestamps.add(f.feedbackTimestamp);
             }
             resultSet.close();
             statement.close();
             String alternativeTitle = alternativeDAO.getAlternativeTitleFromAlternativeID(alternative_ID);
-            return new FeedbackInfo(alternative_ID, alternativeTitle, participants, feedback);
+            return new FeedbackInfo(alternative_ID, alternativeTitle, participants, feedback, timestamps);
         } catch (Exception e) {
             throw new Exception("Failed in getting feedback: " + e.getMessage());
         }
@@ -77,10 +79,11 @@ public class FeedbackDAO {
 
     public boolean addFeedback(Feedback feedback) throws Exception {
         try {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (participant_id,alternative_id,feedback_text) values(?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (participant_id,alternative_id,feedback_text) values(?,?,?,?);");
             ps.setInt(1, feedback.participantID);
             ps.setInt(2, feedback.alternativeID);
             ps.setString(3, feedback.feedbackText); 
+            ps.setLong(4, feedback.feedbackTimestamp);
             ChoiceDAO choiceDAO = new ChoiceDAO();
             String choiceID = null;
             String ps2 = "select choice_id from Alternatives natural join Feedback where alternative_id="+feedback.alternativeID;

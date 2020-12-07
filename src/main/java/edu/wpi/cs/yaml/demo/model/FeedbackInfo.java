@@ -7,6 +7,7 @@ public class FeedbackInfo {
 	String alternativeName;
 	List<String> participantName;
 	List<String> feedbackText;
+	List<Long> feedbackTimestamp;
 	
 	public int getAlternativeID() {return this.alternativeID;}
 	public void setAlternativeID(int alternativeID) {this.alternativeID = alternativeID;}
@@ -19,14 +20,18 @@ public class FeedbackInfo {
 
 	public List<String> getFeedbackText() {return this.feedbackText;}
 	public void setFeedbackText(List<String> feedbackText) {this.feedbackText = feedbackText;}
+	
+	public List<Long> getFeedbackTimestamp() {return this.feedbackTimestamp;}
+	public void setFeedbackTimestamp(List<Long> feedbackTimestamp) {this.feedbackTimestamp = feedbackTimestamp;}
 
 	public FeedbackInfo() {}
 
-	public FeedbackInfo(int alternativeID, String alternativeName, List<String> participantName, List<String> feedbackText){
+	public FeedbackInfo(int alternativeID, String alternativeName, List<String> participantName, List<String> feedbackText, List<Long> feedbackTimestamp){
 		this.alternativeID = alternativeID;
 		this.alternativeName = alternativeName;
 		this.participantName = participantName;
 		this.feedbackText = feedbackText;
+		this.feedbackTimestamp = feedbackTimestamp;
 	}
 
 	@Override
@@ -37,7 +42,8 @@ public class FeedbackInfo {
 					this.alternativeID == other.alternativeID &&
 					this.alternativeName.equals(other.alternativeName) &&
 					this.participantName == other.participantName &&
-					this.feedbackText == other.feedbackText
+					this.feedbackText == other.feedbackText &&
+					this.feedbackTimestamp == other.feedbackTimestamp
 			) {
 				return true;
 			}
