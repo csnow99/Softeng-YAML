@@ -79,14 +79,14 @@ public class FeedbackDAO {
 
     public boolean addFeedback(Feedback feedback) throws Exception {
         try {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (participant_id,alternative_id,feedback_text) values(?,?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (participant_id,alternative_id,feedback_text,feedback_timestamp) values(?,?,?,?);");
             ps.setInt(1, feedback.participantID);
             ps.setInt(2, feedback.alternativeID);
             ps.setString(3, feedback.feedbackText); 
             ps.setLong(4, feedback.feedbackTimestamp);
             ChoiceDAO choiceDAO = new ChoiceDAO();
             String choiceID = null;
-            String ps2 = "select choice_id from Alternatives natural join Feedback where alternative_id="+feedback.alternativeID;
+            String ps2 = "select choice_id from Alternatives where alternative_id="+feedback.alternativeID;
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(ps2);
             while(rs.next()) {
