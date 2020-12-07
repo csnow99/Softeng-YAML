@@ -5,6 +5,7 @@ public class Feedback {
     public int alternativeID;
     public int participantID;
     public String feedbackText;
+    public long feedbackTimestamp;
 
     public int getAlternativeID() {return this.alternativeID;}
     public void setAlternativeID(int altID) {this.alternativeID = altID;}
@@ -12,23 +13,29 @@ public class Feedback {
     public int getParticipantID() {return this.participantID;}
     public void setParticipantID(int partID) {this.participantID = partID;}
 
-    public String getFeedbackText() {return this.feedbackText;}
-    public void setFeedbackText(String fText) {this.feedbackText = fText;}
+    public long getFeedbackText() {return this.feedbackTimestamp;}
+    public void setFeedbackText(long feedbackTimestamp) {this.feedbackTimestamp = feedbackTimestamp;}
+    
+    public long getFeedbackTimestamp() {return this.feedbackTimestamp;}
+    public void setFeedbackTimestamp(long feedbackTimestamp) {this.feedbackTimestamp = feedbackTimestamp;}
+
 
     public Feedback(){
     	feedbackID = 0;
     }
 
-    public Feedback(int altID, int partID, String fText){
+    public Feedback(int altID, int partID, String fText, long fStamp){
         this.alternativeID = altID;
         this.participantID = partID;
         this.feedbackText = fText;
+        this.feedbackTimestamp = fStamp;
     }
     
-    public Feedback(int fID, int altID, int partID, String fText){
+    public Feedback(int fID, int altID, int partID, String fText, long fStamp){
     	this.feedbackID = fID;
         this.alternativeID = altID;
         this.participantID = partID;
         this.feedbackText = fText;
+        this.feedbackTimestamp = fStamp;
     }
 }

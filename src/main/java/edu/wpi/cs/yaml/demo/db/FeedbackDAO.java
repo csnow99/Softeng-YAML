@@ -9,7 +9,6 @@ import java.util.List;
 import edu.wpi.cs.yaml.demo.model.Alternative;
 import edu.wpi.cs.yaml.demo.model.Feedback;
 import edu.wpi.cs.yaml.demo.model.FeedbackInfo;
-import edu.wpi.cs.yaml.demo.model.VoteInfo;
 
 public class FeedbackDAO {
 	
@@ -119,6 +118,7 @@ public class FeedbackDAO {
     	int participantID = resultSet.getInt("participant_id");
     	int alternativeID = resultSet.getInt("alternative_id");
     	String feedbackText = resultSet.getString("feedback_text");
-        return new Feedback(feedbackID, alternativeID, participantID, feedbackText);
+    	long feedbackTimestamp = resultSet.getLong("feedback_timestamp");
+        return new Feedback(feedbackID, alternativeID, participantID, feedbackText, feedbackTimestamp);
     }
 }
