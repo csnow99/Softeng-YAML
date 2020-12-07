@@ -122,7 +122,9 @@ public class FeedbackDAO {
     	int participantID = resultSet.getInt("participant_id");
     	int alternativeID = resultSet.getInt("alternative_id");
     	String feedbackText = resultSet.getString("feedback_text");
-    	long feedbackTimestamp = resultSet.getLong("feedback_timestamp");
-        return new Feedback(feedbackID, alternativeID, participantID, feedbackText, feedbackTimestamp);
+    	Timestamp feedbackTimestamp = resultSet.getTimestamp("feedback_timestamp");
+        long fStamp = 0;
+        if (feedbackTimestamp != null) { fStamp = feedbackTimestamp.getTime(); }
+        return new Feedback(feedbackID, alternativeID, participantID, feedbackText, fStamp);
     }
 }
