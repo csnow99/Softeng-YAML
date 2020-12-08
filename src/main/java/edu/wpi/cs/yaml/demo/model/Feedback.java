@@ -31,6 +31,12 @@ public class Feedback {
         this.feedbackTimestamp = System.currentTimeMillis();;
     }
     
+    public Feedback(int altID, int partID, String fText, long fStamp){
+        this.alternativeID = altID;
+        this.participantID = partID;
+        this.feedbackText = fText;
+        this.feedbackTimestamp = fStamp;
+    }
     public Feedback(int fID, int altID, int partID, String fText, long fStamp){
     	this.feedbackID = fID;
         this.alternativeID = altID;

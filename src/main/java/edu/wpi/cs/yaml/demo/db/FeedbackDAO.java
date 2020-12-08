@@ -25,28 +25,28 @@ public class FeedbackDAO {
     	}
     }
     
-    public Feedback getFeedback(int alternative_ID, int participant_ID) throws Exception {
-        try {
-        	Feedback feedback= null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_id = ? AND participant_id = ?;");
-            ps.setInt(1,  alternative_ID);
-            ps.setInt(2,  participant_ID);
-            
-            ResultSet resultSet = ps.executeQuery();
-            
-            while (resultSet.next()) {
-            	feedback = generateFeedback(resultSet);
-            }
-            resultSet.close();
-            ps.close();
-            
-            return feedback;
-
-        } catch (Exception e) {
-        	e.printStackTrace();
-            throw new Exception("Failed in getting vote: " + e.getMessage());
-        }
-    }
+//    public Feedback getFeedback(int alternative_ID, int participant_ID) throws Exception {
+//        try {
+//        	Feedback feedback= null;
+//            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_id = ? AND participant_id = ?;");
+//            ps.setInt(1,  alternative_ID);
+//            ps.setInt(2,  participant_ID);
+//            
+//            ResultSet resultSet = ps.executeQuery();
+//            
+//            while (resultSet.next()) {
+//            	feedback = generateFeedback(resultSet);
+//            }
+//            resultSet.close();
+//            ps.close();
+//            
+//            return feedback;
+//
+//        } catch (Exception e) {
+//        	e.printStackTrace();
+//            throw new Exception("Failed in getting vote: " + e.getMessage());
+//        }
+//    }
     
     public FeedbackInfo getFeedbackForAlternative(int alternative_ID) throws Exception {
         try {
@@ -117,7 +117,7 @@ public class FeedbackDAO {
     	return feedback;
     }
     
-    private Feedback generateFeedback(ResultSet resultSet) throws Exception {
+    public Feedback generateFeedback(ResultSet resultSet) throws Exception {
         int feedbackID = resultSet.getInt("feedback_id");
     	int participantID = resultSet.getInt("participant_id");
     	int alternativeID = resultSet.getInt("alternative_id");
