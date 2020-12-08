@@ -10,7 +10,7 @@ import edu.wpi.cs.yaml.demo.http.GetChoiceLoginRequest;
 import edu.wpi.cs.yaml.demo.http.GetChoiceResponse;
 import edu.wpi.cs.yaml.demo.model.Choice;
 
-public class getChoiceLoginHandler implements RequestHandler<GetChoiceLoginRequest,GetChoiceResponse>{
+public class GetChoiceLoginHandler implements RequestHandler<GetChoiceLoginRequest,GetChoiceResponse>{
 	LambdaLogger logger;
 
 	@Override 
@@ -23,6 +23,9 @@ public class getChoiceLoginHandler implements RequestHandler<GetChoiceLoginReque
 		ParticipantDAO participantDAO = new ParticipantDAO();
 
 		try {
+			if(choiceDAO.getChoice(request.getChoiceID()) == null) {
+				return new GetChoiceResponse(404, "ChoiceID could not be found");
+			}
 			if (request.getParticipantID() == 0) {
 				Choice choice = choiceDAO.getChoice(request.getChoiceID());
 				return new GetChoiceResponse(206, "Succesfully fetched choice", choice);
