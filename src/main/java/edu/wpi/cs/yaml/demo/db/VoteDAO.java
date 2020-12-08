@@ -125,7 +125,7 @@ public class VoteDAO {
     }
 
     
-    private Vote generateVote(ResultSet resultSet) throws Exception {
+    public Vote generateVote(ResultSet resultSet) throws Exception {
         int voteID = resultSet.getInt("vote_id");
     	int participantID = resultSet.getInt("participant_id");
     	int alternativeID = resultSet.getInt("alternative_id");

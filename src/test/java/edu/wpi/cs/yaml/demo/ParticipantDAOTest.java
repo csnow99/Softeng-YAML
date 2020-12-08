@@ -15,7 +15,6 @@ import edu.wpi.cs.yaml.demo.model.Choice;
 import edu.wpi.cs.yaml.demo.model.Participant;
 
 public class ParticipantDAOTest {
-java.sql.Connection conn;
 	
 	@Test 
 	public void testChoiceDAOBasics() {
