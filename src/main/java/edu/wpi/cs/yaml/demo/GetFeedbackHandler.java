@@ -23,7 +23,7 @@ public class GetFeedbackHandler implements RequestHandler<String, GetFeedbackRes
 		try {
 			FeedbackDAO dao = new FeedbackDAO();
 			List<FeedbackInfo> feedback = dao.getFeedback(choiceID);
-			return new GetFeedbackResponse("Succesfully fetched feedback: ", feedback);
+			return new GetFeedbackResponse("Succesfully fetched feedbacks for choiceID: " + choiceID , feedback);
 			
 		} catch (Exception e) {
 			logger.log(e.getMessage());
