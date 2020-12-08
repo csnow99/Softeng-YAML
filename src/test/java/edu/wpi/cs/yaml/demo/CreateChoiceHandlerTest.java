@@ -1,22 +1,17 @@
 package edu.wpi.cs.yaml.demo;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.google.gson.Gson;
-
 import edu.wpi.cs.yaml.demo.http.CreateChoiceRequest;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceResponse;
-import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDRequest;
-import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDResponse;
 import edu.wpi.cs.yaml.demo.model.Alternative;
-
-import edu.wpi.cs.yaml.demo.LambdaTest;
+import edu.wpi.cs.yaml.demo.model.Choice;
+import edu.wpi.cs.yaml.demo.db.AlternativeDAO;
+import edu.wpi.cs.yaml.demo.db.ChoiceDAO;
 
 
 /**
@@ -24,30 +19,9 @@ import edu.wpi.cs.yaml.demo.LambdaTest;
  */
 public class CreateChoiceHandlerTest extends LambdaTest {
 
-    String testSuccessInput(String incoming) throws IOException {
-    	CreateChoiceHandler handler = new CreateChoiceHandler();
-    	CreateChoiceRequest req = new Gson().fromJson(incoming, CreateChoiceRequest.class);
-        System.out.println(req);
-        CreateChoiceResponse resp = handler.handleRequest(req, createContext("create"));
-        Assert.assertEquals(200, resp.getHttpCode());
-        
-        return resp.getResponse();			//return choiceID
-    }
-	
-    String testFailInput(String incoming, int failureCode) throws IOException {
-    	CreateChoiceHandler handler = new CreateChoiceHandler();
-    	CreateChoiceRequest req = new Gson().fromJson(incoming, CreateChoiceRequest.class);
-
-    	CreateChoiceResponse resp = handler.handleRequest(req, createContext("create"));
-        Assert.assertEquals(failureCode, resp.getHttpCode());
-        
-        return resp.getResponse();
-    }
-
-   
     // NOTE: Manually remove the added choice every time
     @Test
-    public void testShouldBeOk() {
+    public void testCreateChoiceHandler() {
     	ArrayList<Alternative> alternatives = new ArrayList<Alternative>();
     	Alternative alt1 = new Alternative("alt1_name", "alt1_description");
     	Alternative alt2 = new Alternative("alt2_name", "alt2_description");
@@ -55,19 +29,81 @@ public class CreateChoiceHandlerTest extends LambdaTest {
     	alternatives.add(alt1);
     	alternatives.add(alt2);
     	alternatives.add(alt3);
-    	CreateChoiceRequest ccr = new CreateChoiceRequest("testChoice4", 10, "sample description", alternatives);
-        String SAMPLE_INPUT_STRING = new Gson().toJson(ccr);  
-        System.out.print(SAMPLE_INPUT_STRING);
-        String choiceID = null;
+    	CreateChoiceRequest request1 = new CreateChoiceRequest("testChoice1", 10, "sample description", alternatives);
+    	CreateChoiceRequest request2 = new CreateChoiceRequest("testChoice2", 5, "sample description", alternatives);
+    	CreateChoiceHandler createHandler = new CreateChoiceHandler();
+    	ChoiceDAO choiceDAO = new ChoiceDAO();
+    	AlternativeDAO altDAO = new AlternativeDAO();
+    	String choiceID1 = null;
+    	String choiceID2 = null;
         try {
-        	 choiceID = testSuccessInput(SAMPLE_INPUT_STRING);
-        } catch (IOException ioe) {
-        	Assert.fail("Invalid:" + ioe.getMessage());
+        	 /*Attempt creating the first choice for the first time*/
+        	 CreateChoiceResponse response = createHandler.handleRequest(request1, createContext("createTest"));
+        	 Assert.assertEquals(200, response.getHttpCode());
+        	 choiceID1 = response.getResponse(); //choiceID1
+        	 
+        	 Choice choice1 = choiceDAO.getChoice(choiceID1);
+        	 Assert.assertEquals("testChoice1", choice1.getChoiceName());
+        	 Assert.assertEquals(10, choice1.getMaxParticipants());
+        	 Assert.assertEquals("sample description", choice1.getChoiceDescription());
+        	 Assert.assertEquals(false, choice1.getIsCompleted());
+        	 Assert.assertEquals(0, choice1.getDateCompleted());
+        	 Assert.assertEquals(0, choice1.getSelectedAlternativeID());
+
+        	 List<Alternative> alternatives1 = altDAO.getAlternatives(choiceID1);
+        	 Assert.assertEquals(choiceID1, alternatives1.get(0).getChoiceID());
+        	 Assert.assertEquals("alt1_name", alternatives1.get(0).getTitle());
+        	 Assert.assertEquals("alt1_description", alternatives1.get(0).getDescription());
+
+        	 Assert.assertEquals(choiceID1, alternatives1.get(1).getChoiceID());
+        	 Assert.assertEquals("alt2_name", alternatives1.get(1).getTitle());
+        	 Assert.assertEquals("alt2_description", alternatives1.get(1).getDescription());
+
+        	 Assert.assertEquals(choiceID1, alternatives1.get(2).getChoiceID());
+        	 Assert.assertEquals("alt3_name", alternatives1.get(2).getTitle());
+        	 Assert.assertEquals("alt3_description", alternatives1.get(2).getDescription());
+ 			
+        	 /*Attempt creating another choice*/
+        	 response = createHandler.handleRequest(request2, createContext("createTest"));
+        	 Assert.assertEquals(200, response.getHttpCode());
+        	 choiceID2 = response.getResponse(); //choiceID2
+        	 
+        	 Choice choice2 = choiceDAO.getChoice(choiceID2);
+        	 Assert.assertEquals("testChoice2", choice2.getChoiceName());
+        	 Assert.assertEquals(5, choice2.getMaxParticipants());
+        	 Assert.assertEquals("sample description", choice2.getChoiceDescription());
+        	 Assert.assertEquals(false, choice2.getIsCompleted());
+        	 Assert.assertEquals(0, choice2.getDateCompleted());
+        	 Assert.assertEquals(0, choice2.getSelectedAlternativeID());
+
+        	 List<Alternative> alternatives2 = altDAO.getAlternatives(choiceID2);
+        	 Assert.assertEquals(choiceID2, alternatives2.get(0).getChoiceID());
+        	 Assert.assertEquals("alt1_name", alternatives2.get(0).getTitle());
+        	 Assert.assertEquals("alt1_description", alternatives2.get(0).getDescription());
+
+        	 Assert.assertEquals(choiceID2, alternatives2.get(1).getChoiceID());
+        	 Assert.assertEquals("alt2_name", alternatives2.get(1).getTitle());
+        	 Assert.assertEquals("alt2_description", alternatives2.get(1).getDescription());
+
+        	 Assert.assertEquals(choiceID2, alternatives2.get(2).getChoiceID());
+        	 Assert.assertEquals("alt3_name", alternatives2.get(2).getTitle());
+        	 Assert.assertEquals("alt3_description", alternatives2.get(2).getDescription());
+        	 
+        	 /*Attempt creating the first choice again (duplicate choiceID)*/
+        	 response = createHandler.handleRequest(request1, createContext("createTest"));
+        	 Assert.assertEquals(409, response.getHttpCode());
+        	 Assert.assertEquals("Unable to create choice, due to dupliate choiceID: "+choiceID1,response.getResponse()); //choiceID1
+        
+        } catch (Exception e) {
+        	Assert.fail();
         }
-        if (choiceID != null) {
-        DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
-        DeleteSingleChoiceByIDResponse d_resp = new DeleteSingleChoiceByIDChoiceHandler().handleRequest(dcr, createContext("delete"));
-        assertEquals("Succesfully deleted: "+choiceID, d_resp.getResponse());
+        
+        /*Delete Using choiceDAO*/
+        try {
+        	choiceDAO.deleteChoice(choiceID1);
+        	choiceDAO.deleteChoice(choiceID2);
+        } catch (Exception e) {
+        	Assert.fail();
         }
     }
     

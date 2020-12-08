@@ -10,7 +10,7 @@ import edu.wpi.cs.yaml.demo.http.GetChoiceLoginRequest;
 import edu.wpi.cs.yaml.demo.http.GetChoiceResponse;
 import edu.wpi.cs.yaml.demo.model.Choice;
 
-public class getChoiceLoginHandler implements RequestHandler<GetChoiceLoginRequest,GetChoiceResponse>{
+public class GetChoiceLoginHandler implements RequestHandler<GetChoiceLoginRequest,GetChoiceResponse>{
 	LambdaLogger logger;
 
 	@Override 
