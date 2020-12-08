@@ -1,15 +1,12 @@
 package edu.wpi.cs.yaml.demo;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import com.google.gson.Gson;
 
 import edu.wpi.cs.yaml.demo.db.AlternativeDAO;
 import edu.wpi.cs.yaml.demo.db.ParticipantDAO;
