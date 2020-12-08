@@ -106,7 +106,7 @@ public class AlternativeDAO {
         }
     }
     
-    private Alternative generateAlternative(ResultSet resultSet) throws Exception {
+    public Alternative generateAlternative(ResultSet resultSet) throws Exception {
         int alternativeID = resultSet.getInt("alternative_ID");
     	String choiceID = resultSet.getString("choice_ID");
     	String alternativeName = resultSet.getString("alternative_title");

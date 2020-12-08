@@ -12,9 +12,8 @@ import edu.wpi.cs.yaml.demo.model.Choice;
 import edu.wpi.cs.yaml.demo.model.ChoiceInfo;
 
 public class ChoiceDAOTest extends LambdaTest {
-	/*Test addChoice, getChoice and deleteChoice*/
 	java.sql.Connection conn;
-
+	
 	@Test 
 	public void testChoiceDAOBasics() {
 		java.sql.Connection conn;
