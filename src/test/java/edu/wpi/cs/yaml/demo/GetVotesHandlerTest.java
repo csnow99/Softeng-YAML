@@ -42,7 +42,7 @@ public class GetVotesHandlerTest extends LambdaTest {
 			CreateChoiceHandler createHandler = new CreateChoiceHandler();
 			CreateChoiceRequest ccr = new CreateChoiceRequest("testGetVotesHandler", 3, "sample description", alternatives);
 			CreateChoiceResponse createResp = createHandler.handleRequest(ccr, createContext("create"));
-			choiceID = createResp.response;
+			choiceID = createResp.getResponse();
 
 			//We need alternativeID's
 			AlternativeDAO altDAO = new AlternativeDAO();
@@ -130,7 +130,7 @@ public class GetVotesHandlerTest extends LambdaTest {
 			if (choiceID != null) {
 				DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
 				DeleteSingleChoiceByIDResponse d_resp = new DeleteSingleChoiceByIDChoiceHandler().handleRequest(dcr, createContext("delete"));
-				assertEquals("Succesfully deleted: "+choiceID, d_resp.response);
+				assertEquals("Succesfully deleted: "+choiceID, d_resp.getResponse());
 			}
 
 		}catch (Exception e) {

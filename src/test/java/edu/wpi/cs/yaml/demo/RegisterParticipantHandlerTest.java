@@ -36,7 +36,7 @@ public class RegisterParticipantHandlerTest extends LambdaTest{
     CreateChoiceHandler createHandler = new CreateChoiceHandler();
     CreateChoiceRequest ccr = new CreateChoiceRequest("testChoiceRegisterParticipant", 3, "sample description", alternatives);
     CreateChoiceResponse createResp = createHandler.handleRequest(ccr, createContext("create"));
-    choiceID = createResp.response;
+    choiceID = createResp.getResponse();
   
     
     /*Now that it's inserted we can try to create some participants */
@@ -63,12 +63,12 @@ public class RegisterParticipantHandlerTest extends LambdaTest{
     RegisterParticipantResponse resp5 = handler.handleRequest(reg5, createContext("register3"));
     RegisterParticipantResponse resp6 = handler.handleRequest(reg6, createContext("maxReached4"));
     
-    Assert.assertEquals(201, resp1.httpCode);			//register 201
-    Assert.assertEquals(201, resp2.httpCode);			//register 201
-    Assert.assertEquals(200, resp3.httpCode);			//login 200
-    Assert.assertEquals(401, resp4.httpCode);			//wrong password 401
-    Assert.assertEquals(201, resp5.httpCode);			//register 201
-    Assert.assertEquals(403, resp6.httpCode);			//too many 403
+    Assert.assertEquals(201, resp1.getHttpCode());			//register 201
+    Assert.assertEquals(201, resp2.getHttpCode());			//register 201
+    Assert.assertEquals(200, resp3.getHttpCode());			//login 200
+    Assert.assertEquals(401, resp4.getHttpCode());			//wrong password 401
+    Assert.assertEquals(201, resp5.getHttpCode());			//register 201
+    Assert.assertEquals(403, resp6.getHttpCode());			//too many 403
     
     ParticipantDAO participantDAO = new ParticipantDAO();
     try {
@@ -86,7 +86,7 @@ public class RegisterParticipantHandlerTest extends LambdaTest{
     if (choiceID != null) {
         DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
         DeleteSingleChoiceByIDResponse d_resp = new DeleteSingleChoiceByIDChoiceHandler().handleRequest(dcr, createContext("delete"));
-        assertEquals("Succesfully deleted: "+choiceID, d_resp.response);
+        assertEquals("Succesfully deleted: "+choiceID, d_resp.getResponse());
     }
 
 

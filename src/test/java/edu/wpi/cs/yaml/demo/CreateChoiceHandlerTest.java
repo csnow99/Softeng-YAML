@@ -29,9 +29,9 @@ public class CreateChoiceHandlerTest extends LambdaTest {
     	CreateChoiceRequest req = new Gson().fromJson(incoming, CreateChoiceRequest.class);
         System.out.println(req);
         CreateChoiceResponse resp = handler.handleRequest(req, createContext("create"));
-        Assert.assertEquals(200, resp.httpCode);
+        Assert.assertEquals(200, resp.getHttpCode());
         
-        return resp.response;			//return choiceID
+        return resp.getResponse();			//return choiceID
     }
 	
     String testFailInput(String incoming, int failureCode) throws IOException {
@@ -39,9 +39,9 @@ public class CreateChoiceHandlerTest extends LambdaTest {
     	CreateChoiceRequest req = new Gson().fromJson(incoming, CreateChoiceRequest.class);
 
     	CreateChoiceResponse resp = handler.handleRequest(req, createContext("create"));
-        Assert.assertEquals(failureCode, resp.httpCode);
+        Assert.assertEquals(failureCode, resp.getHttpCode());
         
-        return resp.response;
+        return resp.getResponse();
     }
 
    
@@ -67,7 +67,7 @@ public class CreateChoiceHandlerTest extends LambdaTest {
         if (choiceID != null) {
         DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
         DeleteSingleChoiceByIDResponse d_resp = new DeleteSingleChoiceByIDChoiceHandler().handleRequest(dcr, createContext("delete"));
-        assertEquals("Succesfully deleted: "+choiceID, d_resp.response);
+        assertEquals("Succesfully deleted: "+choiceID, d_resp.getResponse());
         }
     }
     

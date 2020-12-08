@@ -44,7 +44,7 @@ public class AmendVoteHandlerTest extends LambdaTest {
 			CreateChoiceHandler createHandler = new CreateChoiceHandler();
 			CreateChoiceRequest ccr = new CreateChoiceRequest("testAmendVote", 3, "sample description", alternatives);
 			CreateChoiceResponse createResp = createHandler.handleRequest(ccr, createContext("create"));
-			choiceID = createResp.response;
+			choiceID = createResp.getResponse();
 			if(choiceID == null) {Assert.fail("Created ChoiceID is null");}
 			
 			//We need alternativeID's
@@ -89,7 +89,7 @@ public class AmendVoteHandlerTest extends LambdaTest {
 			if (choiceID != null) {
 				DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
 				DeleteSingleChoiceByIDResponse d_resp = new DeleteSingleChoiceByIDChoiceHandler().handleRequest(dcr, createContext("delete"));
-				assertEquals("Succesfully deleted: "+choiceID, d_resp.response);
+				assertEquals("Succesfully deleted: "+choiceID, d_resp.getResponse());
 			}
 
 		}catch (Exception e) {

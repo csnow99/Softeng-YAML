@@ -6,12 +6,14 @@ import java.util.List;
 import edu.wpi.cs.yaml.demo.model.ChoiceInfo;
 
 public class ChoiceInfoListResponse {
-	public int statusCode;
-	public String response;
-	public List<ChoiceInfo> infos;
+	int statusCode;
+	String response;
+	List<ChoiceInfo> infos;
 	
 	//Setter and getters
-
+	public List<ChoiceInfo> getInfos() {return this.infos;}
+	public void setInfos(List<ChoiceInfo> infos) {this.infos = infos;}
+	
 	public ChoiceInfoListResponse(List<ChoiceInfo> infos, int code) {
 		this.statusCode = code;
 		this.infos = infos;

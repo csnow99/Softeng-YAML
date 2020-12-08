@@ -16,7 +16,7 @@ public class CreateReportHandlerTest extends LambdaTest{
 			CreateReportsHandler handler = new CreateReportsHandler();
 			ChoiceInfoListResponse list = handler.handleRequest(new Object(), createContext("Create Reports"));
 
-			for (ChoiceInfo i : list.infos) {
+			for (ChoiceInfo i : list.getInfos()) {
 				System.out.println(i.toString());
 			}
 		} catch (Exception e) {

@@ -37,14 +37,14 @@ public class GetAlternativesHandlerTest extends LambdaTest{
         CreateChoiceHandler createHandler = new CreateChoiceHandler();
         CreateChoiceRequest ccr = new CreateChoiceRequest("testChoice1", 10, "sample description", alternatives);
         CreateChoiceResponse createResp = createHandler.handleRequest(ccr, createContext("create"));
-        choiceID = createResp.response;
+        choiceID = createResp.getResponse();
       
         
         /*Now that it's inserted we may */
         if(choiceID == null) {Assert.fail("Created ChoiceID is null");}
         GetAlternativesResponse resp = handler.handleRequest(choiceID, createContext("list"));
-        if(resp.httpCode == 404) {Assert.fail("ChoiceID not found");}
-        List<Alternative> respAlternatives = resp.alternatives;
+        if(resp.getHttpCode() == 404) {Assert.fail("ChoiceID not found");}
+        List<Alternative> respAlternatives = resp.getAlternatives();
         
         Assert.assertEquals(3, respAlternatives.size());
         
@@ -65,7 +65,7 @@ public class GetAlternativesHandlerTest extends LambdaTest{
         if (choiceID != null) {
             DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
             DeleteSingleChoiceByIDResponse d_resp = new DeleteSingleChoiceByIDChoiceHandler().handleRequest(dcr, createContext("delete"));
-            assertEquals("Succesfully deleted: "+choiceID, d_resp.response);
+            assertEquals("Succesfully deleted: "+choiceID, d_resp.getResponse());
         }
     
     }
