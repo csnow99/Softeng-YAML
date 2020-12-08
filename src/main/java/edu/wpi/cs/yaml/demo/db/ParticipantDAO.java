@@ -89,7 +89,7 @@ public class ParticipantDAO {
     	}
     }
 
-
+    /*Doesn't care about max participants, the Lambda takes care of that*/
     public boolean addParticipant(Participant participant) throws Exception {
         try {
             PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (choice_ID, username, password) values(?,?,?);");
@@ -128,7 +128,7 @@ public class ParticipantDAO {
         }
     }
     
-    private Participant generateParticipant(ResultSet resultSet) throws Exception {
+    public Participant generateParticipant(ResultSet resultSet) throws Exception {
         int participantID = resultSet.getInt("participantID");
     	String choiceID = resultSet.getString("choice_id");
     	String alternativeName = resultSet.getString("username");

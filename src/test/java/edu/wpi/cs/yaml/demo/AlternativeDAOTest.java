@@ -85,9 +85,9 @@ java.sql.Connection conn;
 		}
 		
 		
-		/*Test getAllChoices, deleteChoice and DeleteOld choices*/
+		/*Remove choice*/
 		try {
-			choiceDao.addChoice(choice1);
+			choiceDao.deleteChoice(choice1.getChoiceID());
 		} catch (Exception e) {
 			Assert.fail();
 		}
