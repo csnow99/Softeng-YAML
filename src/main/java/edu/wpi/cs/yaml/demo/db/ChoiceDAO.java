@@ -130,11 +130,18 @@ public class ChoiceDAO {
             ps.setString(2,  choice.getChoiceName());
             ps.setInt(3, choice.getMaxParticipants());
             ps.setString(4, choice.getChoiceDescription());
-            ps.setTimestamp(5, new Timestamp(choice.getDateCreated()));
+            if (choice.getDateCreated() == 0) 
+            	ps.setTimestamp(5, null);
+            else 
+                ps.setTimestamp(5, new Timestamp(choice.getDateCreated()));
             ps.setBoolean(6, choice.getIsCompleted());    
-            ps.setTimestamp(7, new Timestamp(choice.getDateCompleted()));    
+            if (choice.getDateCompleted() == 0) 
+            	ps.setTimestamp(7, null);
+            else  
+                ps.setTimestamp(7, new Timestamp(choice.getDateCompleted()));               
             ps.setInt(8, choice.getSelectedAlternativeID());       
             
+
             ps.execute();
             return true;
 

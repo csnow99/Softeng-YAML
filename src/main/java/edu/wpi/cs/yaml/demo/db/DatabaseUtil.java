@@ -26,7 +26,7 @@ public class DatabaseUtil {
 	/**
 	 * Singleton access to DB connection to share resources effectively across multiple accesses.
 	 */
-	protected static Connection connect() throws Exception {
+	public static Connection connect() throws Exception {
 		if (conn != null) { return conn; }
 		
 		// this is resistant to any SQL-injection attack.
