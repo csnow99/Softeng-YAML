@@ -65,7 +65,7 @@ public class ParticipantDAOTest {
 			Assert.fail();
 		}
 		
-		/*Test getParticipants, getParticipantNameFromID, getParticipantIDFromChoiceIDAndParticipantName and belongsToChoiceID*/
+		/*Test getParticipants, getParticipantNameFromID, getParticipantIDFromChoiceIDAndParticipantName, belongsToChoiceID and getChoiceIDP*/
 		try {
 			List<Participant> result = partDao.getParticipants(choice1.getChoiceID());
 			Assert.assertEquals("001", result.get(0).getChoiceID());
@@ -95,6 +95,11 @@ public class ParticipantDAOTest {
 			Assert.assertFalse(partDao.belongsToChoiceID("002", result.get(0).getParticipantID()));
 			Assert.assertFalse(partDao.belongsToChoiceID("002", result.get(1).getParticipantID()));
 			Assert.assertFalse(partDao.belongsToChoiceID("001", result2.get(0).getParticipantID()));
+			
+			/*getChoiceIDP*/
+			Assert.assertEquals("001", partDao.getChoiceIDP(result.get(0).getParticipantID()));
+			Assert.assertEquals("001", partDao.getChoiceIDP(result.get(1).getParticipantID()));
+			Assert.assertEquals("002", partDao.getChoiceIDP(result2.get(0).getParticipantID()));
 		} catch (Exception e) {
 			Assert.fail();
 		}

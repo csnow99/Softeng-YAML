@@ -46,6 +46,27 @@ public class ParticipantDAO {
     	}
     }
     
+    public String getChoiceIDP(int participantID) throws Exception {
+        String choiceID = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement(
+                    "SELECT choice_id FROM " + tblName + " WHERE participantID = ?;");
+            ps.setInt(1, participantID);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                choiceID = rs.getString("choice_id");
+            }
+            rs.close();
+            ps.close();
+
+            return choiceID;
+
+        } catch (Exception e){
+            throw new Exception("Could not get ChoiceID from Participants table: " + e.getMessage());
+        }
+    }
+    
     public String getParticipantNameFromID(int participant_ID) throws Exception {
     	try {
     		Participant participant = null;

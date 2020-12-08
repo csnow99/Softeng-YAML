@@ -43,6 +43,27 @@ public class AlternativeDAO {
          }
     }
     
+    public String getChoiceIDA(int alternativeID) throws Exception {
+        String choiceID = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement(
+                    "SELECT choice_id FROM " + tblName + " WHERE alternative_id = ?;");
+            ps.setInt(1, alternativeID);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                choiceID = rs.getString("choice_id");
+            }
+            rs.close();
+            ps.close();
+
+            return choiceID;
+
+        } catch (Exception e) {
+            throw new Exception("Could not get ChoiceID from Alternatives table: " + e.getMessage());
+        }
+    }
+    
     public int getAlternativeIDFromChoiceIDandTitle(String choiceID, String title) throws Exception {
     	try {
          	 Alternative alternative = null;

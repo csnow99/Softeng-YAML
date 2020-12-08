@@ -4,8 +4,8 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
+import edu.wpi.cs.yaml.demo.db.AlternativeDAO;
 import edu.wpi.cs.yaml.demo.db.FeedbackDAO;
-import edu.wpi.cs.yaml.demo.db.GetDAO;
 import edu.wpi.cs.yaml.demo.http.GetFeedbackResponse;
 import edu.wpi.cs.yaml.demo.http.PostFeedbackRequest;
 import edu.wpi.cs.yaml.demo.model.Feedback;
@@ -16,7 +16,7 @@ import java.util.List;
 public class PostFeedbackHandler implements RequestHandler<PostFeedbackRequest, GetFeedbackResponse> {
     LambdaLogger logger;
     FeedbackDAO feedbackDAO = new FeedbackDAO();
-    GetDAO getDAO = new GetDAO();
+    AlternativeDAO altDAO = new AlternativeDAO();
 
     @Override
     public GetFeedbackResponse handleRequest(PostFeedbackRequest req, Context context) {
@@ -24,7 +24,7 @@ public class PostFeedbackHandler implements RequestHandler<PostFeedbackRequest, 
         try{
             Feedback aFeedback = new Feedback(req.getAlternativeID(), req.getParticipantID(), req.getText());
             if (feedbackDAO.addFeedback(aFeedback)) {
-                List<FeedbackInfo> list = feedbackDAO.getFeedback(getDAO.getChoiceIDA(req.getAlternativeID()));
+                List<FeedbackInfo> list = feedbackDAO.getFeedback(altDAO.getChoiceIDA(req.getAlternativeID()));
                 return new GetFeedbackResponse("Successfully posted Feedback: " + req.getText(), list);
             } else {
                 return new GetFeedbackResponse(400, "Failed to post the feedback for alternative: "

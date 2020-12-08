@@ -62,7 +62,7 @@ public class AlternativeDAOTest {
 			Assert.fail();
 		}
 		
-		/*Test getAlternatives getAltTitleFromAltID and getAltIDfromChoiceIDandAltTitle*/
+		/*Test getAlternatives getAltTitleFromAltID, getAltIDfromChoiceIDandAltTitle and getChoiceIDA*/
 		try {
 			List<Alternative> result = altDao.getAlternatives(choice1.getChoiceID());
 			Assert.assertEquals("001", result.get(0).getChoiceID());
@@ -79,6 +79,8 @@ public class AlternativeDAOTest {
 			Assert.assertEquals(result.get(0).getAlternativeID(), altDao.getAlternativeIDFromChoiceIDandTitle("001", "alt1_name"));
 			Assert.assertEquals(result.get(1).getAlternativeID(), altDao.getAlternativeIDFromChoiceIDandTitle("001", "alt2_name"));
 			
+			Assert.assertEquals("001", altDao.getChoiceIDA(result.get(0).getAlternativeID()));
+			Assert.assertEquals("001", altDao.getChoiceIDA(result.get(1).getAlternativeID()));
 		} catch (Exception e) {
 			Assert.fail();
 		}
