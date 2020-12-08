@@ -44,6 +44,8 @@ public class RegisterParticipantHandlerTest extends LambdaTest{
     Participant participant2 = new Participant(choiceID, "name2", "password2");
     Participant participant3 = new Participant(choiceID, "name3", "password3");
     Participant participant4 = new Participant(choiceID, "name4", "password4");
+    Participant participant5 = new Participant(choiceID, "name5", "password5");
+
     Participant loginParticipant1 = new Participant(choiceID, "name1", "password1");
     Participant incorrectPasswordParticipant1 = new Participant(choiceID, "name1", "password2");
     
@@ -53,6 +55,7 @@ public class RegisterParticipantHandlerTest extends LambdaTest{
     RegisterParticipantRequest reg4 = new RegisterParticipantRequest(incorrectPasswordParticipant1.getChoiceID(), incorrectPasswordParticipant1.getName(), incorrectPasswordParticipant1.getPassword());
     RegisterParticipantRequest reg5 = new RegisterParticipantRequest(participant3.getChoiceID(), participant3.getName(), participant1.getPassword());
     RegisterParticipantRequest reg6 = new RegisterParticipantRequest(participant4.getChoiceID(), participant4.getName(), participant1.getPassword());
+    RegisterParticipantRequest reg7 = new RegisterParticipantRequest("fakeID", participant5.getName(), participant5.getPassword());
 
     if(choiceID == null) {Assert.fail("Created ChoiceID is null");}
     
@@ -62,13 +65,15 @@ public class RegisterParticipantHandlerTest extends LambdaTest{
     RegisterParticipantResponse resp4 = handler.handleRequest(reg4, createContext("falsePassword1"));
     RegisterParticipantResponse resp5 = handler.handleRequest(reg5, createContext("register3"));
     RegisterParticipantResponse resp6 = handler.handleRequest(reg6, createContext("maxReached4"));
-    
+    RegisterParticipantResponse resp7 = handler.handleRequest(reg7, createContext("choiceIDNotFound"));
+
     Assert.assertEquals(201, resp1.getHttpCode());			//register 201
     Assert.assertEquals(201, resp2.getHttpCode());			//register 201
     Assert.assertEquals(200, resp3.getHttpCode());			//login 200
     Assert.assertEquals(401, resp4.getHttpCode());			//wrong password 401
     Assert.assertEquals(201, resp5.getHttpCode());			//register 201
     Assert.assertEquals(403, resp6.getHttpCode());			//too many 403
+    Assert.assertEquals(404, resp7.getHttpCode());			//choiceID not found
     
     ParticipantDAO participantDAO = new ParticipantDAO();
     try {
@@ -78,6 +83,7 @@ public class RegisterParticipantHandlerTest extends LambdaTest{
     Assert.assertEquals(0, resp4.getParticipantID());			//
     Assert.assertEquals(participantDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID, "name3"), resp5.getParticipantID());			//
     Assert.assertEquals(0, resp6.getParticipantID());
+    Assert.assertEquals(0, resp7.getParticipantID());
     } catch (Exception e) {
     	Assert.fail();
     }

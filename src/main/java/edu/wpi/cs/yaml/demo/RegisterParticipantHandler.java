@@ -27,6 +27,10 @@ public class RegisterParticipantHandler implements RequestHandler<RegisterPartic
 		if (logger != null) { logger.log("in createChoice"); }
 		ParticipantDAO participantDAO = new ParticipantDAO();
 		ChoiceDAO choiceDAO = new ChoiceDAO();
+		
+		if (choiceDAO.getChoice(req.getChoiceID()) == null) {
+			return 404;
+		}
 	
 		List<Participant> list = participantDAO.getParticipants(req.getChoiceID());
 		
@@ -70,6 +74,9 @@ public class RegisterParticipantHandler implements RequestHandler<RegisterPartic
 					break;
 				case 403:
 					response = new RegisterParticipantResponse("Maximum number of participants reached for choice: "+req.getName(), 403, 0);
+					break;
+				case 404:
+					response = new RegisterParticipantResponse("ChoiceID not found" + req.getChoiceID(), 404, 0);
 					break;
 				default:
 					response = new RegisterParticipantResponse("Unable to register participant: " + req.getName(), 400, 0);
