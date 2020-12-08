@@ -25,7 +25,7 @@ function requestUsername(participantID, choiceID, callback) {
     if(callback !== null) {
         setTimeout( function(){
             callback(choiceID, participantID, requestAlternativeInfo)
-        }, 1000 );
+        }, 500 );
     }
 }
 

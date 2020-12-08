@@ -19,8 +19,8 @@ function requestAlternativeInfo(choiceID, callback) {
      };
      if (callback !== null) {
          setTimeout( function(){
-             callback(choiceID)
-         }, 1000 );
+             callback(choiceID, requestFeedbackInfo)
+         }, 500 );
      }
 }
 
@@ -60,7 +60,8 @@ function updatePageWithAlternative(response) {
                 "        <a onclick='handleAmendVoteClick(\"dislike:" + alternativeID + "\")'>\n" +
                 "            <img src=\"../img/dislike.png\" id=\"dislike:" + alternativeID + "\" alt=\"dislike\">\n" +
                 "        </a><label id=\"dislikeDesc" + count + "\"> LOADING ... </label><br>\n" +
-                "    </div>"
+                "       <div id='feedback" + alternativeID + "'></div>" +
+                "   </div><hr style=\"width:50%;text-align:left;margin-left:0\">"
         }
     }
 

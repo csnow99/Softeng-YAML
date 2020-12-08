@@ -1,4 +1,4 @@
-function requestVoteInfo(choiceID){
+function requestVoteInfo(choiceID, callback){
     let xhr = new XMLHttpRequest();
     xhr.open("GET", getVote_url + "/" + choiceID, true);
     xhr.send();
@@ -16,6 +16,11 @@ function requestVoteInfo(choiceID){
             updatePageWithVotes("N/A");
         }
     };
+    if (callback !== null) {
+        setTimeout( function(){
+            callback(choiceID)
+        }, 500 );
+    }
 }
 
 function updatePageWithVotes(response){
