@@ -16,6 +16,7 @@ import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDRequest;
 import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDResponse;
 import edu.wpi.cs.yaml.demo.model.Alternative;
 import edu.wpi.cs.yaml.demo.model.Choice;
+import edu.wpi.cs.yaml.demo.model.ChoiceInfo;
 
 public class ChoiceDAOTest extends LambdaTest {
 	/*Test addChoice, getChoice and deleteChoice*/
@@ -23,62 +24,95 @@ public class ChoiceDAOTest extends LambdaTest {
 
 	@Test 
 	public void testChoiceDAOBasics() {
-		String choiceID = "001";
-		String choiceName = "ChoiceDAOTest1";
-		int maxParticipants = 5;
-		String choiceDescription = "ChoiceDAOTest1Description";
 	
-		Choice choice = new Choice(choiceID,  choiceName,  maxParticipants, choiceDescription);
-		
-		/*Test addChoice*/
+		Choice choice1 = new Choice("001", "ChoiceDAOTest1",  5, "ChoiceDAOTest1Description", 1506002170200l, false, 0, 0);
+		Choice choice2 = new Choice("002", "ChoiceDAOTest2",  6, "ChoiceDAOTest2Description", 1506002170300l, true, 1606002170700l, 69);
+	
+		/*Test addChoice1*/
 		ChoiceDAO dao = new ChoiceDAO();
 		try {
-			dao.addChoice(choice);
+			dao.addChoice(choice1);
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM Choice WHERE choice_ID=001;");
 			ResultSet rs = ps.executeQuery();
 			/*Test generateChoice*/
 			Choice result = dao.generateChoice(rs);
 			Assert.assertEquals("001", result.getChoiceID());
-			Assert.assertEquals(expected, actual);
+			Assert.assertEquals( "ChoiceDAOTest1", result.getChoiceName());
+			Assert.assertEquals( 5, result.getMaxParticipants());
+			Assert.assertEquals( "ChoiceDAOTest1Description", result.getChoiceDescription());
+			Assert.assertEquals( 1506002170200l, result.getDateCreated());
+			Assert.assertEquals( false, result.getIsCompleted());
+			Assert.assertEquals( 0, result.getDateCompleted());
+			Assert.assertEquals( 0, result.getSelectedAlternativeID());
 		} catch (Exception e) {
-			
+			Assert.fail();
 		}
 		
+		/*Test addChoice2*/
+		try {
+			dao.addChoice(choice2);
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM Choice WHERE choice_ID=001;");
+			ResultSet rs = ps.executeQuery();
+			/*Test generateChoice*/
+			Choice result = dao.generateChoice(rs);
+			Assert.assertEquals("002", result.getChoiceID());
+			Assert.assertEquals( "ChoiceDAOTest2", result.getChoiceName());
+			Assert.assertEquals( 6, result.getMaxParticipants());
+			Assert.assertEquals( "ChoiceDAOTest2Description", result.getChoiceDescription());
+			Assert.assertEquals( 1506002170300l, result.getDateCreated());
+			Assert.assertEquals( true, result.getIsCompleted());
+			Assert.assertEquals( 1606002170700l, result.getDateCompleted());
+			Assert.assertEquals( 69, result.getSelectedAlternativeID());
+		} catch (Exception e) {
+			Assert.fail();
+		}
 		
+		/*Test getChoice1*/
+		try {
+			Choice result = dao.getChoice(choice1.getChoiceID());
+			Assert.assertEquals("001", result.getChoiceID());
+			Assert.assertEquals( "ChoiceDAOTest1", result.getChoiceName());
+			Assert.assertEquals( 5, result.getMaxParticipants());
+			Assert.assertEquals( "ChoiceDAOTest1Description", result.getChoiceDescription());
+			Assert.assertEquals( 1506002170200l, result.getDateCreated());
+			Assert.assertEquals( false, result.getIsCompleted());
+			Assert.assertEquals( 0, result.getDateCompleted());
+			Assert.assertEquals( 0, result.getSelectedAlternativeID());
+			
+		} catch (Exception e) {
+			Assert.fail();
+		}
+		
+		/*Test getChoice2*/
+		try {
+			Choice result = dao.getChoice(choice1.getChoiceID());
+			Assert.assertEquals("002", result.getChoiceID());
+			Assert.assertEquals( "ChoiceDAOTest2", result.getChoiceName());
+			Assert.assertEquals( 6, result.getMaxParticipants());
+			Assert.assertEquals( "ChoiceDAOTest2Description", result.getChoiceDescription());
+			Assert.assertEquals( 1506002170300l, result.getDateCreated());
+			Assert.assertEquals( true, result.getIsCompleted());
+			Assert.assertEquals( 1606002170700l, result.getDateCompleted());
+			Assert.assertEquals( 69, result.getSelectedAlternativeID());
+			
+		} catch (Exception e) {
+			Assert.fail();
+		}
+		
+		/*Test generateChoiceInfo1*/
+		try {
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM Choice WHERE choice_ID=001;");
+			ResultSet rs = ps.executeQuery();
+			/*Test generateChoice*/
+			ChoiceInfo result = dao.generateChoiceInfo(rs);
+			Assert.assertEquals("001", result.getChoiceID());
+			Assert.assertEquals( "ChoiceDAOTest1Description", result.getDescription());
+			Assert.assertEquals( 1506002170200l, result.getCreationDate());
+			Assert.assertEquals( false, result.getIsCompleted());
+			Assert.assertEquals( 0, result.getCompletionDate());
+		} catch (Exception e) {
+			Assert.fail();
+		}
 	}
 	
-	/*Test getting max Participants*/
-	@Test
-	public void testGetMaxParticipants() {
-		/*We first need to insert a choice in the database*/
-		ArrayList<Alternative> alternatives = new ArrayList<Alternative>();
-		Alternative alt1 = new Alternative("alt1_name", "alt1_description");
-		Alternative alt2 = new Alternative("alt2_name", "alt2_description");
-		Alternative alt3 = new Alternative("alt3_name", "alt3_description");
-		alternatives.add(alt1);
-		alternatives.add(alt2);
-		alternatives.add(alt3);
-	    String choiceID = null;
-
-	    CreateChoiceHandler createHandler = new CreateChoiceHandler();
-	    CreateChoiceRequest ccr = new CreateChoiceRequest("testChoiceRegisterParticipant", 3, "sample description", alternatives);
-	    CreateChoiceResponse createResp = createHandler.handleRequest(ccr, createContext("create"));
-	    choiceID = createResp.response;
-	    
-	    ChoiceDAO dao = new ChoiceDAO();
-	    
-	    try {
-	    Assert.assertEquals(3, dao.getMaxParticipants(choiceID));
-	    } catch (Exception e) {
-	    	Assert.fail("Dao failed");
-	    }
-	    
-	    
-	    if (choiceID != null) {
-	        DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
-	        DeleteSingleChoiceByIDResponse d_resp = new DeleteSingleChoiceByIDChoiceHandler().handleRequest(dcr, createContext("delete"));
-	        assertEquals("Succesfully deleted: "+choiceID, d_resp.response);
-	        }
-	    
-	}
 }

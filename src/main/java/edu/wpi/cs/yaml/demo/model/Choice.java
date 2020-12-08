@@ -10,7 +10,7 @@ public class Choice {
 	long dateCreated;
 	boolean isCompleted;
 	long dateCompleted;
-	String selectedAlternativeID;
+	int selectedAlternativeID;
 	
 	
 	public String getChoiceID() {return this.choiceID;}
@@ -34,8 +34,8 @@ public class Choice {
 	public long getDateCompleted() {return this.dateCompleted;}
 	public void setDateCompleted(long dateCompleted) {this.dateCompleted = dateCompleted;}
 	
-	public String getSelectedAlternativeID() {return this.selectedAlternativeID;}
-	public void setSelectedAlternativeID(String chosenAlternativeID) {this.selectedAlternativeID = chosenAlternativeID;}
+	public int getSelectedAlternativeID() {return this.selectedAlternativeID;}
+	public void setSelectedAlternativeID(int chosenAlternativeID) {this.selectedAlternativeID = chosenAlternativeID;}
 	
 	
 		
@@ -48,12 +48,12 @@ public class Choice {
 		this.dateCreated = System.currentTimeMillis();
 		this.isCompleted = false;
 		this.dateCompleted = 0;
-		this.selectedAlternativeID = null;
+		this.selectedAlternativeID = 0;
 	}
 	
 	/*For testing purposes*/
 	public Choice(String choiceID, String choiceName, int maxParticipants, String choiceDescription,
-				long dateCreated, boolean isCompleted,	long dateCompleted,	String selectedAlternativeID) {
+				long dateCreated, boolean isCompleted,	long dateCompleted,	int selectedAlternativeID) {
 		this.choiceID = choiceID;
 		this.choiceName = choiceName;
 		this.maxParticipants = maxParticipants;
@@ -66,7 +66,7 @@ public class Choice {
 	
 	public Choice() {
 		this.dateCompleted = 0;
-		selectedAlternativeID = null;
+		selectedAlternativeID = 0;
 	}
 	
 }

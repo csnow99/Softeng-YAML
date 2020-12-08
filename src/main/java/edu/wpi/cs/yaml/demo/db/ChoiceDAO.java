@@ -133,7 +133,7 @@ public class ChoiceDAO {
             ps.setTimestamp(5, new Timestamp(choice.getDateCreated()));
             ps.setBoolean(6, choice.getIsCompleted());    
             ps.setTimestamp(7, new Timestamp(choice.getDateCompleted()));    
-            ps.setString(8, choice.getSelectedAlternativeID());       
+            ps.setInt(8, choice.getSelectedAlternativeID());       
             
             ps.execute();
             return true;
@@ -158,13 +158,14 @@ public class ChoiceDAO {
     	Timestamp timeCompleted =  resultSet.getTimestamp("completion_time");
     	if (timeCompleted == null) {returnChoice.setDateCompleted(0);}
     	else {returnChoice.setDateCompleted(timeCompleted.getTime());}
-    	returnChoice.setSelectedAlternativeID(resultSet.getString("chosen_alternative"));
+    	returnChoice.setSelectedAlternativeID(resultSet.getInt("chosen_alternative"));
         return returnChoice;
     }
 
     public ChoiceInfo generateChoiceInfo(ResultSet resultSet) throws Exception {
 
         String choiceID = resultSet.getString("choice_id");
+        String description = resultSet.getString("choice_description");
         Timestamp timeCreated = resultSet.getTimestamp("creation_time");
         long createTime = 0;
         if (timeCreated != null) { createTime = timeCreated.getTime(); }
@@ -173,7 +174,7 @@ public class ChoiceDAO {
         long completeTime = 0;
         if (timeCompleted != null) { completeTime = timeCompleted.getTime(); }
 
-        ChoiceInfo choiceInfo = new ChoiceInfo(choiceID, createTime, completeTime, isComplete);
+        ChoiceInfo choiceInfo = new ChoiceInfo(choiceID, description, createTime, completeTime, isComplete);
 
         return choiceInfo;
     }

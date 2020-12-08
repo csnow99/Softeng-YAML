@@ -50,7 +50,7 @@ public class GetChoiceHandlerTest extends LambdaTest{
         Assert.assertTrue(choice.getChoiceName().equals("testChoice1"));
         Assert.assertTrue(choice.getMaxParticipants() == 10);
         Assert.assertTrue(choice.getChoiceDescription().equals("sample description"));
-        Assert.assertTrue(choice.getSelectedAlternativeID() == null);
+        Assert.assertTrue(choice.getSelectedAlternativeID() == 0);
         
         
         /*Delete the inserted choice*/
