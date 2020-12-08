@@ -22,12 +22,12 @@ public class JsonToChoiceTest {
 		
 		Choice choice = new Gson().fromJson(inputString, Choice.class);
 		
-		Assert.assertEquals(choice.choiceID, "1080016323003461109688296882");
-		Assert.assertEquals(choice.choiceName, "qwe12");
-		Assert.assertEquals(choice.maxParticipants, 10);
-		Assert.assertEquals(choice.choiceDescription, "asdw");
-		Assert.assertEquals(choice.dateCreated, 1606002170260l);
-		Assert.assertEquals(choice.isCompleted, false);
+		Assert.assertEquals(choice.getChoiceID(), "1080016323003461109688296882");
+		Assert.assertEquals(choice.getChoiceName(), "qwe12");
+		Assert.assertEquals(choice.getMaxParticipants(), 10);
+		Assert.assertEquals(choice.getChoiceDescription(), "asdw");
+		Assert.assertEquals(choice.getDateCreated(), 1606002170260l);
+		Assert.assertEquals(choice.getIsCompleted(), false);
 		
 	}
 	}

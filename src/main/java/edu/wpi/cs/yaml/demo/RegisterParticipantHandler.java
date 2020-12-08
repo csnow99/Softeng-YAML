@@ -34,7 +34,7 @@ public class RegisterParticipantHandler implements RequestHandler<RegisterPartic
 		Participant participant = new Participant(req.getChoiceID(), req.getName(), req.getPassword());
 		for(Participant p : list) {
 			if (participant.equals(p)) {
-				if (participant.password.equals(p.password)) {return 200;} //valid login
+				if (participant.getPassword().equals(p.getPassword())) {return 200;} //valid login
 				else {return 401;}										   //false password
 			}
 		}

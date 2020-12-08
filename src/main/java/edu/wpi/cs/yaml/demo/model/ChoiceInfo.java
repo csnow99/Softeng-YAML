@@ -3,10 +3,10 @@ package edu.wpi.cs.yaml.demo.model;
 import java.sql.Timestamp;
 
 public class ChoiceInfo {
-	public String choiceID;
-	public long creationDate;
-	public long completionDate;
-	public boolean completed;
+	String choiceID;
+	long creationDate;
+	long completionDate;
+	boolean completed;
 	
 	public String getChoiceID() {return this.choiceID;}
 	public void setChoiceID(String choiceID) {this.choiceID = choiceID;}

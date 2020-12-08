@@ -58,8 +58,8 @@ public class GetVotesHandlerTest extends LambdaTest {
 			Participant participant2 = new Participant(choiceID, "name2", "password2");
 
 
-			RegisterParticipantRequest reg1 = new RegisterParticipantRequest(participant1.choiceID, participant1.username, participant1.password);
-			RegisterParticipantRequest reg2 = new RegisterParticipantRequest(participant2.choiceID, participant2.username, participant1.password);
+			RegisterParticipantRequest reg1 = new RegisterParticipantRequest(participant1.getChoiceID(), participant1.getName(), participant1.getPassword());
+			RegisterParticipantRequest reg2 = new RegisterParticipantRequest(participant2.getChoiceID(), participant2.getName(), participant1.getPassword());
 
 			if(choiceID == null) {Assert.fail("Created ChoiceID is null");}
 

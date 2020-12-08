@@ -1,11 +1,11 @@
 package edu.wpi.cs.yaml.demo.model;
 
 public class Feedback {
-	public int feedbackID;
-    public int alternativeID;
-    public int participantID;
-    public String feedbackText;
-    public long feedbackTimestamp;
+	int feedbackID;
+    int alternativeID;
+    int participantID;
+    String feedbackText;
+    long feedbackTimestamp;
 
     public int getAlternativeID() {return this.alternativeID;}
     public void setAlternativeID(int altID) {this.alternativeID = altID;}
@@ -13,8 +13,8 @@ public class Feedback {
     public int getParticipantID() {return this.participantID;}
     public void setParticipantID(int partID) {this.participantID = partID;}
 
-    public long getFeedbackText() {return this.feedbackTimestamp;}
-    public void setFeedbackText(long feedbackTimestamp) {this.feedbackTimestamp = feedbackTimestamp;}
+    public String getFeedbackText() {return this.feedbackText;}
+    public void setFeedbackText(String feedbackText) {this.feedbackText = feedbackText;}
     
     public long getFeedbackTimestamp() {return this.feedbackTimestamp;}
     public void setFeedbackTimestamp(long feedbackTimestamp) {this.feedbackTimestamp = feedbackTimestamp;}

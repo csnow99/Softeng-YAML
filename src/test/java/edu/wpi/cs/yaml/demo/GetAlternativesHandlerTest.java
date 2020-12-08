@@ -48,17 +48,17 @@ public class GetAlternativesHandlerTest extends LambdaTest{
         
         Assert.assertEquals(3, respAlternatives.size());
         
-        Assert.assertTrue(respAlternatives.get(0).choiceID.equals(choiceID));
-        Assert.assertTrue(respAlternatives.get(0).title.equals("alt1_name"));
-        Assert.assertTrue(respAlternatives.get(0).description.equals("alt1_description"));
+        Assert.assertTrue(respAlternatives.get(0).getChoiceID().equals(choiceID));
+        Assert.assertTrue(respAlternatives.get(0).getTitle().equals("alt1_name"));
+        Assert.assertTrue(respAlternatives.get(0).getDescription().equals("alt1_description"));
         
-        Assert.assertTrue(respAlternatives.get(1).choiceID.equals(choiceID));
-        Assert.assertTrue(respAlternatives.get(1).title.equals("alt2_name"));
-        Assert.assertTrue(respAlternatives.get(1).description.equals("alt2_description"));
+        Assert.assertTrue(respAlternatives.get(1).getChoiceID().equals(choiceID));
+        Assert.assertTrue(respAlternatives.get(1).getTitle().equals("alt2_name"));
+        Assert.assertTrue(respAlternatives.get(1).getDescription().equals("alt2_description"));
         
-        Assert.assertTrue(respAlternatives.get(2).choiceID.equals(choiceID));
-        Assert.assertTrue(respAlternatives.get(2).title.equals("alt3_name"));
-        Assert.assertTrue(respAlternatives.get(2).description.equals("alt3_description"));
+        Assert.assertTrue(respAlternatives.get(2).getChoiceID().equals(choiceID));
+        Assert.assertTrue(respAlternatives.get(2).getTitle().equals("alt3_name"));
+        Assert.assertTrue(respAlternatives.get(2).getDescription().equals("alt3_description"));
         
         
         /*Delete the inserted choice*/

@@ -47,12 +47,12 @@ public class RegisterParticipantHandlerTest extends LambdaTest{
     Participant loginParticipant1 = new Participant(choiceID, "name1", "password1");
     Participant incorrectPasswordParticipant1 = new Participant(choiceID, "name1", "password2");
     
-    RegisterParticipantRequest reg1 = new RegisterParticipantRequest(participant1.choiceID, participant1.username, participant1.password);
-    RegisterParticipantRequest reg2 = new RegisterParticipantRequest(participant2.choiceID, participant2.username, participant1.password);
-    RegisterParticipantRequest reg3 = new RegisterParticipantRequest(loginParticipant1.choiceID, loginParticipant1.username, loginParticipant1.password);
-    RegisterParticipantRequest reg4 = new RegisterParticipantRequest(incorrectPasswordParticipant1.choiceID, incorrectPasswordParticipant1.username, incorrectPasswordParticipant1.password);
-    RegisterParticipantRequest reg5 = new RegisterParticipantRequest(participant3.choiceID, participant3.username, participant1.password);
-    RegisterParticipantRequest reg6 = new RegisterParticipantRequest(participant4.choiceID, participant4.username, participant1.password);
+    RegisterParticipantRequest reg1 = new RegisterParticipantRequest(participant1.getChoiceID(), participant1.getName(), participant1.getPassword());
+    RegisterParticipantRequest reg2 = new RegisterParticipantRequest(participant2.getChoiceID(), participant2.getName(), participant1.getPassword());
+    RegisterParticipantRequest reg3 = new RegisterParticipantRequest(loginParticipant1.getChoiceID(), loginParticipant1.getName(), loginParticipant1.getPassword());
+    RegisterParticipantRequest reg4 = new RegisterParticipantRequest(incorrectPasswordParticipant1.getChoiceID(), incorrectPasswordParticipant1.getName(), incorrectPasswordParticipant1.getPassword());
+    RegisterParticipantRequest reg5 = new RegisterParticipantRequest(participant3.getChoiceID(), participant3.getName(), participant1.getPassword());
+    RegisterParticipantRequest reg6 = new RegisterParticipantRequest(participant4.getChoiceID(), participant4.getName(), participant1.getPassword());
 
     if(choiceID == null) {Assert.fail("Created ChoiceID is null");}
     

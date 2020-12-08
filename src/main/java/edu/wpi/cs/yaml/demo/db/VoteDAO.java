@@ -63,11 +63,11 @@ public class VoteDAO {
 
         while (resultSet.next()) {
          Vote v = generateVote(resultSet);
-        	if(v.amendType == 1) {
+        	if(v.getAmendType() == 1) {
         		upvoters.add(participantDAO.getParticipantNameFromID(v.getParticipantID()));
         		numUpvotes++;
         	}
-        	else if(v.amendType == 0) {
+        	else if(v.getAmendType() == 0) {
         		downvoters.add(participantDAO.getParticipantNameFromID(v.getParticipantID()));
         		numDownvotes++;
         	}
@@ -98,9 +98,9 @@ public class VoteDAO {
     public boolean addVote(Vote vote) throws Exception {
         try {
             PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (participant_id,alternative_id,vote_type) values(?,?,?);");
-            ps.setInt(1, vote.participantID);
-            ps.setInt(2, vote.alternativeID);
-            ps.setInt(3, vote.amendType);       
+            ps.setInt(1, vote.getParticipantID());
+            ps.setInt(2, vote.getAlternativeID());
+            ps.setInt(3, vote.getAmendType());       
             
             ps.execute();
             return true;

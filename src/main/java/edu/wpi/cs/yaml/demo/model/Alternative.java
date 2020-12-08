@@ -1,10 +1,10 @@
 package edu.wpi.cs.yaml.demo.model;
 
 public class Alternative {
-	public int alternativeID;
-	public String choiceID;
-	public String title;
-	public String description;
+	int alternativeID;
+	String choiceID;
+	String title;
+	String description;
 	
 	public int getAlternativeID() {return this.alternativeID;}
 	public void setAlternativeID(int alternativeID) {this.alternativeID = alternativeID;};

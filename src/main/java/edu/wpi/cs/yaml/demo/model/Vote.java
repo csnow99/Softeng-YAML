@@ -1,10 +1,10 @@
 package edu.wpi.cs.yaml.demo.model;
 
 public class Vote {
-	public int voteID;
-    public int alternativeID;
-    public int participantID;
-    public int amendType;
+	int voteID;
+    int alternativeID;
+    int participantID;
+    int amendType;
 
     public int getAlternativeID() {return this.alternativeID;}
     public void setAlternativeID(int altID) {this.alternativeID = altID;}

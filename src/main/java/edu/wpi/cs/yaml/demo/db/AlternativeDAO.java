@@ -35,7 +35,7 @@ public class AlternativeDAO {
              resultSet.close();
              ps.close();
              
-             return alternative.title;
+             return alternative.getTitle();
 
          } catch (Exception e) {
          	e.printStackTrace();
@@ -70,9 +70,9 @@ public class AlternativeDAO {
     public boolean addAlternative(Alternative alternative) throws Exception {
         try {
             PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (choice_ID, alternative_title,alternative_description) values(?,?,?);");
-            ps.setString(1, alternative.choiceID);
-            ps.setString(2, alternative.title);
-            ps.setString(3, alternative.description);       
+            ps.setString(1, alternative.getChoiceID());
+            ps.setString(2, alternative.getTitle());
+            ps.setString(3, alternative.getDescription());       
             
             ps.execute();
             return true;

@@ -108,11 +108,14 @@ public class ChoiceDAO {
         }
     }
 
-
+    /*Adds whichever choice is passed to it to the Choices table
+     * Blindly copies info provided in the choice object
+     * Make sure that the choice object contains accurate info 
+     * */
     public boolean addChoice(Choice choice) throws Exception {
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_ID = ?;");
-            ps.setString(1, choice.choiceID);
+            ps.setString(1, choice.getChoiceID());
             ResultSet resultSet = ps.executeQuery();
             
             // already present?
@@ -123,14 +126,14 @@ public class ChoiceDAO {
             }
 
             ps = conn.prepareStatement("INSERT INTO " + tblName + " (choice_ID, choice_name, choice_maxParticipants, choice_description, creation_time, choice_isCompleted, completion_time, chosen_alternative) values(?,?,?,?,?,?,?,?);");
-            ps.setString(1,  choice.choiceID);
-            ps.setString(2,  choice.choiceName);
-            ps.setInt(3, choice.maxParticipants);
-            ps.setString(4, choice.choiceDescription);
-            ps.setTimestamp(5, new Timestamp(choice.dateCreated));
-            ps.setBoolean(6, false);     //a newly created choice is not completed
-            ps.setTimestamp(7, null);    //it does not have a completion date
-            ps.setString(8, null);       //it does not have a selected alternative
+            ps.setString(1,  choice.getChoiceID());
+            ps.setString(2,  choice.getChoiceName());
+            ps.setInt(3, choice.getMaxParticipants());
+            ps.setString(4, choice.getChoiceDescription());
+            ps.setTimestamp(5, new Timestamp(choice.getDateCreated()));
+            ps.setBoolean(6, choice.getIsCompleted());    
+            ps.setTimestamp(7, new Timestamp(choice.getDateCompleted()));    
+            ps.setString(8, choice.getSelectedAlternativeID());       
             
             ps.execute();
             return true;
@@ -144,18 +147,18 @@ public class ChoiceDAO {
     
     public Choice generateChoice(ResultSet resultSet) throws Exception {
     	Choice returnChoice = new Choice();
-    	returnChoice.choiceID = resultSet.getString("choice_ID");
-    	returnChoice.choiceName = resultSet.getString("choice_name");
-    	returnChoice.maxParticipants = resultSet.getInt("choice_maxParticipants");
-    	returnChoice.choiceDescription = resultSet.getString("choice_description");
+    	returnChoice.setChoiceID(resultSet.getString("choice_ID"));
+    	returnChoice.setChoiceName(resultSet.getString("choice_name"));
+    	returnChoice.setMaxParticipants(resultSet.getInt("choice_maxParticipants"));
+    	returnChoice.setChoiceDescription(resultSet.getString("choice_description"));
     	Timestamp timeCreated =  resultSet.getTimestamp("creation_time");
-    	if (timeCreated == null) {returnChoice.dateCreated = 0;}
-    	else {returnChoice.dateCreated = timeCreated.getTime();}
-    	returnChoice.isCompleted = resultSet.getBoolean("choice_isCompleted");
+    	if (timeCreated == null) {returnChoice.setDateCreated(0);}
+    	else {returnChoice.setDateCreated(timeCreated.getTime());}
+    	returnChoice.setIsCompleted(resultSet.getBoolean("choice_isCompleted"));
     	Timestamp timeCompleted =  resultSet.getTimestamp("completion_time");
-    	if (timeCompleted == null) {returnChoice.dateCompleted = 0;}
-    	else {returnChoice.dateCompleted = timeCompleted.getTime();}
-    	returnChoice.selectedAlternativeID = resultSet.getString("chosen_alternative");
+    	if (timeCompleted == null) {returnChoice.setDateCompleted(0);}
+    	else {returnChoice.setDateCompleted(timeCompleted.getTime());}
+    	returnChoice.setSelectedAlternativeID(resultSet.getString("chosen_alternative"));
         return returnChoice;
     }
 

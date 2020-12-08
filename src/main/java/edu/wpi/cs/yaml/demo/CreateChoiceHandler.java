@@ -51,7 +51,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 		String maxParticipants = Integer.toString(Math.abs(req.getMaxParticipants()));				//never longer than 10 digits
 		String alternativesHashCode = "";															//never longer than 30 digits
 		for (Alternative alt : req.getAlternatives()) {
-			Integer altHashCode = Math.abs(alt.title.hashCode()%1000000); 							//make these 6 digits long
+			Integer altHashCode = Math.abs(alt.getTitle().hashCode()%1000000); 							//make these 6 digits long
 			alternativesHashCode = alternativesHashCode.concat(altHashCode.toString());
 		}
 	

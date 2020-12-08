@@ -93,9 +93,9 @@ public class ParticipantDAO {
     public boolean addParticipant(Participant participant) throws Exception {
         try {
             PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (choice_ID, username, password) values(?,?,?);");
-            ps.setString(1, participant.choiceID);
-            ps.setString(2, participant.username);
-            ps.setString(3, participant.password);       
+            ps.setString(1, participant.getChoiceID());
+            ps.setString(2, participant.getName());
+            ps.setString(3, participant.getPassword());       
             
             ps.execute();
             return true;

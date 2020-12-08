@@ -65,8 +65,8 @@ public class FeedbackDAO {
             while (resultSet.next()) {
             	Feedback f = generateFeedback(resultSet);
             	participants.add(participantDAO.getParticipantNameFromID(f.getParticipantID()));
-            	feedback.add(f.feedbackText);
-            	timestamps.add(f.feedbackTimestamp);
+            	feedback.add(f.getFeedbackText());
+            	timestamps.add(f.getFeedbackTimestamp());
             }
             resultSet.close();
             statement.close();
@@ -81,13 +81,13 @@ public class FeedbackDAO {
     public boolean addFeedback(Feedback feedback) throws Exception {
         try {
             PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (participant_id,alternative_id,feedback_text,feedback_timestamp) values(?,?,?,?);");
-            ps.setInt(1, feedback.participantID);
-            ps.setInt(2, feedback.alternativeID);
-            ps.setString(3, feedback.feedbackText); 
-            ps.setTimestamp(4, new Timestamp(feedback.feedbackTimestamp));
+            ps.setInt(1, feedback.getParticipantID());
+            ps.setInt(2, feedback.getAlternativeID());
+            ps.setString(3, feedback.getFeedbackText()); 
+            ps.setTimestamp(4, new Timestamp(feedback.getFeedbackTimestamp()));
             ChoiceDAO choiceDAO = new ChoiceDAO();
             String choiceID = null;
-            String ps2 = "select choice_id from Alternatives where alternative_id="+feedback.alternativeID;
+            String ps2 = "select choice_id from Alternatives where alternative_id="+feedback.getAlternativeID();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(ps2);
             while(rs.next()) {

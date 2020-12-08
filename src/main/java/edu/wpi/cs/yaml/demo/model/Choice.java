@@ -3,14 +3,14 @@ package edu.wpi.cs.yaml.demo.model;
 import java.sql.Timestamp;
 
 public class Choice {
-	public String choiceID;
-	public String choiceName;
-	public int maxParticipants;
-	public String choiceDescription;
-	public long dateCreated;
-	public boolean isCompleted;
-	public long dateCompleted;
-	public String selectedAlternativeID;
+	String choiceID;
+	String choiceName;
+	int maxParticipants;
+	String choiceDescription;
+	long dateCreated;
+	boolean isCompleted;
+	long dateCompleted;
+	String selectedAlternativeID;
 	
 	
 	public String getChoiceID() {return this.choiceID;}
@@ -26,13 +26,13 @@ public class Choice {
 	public void setChoiceDescription(String choiceDescription) {this.choiceDescription = choiceDescription;}
  	
 	public long getDateCreated() {return this.dateCreated;}
-	public void setDateCreated(int dateCreated) {this.dateCreated = dateCreated;}
+	public void setDateCreated(long dateCreated) {this.dateCreated = dateCreated;}
 	
 	public boolean getIsCompleted() {return this.isCompleted;}
 	public void setIsCompleted(boolean isCompleted) {this.isCompleted = isCompleted;}
 	
 	public long getDateCompleted() {return this.dateCompleted;}
-	public void setDateCompleted(int dateCompleted) {this.dateCompleted = dateCompleted;}
+	public void setDateCompleted(long dateCompleted) {this.dateCompleted = dateCompleted;}
 	
 	public String getSelectedAlternativeID() {return this.selectedAlternativeID;}
 	public void setSelectedAlternativeID(String chosenAlternativeID) {this.selectedAlternativeID = chosenAlternativeID;}
@@ -49,6 +49,19 @@ public class Choice {
 		this.isCompleted = false;
 		this.dateCompleted = 0;
 		this.selectedAlternativeID = null;
+	}
+	
+	/*For testing purposes*/
+	public Choice(String choiceID, String choiceName, int maxParticipants, String choiceDescription,
+				long dateCreated, boolean isCompleted,	long dateCompleted,	String selectedAlternativeID) {
+		this.choiceID = choiceID;
+		this.choiceName = choiceName;
+		this.maxParticipants = maxParticipants;
+		this.choiceDescription = choiceDescription;
+		this.dateCreated = dateCreated;
+		this.isCompleted = isCompleted;
+		this.dateCompleted = dateCompleted;
+		this.selectedAlternativeID = selectedAlternativeID;
 	}
 	
 	public Choice() {

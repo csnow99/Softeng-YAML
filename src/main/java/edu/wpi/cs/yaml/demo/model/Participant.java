@@ -1,10 +1,10 @@
 package edu.wpi.cs.yaml.demo.model;
 
 public class Participant {
-	public int participantID;
-	public String choiceID;
-	public String username;
-	public String password;
+	int participantID;
+	String choiceID;
+	String username;
+	String password;
 	
 	public int getParticipantID() {return this.participantID;}
 	public String getChoiceID() {return this.choiceID;}
