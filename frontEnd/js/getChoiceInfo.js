@@ -20,7 +20,7 @@ function requestChoiceInfo(choiceID, participantID, callback) {
      if (callback !== null) {
          setTimeout( function(){
              callback(choiceID, requestVoteInfo)
-         }, 1000 );
+         }, 500 );
      }
 }
 

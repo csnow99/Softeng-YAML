@@ -8,6 +8,7 @@ let createReport_url = base_url + "admin"               // GET
 let getVote_url = base_url + "vote"                     // GET + /{choiceID}
 let amendVote_url = base_url + "vote"                   // POST + /{choiceID}/{participantID}
 let getUsername_url = base_url + "choice"               // GET + /{choiceID}/{participantID}
+let getFeedback_url = base_url + "feedback"             // GET + /{choiceID}
 
 
 
