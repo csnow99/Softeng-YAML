@@ -56,19 +56,14 @@ function sendVote(voteType, altID) {
     xhr.onloadend = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                processVote(xhr.responseText);
+                updatePageWithVotes(xhr.responseText);
             } else {
                 let js = JSON.parse(xhr.responseText);
                 let err = js["response"];
                 alert (err);
             }
         } else {
-            processVote("N/A");
+            updatePageWithVotes("N/A");
         }
     };
-}
-
-function processVote(response) {
-    console.log("The response after sending Vote: " + response);
-    updatePageWithVotes(response);
 }
