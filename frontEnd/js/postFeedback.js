@@ -4,12 +4,16 @@ function addFeedback(id) {
     let output = feedbackDiv.innerHTML;
     let otherAttempt = document.getElementById("newFeedback");
     if (otherAttempt !== null) {
+        let oldAlternativeID = document.getElementById("feedbackInput").getAttribute("name");
         otherAttempt.parentElement.removeChild(otherAttempt);
+        document.getElementById("addFeedback" + oldAlternativeID).innerHTML =
+            "<input id='addFeedbackBtn" + oldAlternativeID + "' type=\"button\" value=\"Add Feedback\" " +
+            "           onclick='JavaScript:addFeedback(\"feedback" + oldAlternativeID + "\")'>"
     }
-    let element = document.getElementById("addFeedback" + alternativeID);
+    let element = document.getElementById("addFeedbackBtn" + alternativeID);
     element.parentElement.removeChild(element);
     output += "<div id='newFeedback'><label>Enter Feedback text:</label><br>" +
-                "<textarea id='feedbackInput' rows='4' cols='50'></textarea><br>" +
+                "<textarea id='feedbackInput' name='" + alternativeID + "' rows='4' cols='50'></textarea><br>" +
                 "<input type='button' value='Post Feedback' onclick='postFeedback(" + alternativeID + ")'></div>";
     feedbackDiv.innerHTML = output;
 }

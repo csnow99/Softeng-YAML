@@ -61,9 +61,10 @@ function updatePageWithAlternative(response) {
                 "            <img src=\"../img/dislike.png\" id=\"dislike:" + alternativeID + "\" alt=\"dislike\">\n" +
                 "        </a><label id=\"dislikeDesc" + count + "\"> LOADING ... </label><br>\n" +
                 "   </div>" +
-                "       <div id='feedback" + alternativeID + "'></div>" +
-                "       <input id='addFeedback" + alternativeID + "' type=\"button\" value=\"Add Feedback\" " +
-                "           onclick='JavaScript:addFeedback(\"feedback" + alternativeID + "\")'>" +
+                "       <div id='feedback" + alternativeID + "'></div><br>" +
+                "       <div id='addFeedback" + alternativeID + "'>" +
+                "           <input id='addFeedbackBtn" + alternativeID + "' type=\"button\" value=\"Add Feedback\" " +
+                "           onclick='JavaScript:addFeedback(\"feedback" + alternativeID + "\")'></div>" +
                 "<hr style=\"width:50%;text-align:left;margin-left:0\">"
         }
     }
