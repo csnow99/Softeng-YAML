@@ -28,7 +28,7 @@ public class AmendVoteHandler implements RequestHandler<AmendVoteRequest, GetVot
         
         
         try {
-        	String choiceID = partDao.getChoiceIDP(req.getParticipantID());
+        	String choiceID = altDao.getChoiceIDA(req.getAlternativeID());
         	
         	/*If the participantID does not belong to the choiceID (someone trying to hack in)*/
         	if (!partDao.belongsToChoiceID(choiceID, req.getParticipantID())) {return new GetVotesResponse(403, "ParticipantID not associated with choiceID");}

@@ -135,14 +135,14 @@ public class AmendVoteHandlerTest extends LambdaTest {
 			Participant participant2 = new Participant(choiceID2, "creator", "password1");
 			RegisterParticipantRequest reg2 = new RegisterParticipantRequest(participant2.getChoiceID(), participant2.getName(), participant2.getPassword());
 			registerHandler.handleRequest(reg2, createContext("register2"));
-			int part2ID = partDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID, "creator");
+			int part2ID = partDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID2, "creator");
 
 			AmendVoteHandler amendHandler = new AmendVoteHandler();
-			AmendVoteRequest amendRequest1 = new AmendVoteRequest(alt1ID, part2ID, 1);
-			AmendVoteRequest amendRequest2 = new AmendVoteRequest(alt1ID2, part1ID, 1);
+			AmendVoteRequest amendRequest1 = new AmendVoteRequest(part2ID,1, alt1ID);
+			AmendVoteRequest amendRequest2 = new AmendVoteRequest(part1ID, 1, alt1ID2);
 
 			GetVotesResponse amendResponse1 = amendHandler.handleRequest(amendRequest1,  createContext("improper Amend1"));
-			GetVotesResponse amendResponse2 = amendHandler.handleRequest(amendRequest2,  createContext("improper Amend1"));
+			GetVotesResponse amendResponse2 = amendHandler.handleRequest(amendRequest2,  createContext("improper Amend2"));
 			
 			Assert.assertEquals(403, amendResponse1.getHttpCode());
 			Assert.assertEquals("ParticipantID not associated with choiceID", amendResponse1.getResponse());
@@ -166,7 +166,7 @@ public class AmendVoteHandlerTest extends LambdaTest {
 			int altID = altDAO.getAlternativeIDFromChoiceIDandTitle("001", "alt1_name");
 			int partID = partDAO.getParticipantIDFromChoiceIDAndParticipantName("001", "PartName1");
 			
-			AmendVoteRequest amendRequest3 = new AmendVoteRequest(altID, partID, 1);
+			AmendVoteRequest amendRequest3 = new AmendVoteRequest(partID, 1,altID);
 			GetVotesResponse amendResponse3 = amendHandler.handleRequest(amendRequest3,  createContext("improper Amend3"));
 
 			Assert.assertEquals(403, amendResponse3.getHttpCode());

@@ -15,13 +15,13 @@ public class AmendVoteRequest {
 	public void setAmendType(int amendType) {this.amendType = amendType;}
 	
 	public AmendVoteRequest() {}
-	public AmendVoteRequest(int participantName, int amendType, int alternativeID){
-		this.participantID = participantName;
+	public AmendVoteRequest(int participantID, int amendType, int alternativeID){
+		this.participantID = participantID;
 		this.amendType = amendType;
 		this.alternativeID = alternativeID;
 	}
 	
 	public String toString() {
-		return "Requesting to amend voteID: " + this.alternativeID;
+		return "Requesting to amend vote for alternativeID: " + Integer.toString(this.alternativeID)+ " and participantID: "+ Integer.toString(this.participantID);
 	}
 }
