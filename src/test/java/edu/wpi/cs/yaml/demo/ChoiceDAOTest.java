@@ -161,7 +161,7 @@ public class ChoiceDAOTest extends LambdaTest {
 			int difference3 = dao.getAllChoices().size() - initialNumOfChoices;
 			Assert.assertEquals(-2, difference3);
 		} catch (Exception e) {
-			
+			Assert.fail();
 		}
 		
 	}
