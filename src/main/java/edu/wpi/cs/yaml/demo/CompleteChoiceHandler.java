@@ -16,9 +16,9 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 		logger.log(req.toString());
 		
 		/*Along with making sure that the basic functionality works, make sure to check the following
-		 * 1) ChoiceID exists
-		 * 2) ParticipantID is a valid ID for the choiceID
-		 * 3) choiceID is not already completed
+		 * 1) ChoiceID exists (code 404 choice does not exist otherwise)
+		 * 2) ParticipantID is a valid ID for the choiceID (code 403)
+		 * 3) choiceID is not already completed (code 403)
 		 * */
 	}
 }
