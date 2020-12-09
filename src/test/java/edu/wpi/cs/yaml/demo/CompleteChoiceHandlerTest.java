@@ -20,6 +20,9 @@ import edu.wpi.cs.yaml.demo.model.Participant;
 public class CompleteChoiceHandlerTest extends LambdaTest{
 	@Test
 	public void testCompleteChoice() {
+		String choiceID = null;
+		ChoiceDAO choiceDAO = new ChoiceDAO();
+
 		try {
 			/*We first need to insert a choice in the database*/
 			ArrayList<Alternative> alternatives = new ArrayList<Alternative>();
@@ -29,7 +32,6 @@ public class CompleteChoiceHandlerTest extends LambdaTest{
 			alternatives.add(alt1);
 			alternatives.add(alt2);
 			alternatives.add(alt3);
-			String choiceID = null;
 
 			CreateChoiceHandler createHandler = new CreateChoiceHandler();
 			CreateChoiceRequest ccr = new CreateChoiceRequest("testCompleteChoice", 3, "sample description", alternatives);
@@ -47,14 +49,13 @@ public class CompleteChoiceHandlerTest extends LambdaTest{
 			//We need creator ID to vote
 			ParticipantDAO partDAO = new ParticipantDAO();
 			int part1ID = partDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID, "creator");
-			
-			ChoiceDAO choiceDAO = new ChoiceDAO();
+
 			/*make sure the choice is initially not completed*/
 			Choice initialChoice = choiceDAO.getChoice(choiceID);
 			Assert.assertFalse(initialChoice.getIsCompleted());
 			Assert.assertEquals(0, initialChoice.getDateCompleted());
-			
-			
+
+
 			/*Next complete the choice*/
 			CompleteChoiceRequest completeReq = new CompleteChoiceRequest(choiceID, part1ID);
 			CompleteChoiceHandler completeHandler = new CompleteChoiceHandler();
@@ -64,19 +65,27 @@ public class CompleteChoiceHandlerTest extends LambdaTest{
 			Assert.assertEquals(200, completeResp.getHttpCode());
 			Assert.assertTrue(finalChoice.getIsCompleted());
 			Assert.assertNotEquals(0, finalChoice.getDateCompleted());
-			
+
 			/*make sure the creator cannot complete the choiceAgain*/
 			GetChoiceResponse completeResp2 = completeHandler.handleRequest(completeReq, createContext("complete"));
 			/*Assert the httpCode and response */
 			Assert.assertEquals(403, completeResp2.getHttpCode());
 			Assert.assertNotEquals("Choice has already been completed", completeResp2.getResponse());
-			
+
+			choiceDAO.deleteChoice(choiceID);
+
+
 		} catch (Exception e) {
+			try {
+				choiceDAO.deleteChoice(choiceID);	//delete the choice automatically if the test fails anywhere
+			} catch (Exception e2) {
+				Assert.fail();
+			}
 			Assert.fail();
 		}
 
 	}
-	
+
 	@Test
 	public void testCompleteChoiceEdgeCases() {
 		ChoiceDAO choiceDAO = new ChoiceDAO();
@@ -103,11 +112,11 @@ public class CompleteChoiceHandlerTest extends LambdaTest{
 			choiceID2 = createResp2.getResponse();
 			if(choiceID == null) {Assert.fail("Created ChoiceID is null");}
 
-		
+
 			/*Now that it's inserted we can try to register the first user to both choices */
 
 			RegisterParticipantHandler registerHandler = new RegisterParticipantHandler();
-			
+
 			Participant participant1 = new Participant(choiceID, "creator", "password1");
 			RegisterParticipantRequest reg1 = new RegisterParticipantRequest(participant1.getChoiceID(), participant1.getName(), participant1.getPassword());
 			registerHandler.handleRequest(reg1, createContext("register1"));
@@ -124,20 +133,26 @@ public class CompleteChoiceHandlerTest extends LambdaTest{
 
 			GetChoiceResponse completeResponse1 = completeHandler.handleRequest(completeRequest1,  createContext("improper Amend1"));
 			GetChoiceResponse completeResponse2 = completeHandler.handleRequest(completeRequest2,  createContext("improper Amend2"));
-			
+
 			Assert.assertEquals(403, completeResponse1.getHttpCode());
 			Assert.assertEquals("ParticipantID not associated with choiceID", completeResponse1.getResponse());
 			Assert.assertEquals(null, completeResponse1.getChoice());
-			
+
 			Assert.assertEquals(403, completeResponse2.getHttpCode());
 			Assert.assertEquals("ParticipantID not associated with choiceID", completeResponse2.getResponse());
 			Assert.assertEquals(null, completeResponse1.getChoice());
-		
+
 			choiceDAO.deleteChoice(choiceID);
 			choiceDAO.deleteChoice(choiceID2);
-			
+
 
 		} catch (Exception e) {
+			try {
+				choiceDAO.deleteChoice(choiceID);	//delete the choice automatically if the test fails anywhere
+				choiceDAO.deleteChoice(choiceID2);
+			} catch (Exception e2) {
+				Assert.fail();
+			}
 			Assert.fail();
 		}
 

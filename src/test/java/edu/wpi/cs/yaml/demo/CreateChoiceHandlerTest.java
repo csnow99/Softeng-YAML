@@ -95,6 +95,12 @@ public class CreateChoiceHandlerTest extends LambdaTest {
         	 Assert.assertEquals("Unable to create choice, due to dupliate choiceID: "+choiceID1,response.getResponse()); //choiceID1
         
         } catch (Exception e) {
+        	try {
+				choiceDAO.deleteChoice(choiceID1);	//delete the choice automatically if the test fails anywhere
+				choiceDAO.deleteChoice(choiceID2);
+			} catch (Exception e2) {
+				Assert.fail();
+			}
         	Assert.fail();
         }
         

@@ -8,8 +8,6 @@ import edu.wpi.cs.yaml.demo.db.VoteDAO;
 import edu.wpi.cs.yaml.demo.http.AmendVoteRequest;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceRequest;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceResponse;
-import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDRequest;
-import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDResponse;
 import edu.wpi.cs.yaml.demo.http.GetVotesResponse;
 import edu.wpi.cs.yaml.demo.http.RegisterParticipantRequest;
 import edu.wpi.cs.yaml.demo.model.Alternative;
@@ -26,6 +24,8 @@ public class AmendVoteHandlerTest extends LambdaTest {
 
 	@Test
 	public void testHeinemanIteration2() {
+		String choiceID = null;
+		ChoiceDAO choiceDAO = new ChoiceDAO();
 		try {
 			/*We first need to insert a choice in the database*/
 			ArrayList<Alternative> alternatives = new ArrayList<Alternative>();
@@ -35,7 +35,6 @@ public class AmendVoteHandlerTest extends LambdaTest {
 			alternatives.add(alt1);
 			alternatives.add(alt2);
 			alternatives.add(alt3);
-			String choiceID = null;
 
 			CreateChoiceHandler createHandler = new CreateChoiceHandler();
 			CreateChoiceRequest ccr = new CreateChoiceRequest("testAmendVote", 3, "sample description", alternatives);
@@ -82,13 +81,13 @@ public class AmendVoteHandlerTest extends LambdaTest {
 
 
 			/*Delete the inserted choice*/
-			if (choiceID != null) {
-				DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
-				DeleteSingleChoiceByIDResponse d_resp = new DeleteSingleChoiceByIDChoiceHandler().handleRequest(dcr, createContext("delete"));
-				assertEquals("Succesfully deleted: "+choiceID, d_resp.getResponse());
-			}
-
+			choiceDAO.deleteChoice(choiceID);
 		}catch (Exception e) {
+			try {
+				choiceDAO.deleteChoice(choiceID);	//delete the choice automatically if the test fails anywhere
+			} catch (Exception e2) {
+				Assert.fail();
+			}
 			Assert.fail();
 		}
 	}
@@ -126,7 +125,7 @@ public class AmendVoteHandlerTest extends LambdaTest {
 			/*Now that it's inserted we can try to register the first user to both choices */
 
 			RegisterParticipantHandler registerHandler = new RegisterParticipantHandler();
-			
+
 			Participant participant1 = new Participant(choiceID, "creator", "password1");
 			RegisterParticipantRequest reg1 = new RegisterParticipantRequest(participant1.getChoiceID(), participant1.getName(), participant1.getPassword());
 			registerHandler.handleRequest(reg1, createContext("register1"));
@@ -143,16 +142,16 @@ public class AmendVoteHandlerTest extends LambdaTest {
 
 			GetVotesResponse amendResponse1 = amendHandler.handleRequest(amendRequest1,  createContext("improper Amend1"));
 			GetVotesResponse amendResponse2 = amendHandler.handleRequest(amendRequest2,  createContext("improper Amend2"));
-			
+
 			Assert.assertEquals(403, amendResponse1.getHttpCode());
 			Assert.assertEquals("ParticipantID not associated with choiceID", amendResponse1.getResponse());
-			
+
 			Assert.assertEquals(403, amendResponse2.getHttpCode());
 			Assert.assertEquals("ParticipantID not associated with choiceID", amendResponse2.getResponse());
-		
+
 			choiceDAO.deleteChoice(choiceID);
 			choiceDAO.deleteChoice(choiceID2);
-			
+
 			/*Try amending a choice that has been completed*/
 			Choice choice1 = new Choice("001", "ChoiceDAOTest1",  5, "ChoiceDAOTest1Description", 1507019912630l, true, 0, 0);
 			choiceDAO.addChoice(choice1);
@@ -161,22 +160,29 @@ public class AmendVoteHandlerTest extends LambdaTest {
 			Participant participant3 = new Participant("001", "PartName1", "PartPass1");
 			RegisterParticipantRequest reg3 = new RegisterParticipantRequest(participant3.getChoiceID(), participant3.getName(), participant3.getPassword());
 			registerHandler.handleRequest(reg3, createContext("register3"));
-			
-			
+
+
 			int altID = altDAO.getAlternativeIDFromChoiceIDandTitle("001", "alt1_name");
 			int partID = partDAO.getParticipantIDFromChoiceIDAndParticipantName("001", "PartName1");
-			
+
 			AmendVoteRequest amendRequest3 = new AmendVoteRequest(partID, 1,altID);
 			GetVotesResponse amendResponse3 = amendHandler.handleRequest(amendRequest3,  createContext("improper Amend3"));
 
 			Assert.assertEquals(403, amendResponse3.getHttpCode());
 			Assert.assertEquals("Choice has been completed", amendResponse3.getResponse());
-			
-			
+
+
 			choiceDAO.deleteChoice("001");
-			
+
 
 		} catch (Exception e) {
+			try {
+				choiceDAO.deleteChoice(choiceID);	//delete the choice automatically if the test fails anywhere
+				choiceDAO.deleteChoice(choiceID2);
+				choiceDAO.deleteChoice("001");
+			} catch (Exception e2) {
+				Assert.fail();
+			}
 			Assert.fail();
 		}
 

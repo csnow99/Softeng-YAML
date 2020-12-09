@@ -1,6 +1,5 @@
 package edu.wpi.cs.yaml.demo;
 
-import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +8,11 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import edu.wpi.cs.yaml.demo.db.AlternativeDAO;
+import edu.wpi.cs.yaml.demo.db.ChoiceDAO;
 import edu.wpi.cs.yaml.demo.db.ParticipantDAO;
 import edu.wpi.cs.yaml.demo.http.AmendVoteRequest;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceRequest;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceResponse;
-import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDRequest;
-import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDResponse;
 import edu.wpi.cs.yaml.demo.http.GetVotesResponse;
 import edu.wpi.cs.yaml.demo.http.RegisterParticipantRequest;
 import edu.wpi.cs.yaml.demo.model.Alternative;
@@ -25,6 +23,9 @@ public class GetVotesHandlerTest extends LambdaTest {
 
 	@Test 
 	public void testGetVotes() {
+		ChoiceDAO choiceDAO = new ChoiceDAO();
+		String choiceID = null;
+
 		try {
 			/*We first need to insert a choice in the database*/
 			ArrayList<Alternative> alternatives = new ArrayList<Alternative>();
@@ -34,7 +35,6 @@ public class GetVotesHandlerTest extends LambdaTest {
 			alternatives.add(alt1);
 			alternatives.add(alt2);
 			alternatives.add(alt3);
-			String choiceID = null;
 
 			CreateChoiceHandler createHandler = new CreateChoiceHandler();
 			CreateChoiceRequest ccr = new CreateChoiceRequest("testGetVotesHandler", 3, "sample description", alternatives);
@@ -124,13 +124,15 @@ public class GetVotesHandlerTest extends LambdaTest {
 			
 
 			/*Delete the inserted choice*/
-			if (choiceID != null) {
-				DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
-				DeleteSingleChoiceByIDResponse d_resp = new DeleteSingleChoiceByIDChoiceHandler().handleRequest(dcr, createContext("delete"));
-				assertEquals("Succesfully deleted: "+choiceID, d_resp.getResponse());
-			}
+         	choiceDAO.deleteChoice(choiceID);
+
 
 		}catch (Exception e) {
+			try {
+             	choiceDAO.deleteChoice(choiceID);
+             } catch (Exception e2) {
+             	Assert.fail();
+             }
 			Assert.fail();
 		}
 	}

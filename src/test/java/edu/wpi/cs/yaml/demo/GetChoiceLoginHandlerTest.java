@@ -37,7 +37,8 @@ public class GetChoiceLoginHandlerTest extends LambdaTest{
         CreateChoiceHandler createHandler = new CreateChoiceHandler();
         CreateChoiceRequest createRequest1 = new CreateChoiceRequest("testChoice1", 10, "sample description", alternatives);
         CreateChoiceRequest createRequest2 = new CreateChoiceRequest("testChoice2", 5, "sample description", alternatives);
-        
+    	ChoiceDAO choiceDAO = new ChoiceDAO();
+
         try {
         CreateChoiceResponse createResp = createHandler.handleRequest(createRequest1, createContext("createChoice"));
         choiceID = createResp.getResponse();
@@ -100,11 +101,17 @@ public class GetChoiceLoginHandlerTest extends LambdaTest{
 		
         
         } catch (Exception e) {
+        	 try {
+             	choiceDAO.deleteChoice(choiceID);
+             	choiceDAO.deleteChoice(choiceID2);
+             } catch (Exception e2) {
+             	Assert.fail();
+             }
+        	 Assert.fail();
          }
         
         /*Delete the choices*/
         try {
-        	ChoiceDAO choiceDAO = new ChoiceDAO();
         	choiceDAO.deleteChoice(choiceID);
         	choiceDAO.deleteChoice(choiceID2);
         } catch (Exception e) {

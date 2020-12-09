@@ -1,6 +1,5 @@
 package edu.wpi.cs.yaml.demo;
 
-import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 //import java.util.List;
@@ -8,11 +7,10 @@ import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
 
+import edu.wpi.cs.yaml.demo.db.ChoiceDAO;
 import edu.wpi.cs.yaml.demo.db.ParticipantDAO;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceRequest;
 import edu.wpi.cs.yaml.demo.http.CreateChoiceResponse;
-import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDRequest;
-import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDResponse;
 import edu.wpi.cs.yaml.demo.http.RegisterParticipantRequest;
 import edu.wpi.cs.yaml.demo.http.RegisterParticipantResponse;
 import edu.wpi.cs.yaml.demo.model.Alternative;
@@ -37,7 +35,7 @@ public class RegisterParticipantHandlerTest extends LambdaTest{
     CreateChoiceRequest ccr = new CreateChoiceRequest("testChoiceRegisterParticipant", 3, "sample description", alternatives);
     CreateChoiceResponse createResp = createHandler.handleRequest(ccr, createContext("create"));
     choiceID = createResp.getResponse();
-  
+    ChoiceDAO choiceDAO = new ChoiceDAO();
     
     /*Now that it's inserted we can try to create some participants */
     Participant participant1 = new Participant(choiceID, "name1", "password1");
@@ -85,16 +83,18 @@ public class RegisterParticipantHandlerTest extends LambdaTest{
     Assert.assertEquals(0, resp6.getParticipantID());
     Assert.assertEquals(0, resp7.getParticipantID());
     } catch (Exception e) {
+    	try {
+    		choiceDAO.deleteChoice(choiceID);	//delete the choice automatically if the test fails anywhere
+    	} catch (Exception e2) {
+    		Assert.fail();
+    	}
     	Assert.fail();
     }
     
-    /*Delete the inserted choice*/
-    if (choiceID != null) {
-        DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
-        DeleteSingleChoiceByIDResponse d_resp = new DeleteSingleChoiceByIDChoiceHandler().handleRequest(dcr, createContext("delete"));
-        assertEquals("Succesfully deleted: "+choiceID, d_resp.getResponse());
-    }
-
-
+    try {
+		choiceDAO.deleteChoice(choiceID);	//delete the choice automatically if the test fails anywhere
+	} catch (Exception e2) {
+		Assert.fail();
+	}
 	}
 }

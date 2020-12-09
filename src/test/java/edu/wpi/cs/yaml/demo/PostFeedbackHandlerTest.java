@@ -146,8 +146,8 @@ public class PostFeedbackHandlerTest extends LambdaTest {
 			String choiceID2 = null;
 
 			CreateChoiceHandler createHandler = new CreateChoiceHandler();
-			CreateChoiceRequest ccr = new CreateChoiceRequest("testAmendVote2", 3, "sample description", alternatives);
-			CreateChoiceRequest ccr2 = new CreateChoiceRequest("testAmendVote3", 3, "sample description", alternatives);
+			CreateChoiceRequest ccr = new CreateChoiceRequest("testPostFeedbackEdge1", 3, "sample description", alternatives);
+			CreateChoiceRequest ccr2 = new CreateChoiceRequest("testPostFeedbackEdge2", 3, "sample description", alternatives);
 			try {
 				CreateChoiceResponse createResp = createHandler.handleRequest(ccr, createContext("create"));
 				CreateChoiceResponse createResp2 = createHandler.handleRequest(ccr2, createContext("create"));
@@ -163,22 +163,22 @@ public class PostFeedbackHandlerTest extends LambdaTest {
 
 				RegisterParticipantHandler registerHandler = new RegisterParticipantHandler();
 				
-				Participant participant1 = new Participant(choiceID, "creator", "password1");
+				Participant participant1 = new Participant(choiceID, "creator1", "password1");
 				RegisterParticipantRequest reg1 = new RegisterParticipantRequest(participant1.getChoiceID(), participant1.getName(), participant1.getPassword());
 				registerHandler.handleRequest(reg1, createContext("register1"));
-				int part1ID = partDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID, "creator");
+				int part1ID = partDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID, "creator1");
 
-				Participant participant2 = new Participant(choiceID2, "creator", "password1");
+				Participant participant2 = new Participant(choiceID2, "creator2", "password1");
 				RegisterParticipantRequest reg2 = new RegisterParticipantRequest(participant2.getChoiceID(), participant2.getName(), participant2.getPassword());
 				registerHandler.handleRequest(reg2, createContext("register2"));
-				int part2ID = partDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID2, "creator");
+				int part2ID = partDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID2, "creator2");
 
 				PostFeedbackHandler postHandler = new PostFeedbackHandler();
 				PostFeedbackRequest postRequest1 = new PostFeedbackRequest(alt1ID, part2ID, "feedback1");
 				PostFeedbackRequest postRequest2 = new PostFeedbackRequest(alt1ID2, part1ID, "feedback2");
 
 				GetFeedbackResponse postResponse1 = postHandler.handleRequest(postRequest1,  createContext("improper postfeedback1"));
-				GetFeedbackResponse postResponse2 = postHandler.handleRequest(postRequest2,  createContext("improper postfeedback1"));
+				GetFeedbackResponse postResponse2 = postHandler.handleRequest(postRequest2,  createContext("improper postfeedback2"));
 				
 				Assert.assertEquals(403, postResponse1.getHttpCode());
 				Assert.assertEquals("ParticipantID not associated with choiceID", postResponse1.getResponse());
@@ -189,7 +189,7 @@ public class PostFeedbackHandlerTest extends LambdaTest {
 				choiceDAO.deleteChoice(choiceID);
 				choiceDAO.deleteChoice(choiceID2);
 				
-				/*Try amending a choice that has been completed*/
+				/*Try posting feedback a choice that has been completed*/
 				Choice choice1 = new Choice("001", "ChoiceDAOTest1",  5, "ChoiceDAOTest1Description", 1507019912630l, true, 0, 0);
 				choiceDAO.addChoice(choice1);
 				Alternative alt4 = new Alternative("001", "alt1_name", "alt1_description");
@@ -213,6 +213,13 @@ public class PostFeedbackHandlerTest extends LambdaTest {
 				
 
 			} catch (Exception e) {
+				try {
+					choiceDAO.deleteChoice(choiceID);	//delete the choice automatically if the test fails anywhere
+					choiceDAO.deleteChoice(choiceID2);
+					choiceDAO.deleteChoice("001");
+				} catch (Exception e2) {
+					Assert.fail();
+				}
 				Assert.fail();
 			}
 

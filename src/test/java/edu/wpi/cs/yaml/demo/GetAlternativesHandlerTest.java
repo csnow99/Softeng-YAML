@@ -30,6 +30,7 @@ public class GetAlternativesHandlerTest extends LambdaTest{
     	alternatives.add(alt2);
     	alternatives.add(alt3);
         String choiceID = null;
+        ChoiceDAO choiceDAO = new ChoiceDAO();
 
         CreateChoiceHandler createHandler = new CreateChoiceHandler();
         CreateChoiceRequest ccr = new CreateChoiceRequest("testChoice1", 10, "sample description", alternatives);
@@ -58,11 +59,15 @@ public class GetAlternativesHandlerTest extends LambdaTest{
         Assert.assertTrue(respAlternatives.get(2).getDescription().equals("alt3_description"));
         
         } catch(Exception e) {
+        	try {
+				choiceDAO.deleteChoice(choiceID);	//delete the choice automatically if the test fails anywhere
+			} catch (Exception e2) {
+				Assert.fail();
+			}
         	Assert.fail();
         }
         /*Delete the inserted choice*/
         try {
-         ChoiceDAO choiceDAO = new ChoiceDAO();
          choiceDAO.deleteChoice(choiceID);
         } catch (Exception e) {
         	Assert.fail();

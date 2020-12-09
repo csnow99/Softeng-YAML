@@ -64,6 +64,12 @@ public class DeleteSingleChoiceByIDHandlerTest extends LambdaTest{
 			Assert.assertEquals("Unable to delete choice: " + choiceID1, deleteResponse3.getResponse());
 
 		} catch (Exception e) {
+			try {
+				choiceDAO.deleteChoice(choiceID1);	//delete the choice automatically if the test fails anywhere
+				choiceDAO.deleteChoice(choiceID2);
+			} catch (Exception e2) {
+				Assert.fail();
+			}
 			Assert.fail();
 		}
 
