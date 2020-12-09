@@ -11,6 +11,7 @@ import edu.wpi.cs.yaml.demo.http.GetVotesResponse;
 public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceRequest, GetChoiceResponse> {
 	LambdaLogger logger;
 
+	@Override
 	public GetChoiceResponse handleRequest(CompleteChoiceRequest req, Context context) {
 		logger = context.getLogger();
 		logger.log(req.toString());
@@ -20,5 +21,6 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 		 * 2) ParticipantID is a valid ID for the choiceID (code 403)
 		 * 3) choiceID is not already completed (code 403)
 		 * */
+		return null;
 	}
 }
