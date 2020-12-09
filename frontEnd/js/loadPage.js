@@ -7,7 +7,6 @@ function loadChoicePage() {
 
     let finalChoiceID = choiceQueryString.toString()
     let finalParticipantID = userQueryString.toString()
-    console.log(finalParticipantID)
 
     if(finalParticipantID === "0") {
         requestChoiceInfo(finalChoiceID, finalParticipantID, null)
@@ -21,7 +20,6 @@ function checkQuality(response, finalParticipantID, finalChoiceID) {
     response = JSON.parse(response)
     let code = response["httpCode"]
     console.log(response)
-    console.log(code)
 
     if(code === 404) { // Not found
         let element = document.getElementById("loginStuff")
@@ -30,10 +28,24 @@ function checkQuality(response, finalParticipantID, finalChoiceID) {
         document.getElementById("alternatives").innerText = response["response"]
         document.getElementById("mainMessage").innerText = code
     } else {
+        let isCompleted = response["choice"]["isCompleted"];
         let element = document.getElementById("loginStuff")
         element.parentElement.removeChild(element)
         // Callbacks:
         // Username -> ChoiceInfo -> AlternativeInfo -> VoteInfo -> FeedbackInfo
         requestUsername(finalParticipantID, finalChoiceID, requestChoiceInfo)
+        setTimeout( function () {
+            if (isCompleted) {
+                let allInputsTags = document.querySelectorAll("input");
+                let allATags = document.querySelectorAll("a");
+                for (let i = 0; i < allInputsTags.length; i++) {
+                    allInputsTags[i].onclick = function() { alert("The choice has been complete"); };
+                }
+                for (let i = 0; i < allInputsTags.length; i++) {
+                    allATags[i].onclick = function() { alert("The choice has been complete"); };
+                }
+            }
+        }, 5000);
     }
 }
+
