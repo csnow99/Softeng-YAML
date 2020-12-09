@@ -1,5 +1,6 @@
 function createReport() {
     let xhr = new XMLHttpRequest();
+    console.log("Sending a request to get all choices for report")
     xhr.open("GET", createReport_url, true);
     xhr.send();
 
@@ -21,7 +22,6 @@ function createReport() {
 
 function updatePageWithReport(response) {
 
-    console.log("The response after retrieving the Choices Info for the report: " + response)
     let parsedResponse = JSON.parse(response);
     let reportDiv = document.getElementById("report")
     let i = ""
@@ -36,7 +36,7 @@ function updatePageWithReport(response) {
         "   </tr>"
 
     parsedResponse = parsedResponse["infos"]
-
+    console.log("Successfully got a response to retrieve all the choices for the report")
     for (i in parsedResponse) {
 
         let choice = parsedResponse[i]

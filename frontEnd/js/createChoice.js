@@ -11,11 +11,10 @@ function processCreateChoiceResponse(response) {
     urlParams.append("user","0");
 
     window.location.href = choiceURL + urlParams;
-    loadChoicePage(2000);
 
 }
 
-function handleChoiceCreateClick(e) {
+function handleChoiceCreateClick() {
     let form = document.createChoice;
     let data = {};
     data["name"] = form.choiceName.value;
@@ -32,6 +31,12 @@ function handleChoiceCreateClick(e) {
     let alt3 = {};
     let alt4 = {};
     let alt5 = {};
+    if (
+        form.altName1.value === "" || form.altDesc1.value === "" || form.altName2.value === "" || form.altDesc2.value === ""
+    ) {
+        alert("Must have at least two Alternatives to create a Choice");
+        return;
+    }
     switch(count){
         case 2:
             alt1["name"] = form.altName1.value;

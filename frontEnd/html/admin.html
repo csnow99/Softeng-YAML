@@ -13,6 +13,7 @@
     </style>
 	<script type='text/javascript' src='../js/api.js'></script>
 	<script type='text/javascript' src='../js/createReport.js'></script>
+    <script type='text/javascript' src='../js/deleteOldChoices.js'></script>
     <script type='text/javascript'>
         function load() {
             createReport();
@@ -23,8 +24,8 @@
     <body onload="load()">
     <p>Delete all choices N days old. N is: </p>
     <form>
-        <input type="text" id="numDays" name="numDays">
-        <input type="button" id="numDaysBtn" value="Delete">
+        <input type="number" id="numDays" value="100">
+        <input type="button" id="numDaysBtn" value="Delete" onclick="handleDeleteOldChoicesClick()">
     </form>
     <br>
     <label>All choices: </label>

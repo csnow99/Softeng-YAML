@@ -10,6 +10,7 @@ let amendVote_url = base_url + "vote"                   // POST + /{choiceID}/{p
 let getUsername_url = base_url + "choice"               // GET + /{choiceID}/{participantID}
 let getFeedback_url = base_url + "feedback"             // GET + /{choiceID}
 let postFeedback_url = base_url + "feedback"            // GET + /{choiceID}/{participantID}
+let deleteOldChoices = base_url + "admin"               // POST
 
 
 
