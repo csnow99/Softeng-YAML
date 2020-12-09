@@ -28,7 +28,7 @@ public class PostFeedbackHandler implements RequestHandler<PostFeedbackRequest, 
 
         
         try{
-        	String choiceID = partDAO.getChoiceIDP(req.getParticipantID());
+        	String choiceID = altDAO.getChoiceIDA(req.getAlternativeID());
         	
         	/*If the participantID does not belong to the choiceID (someone trying to hack in)*/
         	if (!partDAO.belongsToChoiceID(choiceID, req.getParticipantID())) {return new GetFeedbackResponse(403, "ParticipantID not associated with choiceID");}
