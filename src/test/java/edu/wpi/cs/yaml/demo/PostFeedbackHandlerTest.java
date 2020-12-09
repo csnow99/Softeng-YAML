@@ -3,22 +3,19 @@ package edu.wpi.cs.yaml.demo;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import edu.wpi.cs.yaml.demo.http.*;
+import edu.wpi.cs.yaml.demo.model.FeedbackInfo;
 import org.junit.Assert;
 import org.junit.Test;
 
 import edu.wpi.cs.yaml.demo.db.AlternativeDAO;
 import edu.wpi.cs.yaml.demo.db.ParticipantDAO;
-import edu.wpi.cs.yaml.demo.http.CreateChoiceRequest;
-import edu.wpi.cs.yaml.demo.http.CreateChoiceResponse;
-import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDRequest;
-import edu.wpi.cs.yaml.demo.http.DeleteSingleChoiceByIDResponse;
-import edu.wpi.cs.yaml.demo.http.PostFeedbackRequest;
-import edu.wpi.cs.yaml.demo.http.RegisterParticipantRequest;
 import edu.wpi.cs.yaml.demo.model.Alternative;
 import edu.wpi.cs.yaml.demo.model.Participant;
 
-public class PostFeedbackHandlerTest extends LambdaTest{
+public class PostFeedbackHandlerTest extends LambdaTest {
 	 @Test
 	    public void testPostFeedbackHandler() {
 		 	
@@ -34,7 +31,7 @@ public class PostFeedbackHandlerTest extends LambdaTest{
 				String choiceID = null;
 
 				CreateChoiceHandler createHandler = new CreateChoiceHandler();
-				CreateChoiceRequest ccr = new CreateChoiceRequest("testAmendVote", 3, "sample description", alternatives);
+				CreateChoiceRequest ccr = new CreateChoiceRequest("testPostFeedback", 3, "sample description", alternatives);
 				CreateChoiceResponse createResp = createHandler.handleRequest(ccr, createContext("create"));
 				choiceID = createResp.getResponse();
 				if(choiceID == null) {Assert.fail("Created ChoiceID is null");}
@@ -53,20 +50,20 @@ public class PostFeedbackHandlerTest extends LambdaTest{
 				RegisterParticipantRequest reg1 = new RegisterParticipantRequest(participant1.getChoiceID(), participant1.getName(), participant1.getPassword());
 				registerHandler.handleRequest(reg1, createContext("register1"));
 				//We need user ID to post feedback
-				int part1ID = partDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID, "user2");
+				int part1ID = partDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID, "user1");
 				
 				/*Register second user */
 				registerHandler = new RegisterParticipantHandler();
 				Participant participant2 = new Participant(choiceID, "user2", "password2");
-				RegisterParticipantRequest reg2 = new RegisterParticipantRequest(participant1.getChoiceID(), participant1.getName(), participant1.getPassword());
+				RegisterParticipantRequest reg2 = new RegisterParticipantRequest(participant2.getChoiceID(), participant2.getName(), participant2.getPassword());
 				registerHandler.handleRequest(reg2, createContext("register2"));
 				//We need user ID to post feedback
 				int part2ID = partDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID, "user2");
 				
 				/*Register third user */
 				registerHandler = new RegisterParticipantHandler();
-				Participant participant3 = new Participant(choiceID, "user3", "password2");
-				RegisterParticipantRequest reg3 = new RegisterParticipantRequest(participant1.getChoiceID(), participant1.getName(), participant1.getPassword());
+				Participant participant3 = new Participant(choiceID, "user3", "password3");
+				RegisterParticipantRequest reg3 = new RegisterParticipantRequest(participant3.getChoiceID(), participant3.getName(), participant3.getPassword());
 				registerHandler.handleRequest(reg3, createContext("register3"));
 				//We need user ID to post feedback
 				int part3ID = partDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID, "user3");
@@ -76,12 +73,48 @@ public class PostFeedbackHandlerTest extends LambdaTest{
 				PostFeedbackRequest feedbackRequest2 = new PostFeedbackRequest(alt2ID, part1ID, "secondFeedback");
 				PostFeedbackRequest feedbackRequest3 = new PostFeedbackRequest(alt3ID, part1ID, "thirdFeedback");
 				PostFeedbackRequest feedbackRequest4 = new PostFeedbackRequest(alt1ID, part2ID, "fourthFeedback");
-				PostFeedbackRequest feedbackRequest5 = new PostFeedbackRequest(alt2ID, part2ID, "fifthFeedback");
-				PostFeedbackRequest feedbackRequest6 = new PostFeedbackRequest(alt3ID, part2ID, "sixthFeedback");
-				PostFeedbackRequest feedbackRequest7 = new PostFeedbackRequest(alt1ID, part3ID, "seventhFeedback");
 				
-				
-				
+				PostFeedbackHandler handler = new PostFeedbackHandler();
+
+				GetFeedbackResponse feedbackResponse1 = handler.handleRequest(feedbackRequest1, createContext("feedback1"));
+				assertEquals(200, feedbackResponse1.getHttpCode());
+				assertEquals(3, feedbackResponse1.feedback.size()); // Since there are only three alternatives
+				List<FeedbackInfo> listOfFeedbacks1 = feedbackResponse1.feedback;
+				assertEquals(1, listOfFeedbacks1.get(0).getParticipantName().size()); // Since there is only one feedback
+				assertEquals("user1", listOfFeedbacks1.get(0).getParticipantName().get(0));
+
+				GetFeedbackResponse feedbackResponse2 = handler.handleRequest(feedbackRequest2, createContext("feedback1"));
+				assertEquals(200, feedbackResponse2.getHttpCode());
+				assertEquals(3, feedbackResponse2.feedback.size()); // Since there are only three alternatives
+				List<FeedbackInfo> listOfFeedbacks2 = feedbackResponse2.feedback;
+				assertEquals(1, listOfFeedbacks2.get(0).getParticipantName().size()); // Since there is only one feedback
+				assertEquals("user1", listOfFeedbacks2.get(0).getParticipantName().get(0));
+				assertEquals(1, listOfFeedbacks2.get(1).getParticipantName().size()); // Since there is only one feedback
+				assertEquals("user1", listOfFeedbacks2.get(1).getParticipantName().get(0));
+				assertEquals(0, listOfFeedbacks2.get(2).getParticipantName().size());
+
+				GetFeedbackResponse feedbackResponse3 = handler.handleRequest(feedbackRequest3, createContext("feedback1"));
+				assertEquals(200, feedbackResponse3.getHttpCode());
+				assertEquals(3, feedbackResponse3.feedback.size()); // Since there are only three alternatives
+				List<FeedbackInfo> listOfFeedbacks3 = feedbackResponse3.feedback;
+				assertEquals(1, listOfFeedbacks3.get(0).getParticipantName().size()); // Since there is only one feedback
+				assertEquals("user1", listOfFeedbacks3.get(0).getParticipantName().get(0));
+				assertEquals(1, listOfFeedbacks3.get(1).getParticipantName().size()); // Since there is only one feedback
+				assertEquals("user1", listOfFeedbacks3.get(1).getParticipantName().get(0));
+				assertEquals(1, listOfFeedbacks3.get(2).getParticipantName().size()); // Since there is only one feedback
+				assertEquals("user1", listOfFeedbacks3.get(2).getParticipantName().get(0));
+
+				GetFeedbackResponse feedbackResponse4 = handler.handleRequest(feedbackRequest4, createContext("feedback1"));
+				assertEquals(200, feedbackResponse4.getHttpCode());
+				assertEquals(3, feedbackResponse4.feedback.size()); // Since there are only three alternatives
+				List<FeedbackInfo> listOfFeedbacks4 = feedbackResponse4.feedback;
+				assertEquals(2, listOfFeedbacks4.get(0).getParticipantName().size()); // Since there are two feedbacks now
+				assertEquals("user2", listOfFeedbacks4.get(0).getParticipantName().get(1));
+				assertEquals(1, listOfFeedbacks4.get(1).getParticipantName().size()); // Since there is only one feedback
+				assertEquals("user1", listOfFeedbacks4.get(1).getParticipantName().get(0));
+				assertEquals(1, listOfFeedbacks4.get(2).getParticipantName().size()); // Since there is only one feedback
+				assertEquals("user1", listOfFeedbacks4.get(2).getParticipantName().get(0));
+
 				/*Delete the inserted choice*/
 				if (choiceID != null) {
 					DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);

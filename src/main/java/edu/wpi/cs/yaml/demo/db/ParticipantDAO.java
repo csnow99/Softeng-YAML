@@ -92,7 +92,7 @@ public class ParticipantDAO {
     	try {
     		Participant participant = null;
     		PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_id=? AND username=?;");
-    		ps.setString(1,  choice_ID);
+    		ps.setString(1, choice_ID);
     		ps.setString(2, participant_name);
     		ResultSet resultSet = ps.executeQuery();
 
@@ -102,6 +102,7 @@ public class ParticipantDAO {
     		resultSet.close();
     		ps.close();
 
+    		if (participant == null) { throw new Exception("Failed in getting participant: "); }
     		return participant.getParticipantID();
 
     	} catch (Exception e) {
