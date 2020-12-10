@@ -1,6 +1,12 @@
 function processCreateChoiceResponse(response) {
     console.log("The response after creating Choice:" + response);
     let parsedResponse = JSON.parse(response);
+
+    if (Math.floor(parsedResponse["httpCode"] / 100) !== 2) {
+        alert(parsedResponse["response"]);
+        return;
+    }
+
     let choiceID = parsedResponse["response"];
     window.location.href = "https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html";
     let choiceURL = new URL("https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html?");

@@ -33,12 +33,13 @@ function updatePageWithUsername(response) {
 
     console.log("The response after getting the User " + response)
     let parsedResponse = JSON.parse(response);
-    if (parsedResponse["httpCode"] === 200) {
-        parsedResponse = parsedResponse["participantName"]
-        document.getElementById("mainMessage").innerText = "Welcome, " + parsedResponse
-    } else {
-        alert(parsedResponse["response"])
+
+    if (Math.floor(parsedResponse["httpCode"] / 100) !== 2) {
+        alert(parsedResponse["response"]);
+        return;
     }
 
+    parsedResponse = parsedResponse["participantName"]
+    document.getElementById("mainMessage").innerText = "Welcome, " + parsedResponse
 
 }

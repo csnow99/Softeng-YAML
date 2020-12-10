@@ -35,6 +35,11 @@ function updatePageWithReport(response) {
         "       <th>Is Completed</th>" +
         "   </tr>"
 
+    if (Math.floor(parsedResponse["httpCode"] / 100) !== 2) {
+        alert(parsedResponse["response"]);
+        return;
+    }
+
     parsedResponse = parsedResponse["infos"]
     console.log("Successfully got a response to retrieve all the choices for the report")
     for (i in parsedResponse) {
@@ -49,10 +54,6 @@ function updatePageWithReport(response) {
         let date = new Date(choiceDateCreated)
         date = date.toLocaleString()
 
-        // output = output + "<p> " +
-        //     "<b>ChoiceID: </b>" + choiceID +
-        //     " | <b>Date Created: </b>" + date +
-        //     " | <b>Completed: </b>" + choiceCompleted + "</p>"
         output +=
             "<tr>" +
             "   <td>" + choiceID + "</td>" +

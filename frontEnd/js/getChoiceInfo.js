@@ -32,6 +32,11 @@ function updatePageWithChoice(response) {
     let choiceDiv = document.getElementById("choice")
     let output = "";
 
+    if (Math.floor(parsedResponse["httpCode"] / 100) !== 2) {
+        alert(parsedResponse["response"]);
+        return;
+    }
+
     parsedResponse = parsedResponse["choice"]
 
     let choiceName = parsedResponse["choiceName"]

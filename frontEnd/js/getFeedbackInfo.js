@@ -20,8 +20,14 @@ function requestFeedbackInfo(choiceID) {
 
 function updatePageWithFeedback(response) {
     console.log("The response after retrieving Feedbacks: " + response);
-    let parseResponse = (JSON).parse(response);
-    let feedbackInfo = parseResponse["feedback"];
+    let parsedResponse = (JSON).parse(response);
+
+    if (Math.floor(parsedResponse["httpCode"] / 100) !== 2) {
+        alert(parsedResponse["response"]);
+        return;
+    }
+
+    let feedbackInfo = parsedResponse["feedback"];
     for (let i in feedbackInfo) {
         let anAlternative = feedbackInfo[i];
         console.log(anAlternative);

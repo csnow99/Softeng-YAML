@@ -1,3 +1,4 @@
+// URLs to send requests to the API in AWS
 let base_url = "https://65y680psjl.execute-api.us-east-2.amazonaws.com/beta/";
 
 let createChoice_url = base_url + "createChoice";       // POST

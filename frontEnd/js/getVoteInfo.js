@@ -26,6 +26,12 @@ function requestVoteInfo(choiceID, callback){
 function updatePageWithVotes(response){
     console.log("The response after retrieving Votes Info: "+ response);
     let parsedResponse = JSON.parse(response);
+
+    if (Math.floor(parsedResponse["httpCode"] / 100) !== 2) {
+        alert(parsedResponse["response"]);
+        return;
+    }
+
     parsedResponse = parsedResponse["votes"];
 
     let count = 0;

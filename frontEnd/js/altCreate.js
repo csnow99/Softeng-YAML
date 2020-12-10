@@ -1,4 +1,4 @@
-function handleAltCreateClick(e){
+function handleAltCreateClick(){
     let alt = document.getElementById("alternatives");
     let output = alt.innerHTML;
     let count = (output.match(/<label>/g) || []).length / 2;

@@ -36,7 +36,7 @@ function processLogIn(result){
     console.log("The response after logging in / signing up: " + result);
 
     let newData = JSON.parse(result);
-    if (newData["httpCode"] >= 200 && newData["httpCode"] < 400) {
+    if (Math.floor(newData["httpCode"] / 100) === 200) {
 
         let stateObj = {user: "0"}
         let queryString = new URLSearchParams(window.location.search)

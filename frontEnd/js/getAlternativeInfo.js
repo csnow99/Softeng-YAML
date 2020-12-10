@@ -36,6 +36,11 @@ function updatePageWithAlternative(response) {
     let userQueryString = queryString.get("user")
     let finalParticipantID = userQueryString.toString()
 
+    if (Math.floor(parsedResponse["httpCode"] / 100) !== 2) {
+        alert(parsedResponse["response"]);
+        return;
+    }
+
     parsedResponse = parsedResponse["alternatives"]
     let choiceID
 
