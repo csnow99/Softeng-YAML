@@ -15,6 +15,7 @@ public class Alternative {
 	public String getTitle() {return this.title;}
 	public void setName(String title) {this.title = title;}
 	
+	public void setDescription(String description) { this.description = description;}
 	public String getDescription() {return this.description;}
 	
 	public Alternative() {}
