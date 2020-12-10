@@ -20,7 +20,9 @@ import edu.wpi.cs.yaml.demo.model.Participant;
 public class PostFeedbackHandlerTest extends LambdaTest {
 	 @Test
 	    public void testPostFeedbackHandler() {
-		 	
+		 	ChoiceDAO choiceDAO = new ChoiceDAO();
+			String choiceID = null;
+
 	    	try {
 				/*We first need to insert a choice in the database*/
 				ArrayList<Alternative> alternatives = new ArrayList<Alternative>();
@@ -30,7 +32,6 @@ public class PostFeedbackHandlerTest extends LambdaTest {
 				alternatives.add(alt1);
 				alternatives.add(alt2);
 				alternatives.add(alt3);
-				String choiceID = null;
 
 				CreateChoiceHandler createHandler = new CreateChoiceHandler();
 				CreateChoiceRequest ccr = new CreateChoiceRequest("testPostFeedback", 3, "sample description", alternatives);
@@ -117,14 +118,14 @@ public class PostFeedbackHandlerTest extends LambdaTest {
 				assertEquals(1, listOfFeedbacks4.get(2).getParticipantName().size()); // Since there is only one feedback
 				assertEquals("user1", listOfFeedbacks4.get(2).getParticipantName().get(0));
 
-				/*Delete the inserted choice*/
-				if (choiceID != null) {
-					DeleteSingleChoiceByIDRequest dcr = new DeleteSingleChoiceByIDRequest(choiceID);
-					DeleteSingleChoiceByIDResponse d_resp = new DeleteSingleChoiceByIDChoiceHandler().handleRequest(dcr, createContext("delete"));
-					assertEquals("Succesfully deleted: "+choiceID, d_resp.getResponse());
-				}
+				choiceDAO.deleteChoice(choiceID);
 
 			}catch (Exception e) {
+				try {
+					choiceDAO.deleteChoice(choiceID);	//delete the choice automatically if the test fails anywhere
+				} catch (Exception e2) {
+					Assert.fail();
+				}
 				Assert.fail();
 			}
 		}
