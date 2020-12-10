@@ -35,11 +35,6 @@ function updatePageWithReport(response) {
         "       <th>Is Completed</th>" +
         "   </tr>"
 
-    if (Math.floor(parsedResponse["httpCode"] / 100) !== 2) {
-        alert(parsedResponse["response"]);
-        return;
-    }
-
     parsedResponse = parsedResponse["infos"]
     console.log("Successfully got a response to retrieve all the choices for the report")
     for (i in parsedResponse) {
