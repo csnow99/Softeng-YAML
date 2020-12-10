@@ -50,7 +50,7 @@ function updatePageWithAlternative(response) {
         let alternativeDescription = alternative["description"]
         choiceID = alternative["choiceID"]
 
-        output = output + "<label><b> Alternative #"+ count + ": " + alternativeName + "</b></label><br>"
+        output = output + "<div id='" + alternativeID + "'><label><b> Alternative #"+ count + ": " + alternativeName + "</b></label><br>"
         output = output + "<label> <b> Description: </b>" + alternativeDescription + "</label><br>"
         if (finalParticipantID !== "0"){
             output = output + "<div id=\"buttons"+ count +"\">\n" +
@@ -65,7 +65,9 @@ function updatePageWithAlternative(response) {
                 "       <div id='addFeedback" + alternativeID + "'>" +
                 "           <input id='addFeedbackBtn" + alternativeID + "' type=\"button\" value=\"Add Feedback\" " +
                 "           onclick='JavaScript:addFeedback(\"feedback" + alternativeID + "\")'></div>" +
-                "<hr style=\"width:50%;text-align:left;margin-left:0\">"
+                "<hr style=\"width:50%;text-align:left;margin-left:0\"></div>"
+        } else {
+            output += "</div>";
         }
     }
 

@@ -33,7 +33,7 @@ function checkQuality(response, finalParticipantID, finalChoiceID) {
         element.parentElement.removeChild(element)
         // Callbacks:
         // Username -> ChoiceInfo -> AlternativeInfo -> VoteInfo -> FeedbackInfo
-        requestUsername(finalParticipantID, finalChoiceID, requestChoiceInfo)
+        requestUsername(finalParticipantID, finalChoiceID, requestChoiceInfo);
         setTimeout( function () {
             if (isCompleted) {
                 let allInputsTags = document.querySelectorAll("input");
@@ -44,8 +44,13 @@ function checkQuality(response, finalParticipantID, finalChoiceID) {
                 for (let i = 0; i < allInputsTags.length; i++) {
                     allATags[i].onclick = function() { alert("The choice has been complete"); };
                 }
+                let chosenAltID = response["choice"]["selectedAlternativeID"];
+                let chosenAltDiv = document.getElementById(chosenAltID);
+                let chosenAltName = chosenAltDiv.innerHTML.split("<br>")[0].split(":")[1].split("</b>")[0]
+                document.getElementById("choiceID").innerText = "The choice has been complete with an Alternative: " + chosenAltName;
+
             }
-        }, 5000);
+        }, 3000);
     }
 }
 
