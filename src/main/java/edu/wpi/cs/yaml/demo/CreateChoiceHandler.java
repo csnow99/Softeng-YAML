@@ -1,6 +1,7 @@
 package edu.wpi.cs.yaml.demo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
@@ -32,7 +33,7 @@ public class CreateChoiceHandler implements RequestHandler<CreateChoiceRequest,C
 		}
 		
 		AlternativeDAO altDao = new AlternativeDAO();
-		ArrayList<Alternative> alternatives = req.getAlternatives();
+		List<Alternative> alternatives = req.getAlternatives();
 		for (Alternative alt :alternatives) {
 			alt.setChoiceID(choiceID);
 			altDao.addAlternative(alt);
