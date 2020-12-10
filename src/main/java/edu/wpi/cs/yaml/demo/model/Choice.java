@@ -21,7 +21,7 @@ public class Choice {
 	public int getMaxParticipants() {return this.maxParticipants;}
 	public void setMaxParticipants(int maxParticipants) {this.maxParticipants = maxParticipants;}
 	
-	public String getChoiceDescription() {return this.choiceDescription;};
+	public String getChoiceDescription() {return this.choiceDescription;}
 	public void setChoiceDescription(String choiceDescription) {this.choiceDescription = choiceDescription;}
  	
 	public long getDateCreated() {return this.dateCreated;}

@@ -7,6 +7,9 @@ public class Feedback {
     String feedbackText;
     long feedbackTimestamp;
 
+    public int getFeedbackID() {return this.feedbackID;}
+    public void setFeedbackID(int feedbackID) {this.feedbackID = feedbackID;}
+
     public int getAlternativeID() {return this.alternativeID;}
     public void setAlternativeID(int altID) {this.alternativeID = altID;}
 
@@ -28,7 +31,7 @@ public class Feedback {
         this.alternativeID = altID;
         this.participantID = partID;
         this.feedbackText = fText;
-        this.feedbackTimestamp = System.currentTimeMillis();;
+        this.feedbackTimestamp = System.currentTimeMillis();
     }
     
     public Feedback(int altID, int partID, String fText, long fStamp){

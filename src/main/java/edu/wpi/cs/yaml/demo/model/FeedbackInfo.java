@@ -38,15 +38,11 @@ public class FeedbackInfo {
 	public boolean equals(Object o){
 		if (o instanceof FeedbackInfo){
 			FeedbackInfo other = (FeedbackInfo) o;
-			if (
-					this.alternativeID == other.alternativeID &&
+			return this.alternativeID == other.alternativeID &&
 					this.alternativeName.equals(other.alternativeName) &&
 					this.participantName == other.participantName &&
 					this.feedbackText == other.feedbackText &&
-					this.feedbackTimestamp == other.feedbackTimestamp
-			) {
-				return true;
-			}
+					this.feedbackTimestamp == other.feedbackTimestamp;
 		}
 		return false;
 	}

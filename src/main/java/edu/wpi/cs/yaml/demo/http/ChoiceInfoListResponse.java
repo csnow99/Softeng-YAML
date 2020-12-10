@@ -13,7 +13,13 @@ public class ChoiceInfoListResponse {
 	//Setter and getters
 	public List<ChoiceInfo> getInfos() {return this.infos;}
 	public void setInfos(List<ChoiceInfo> infos) {this.infos = infos;}
-	
+
+	public int getStatusCode() {return this.statusCode;}
+	public void setStatusCode(int statusCode) {this.statusCode = statusCode;}
+
+	public String getResponse() {return this.response;}
+	public void setResponse(String response) {this.response = response;}
+
 	public ChoiceInfoListResponse(List<ChoiceInfo> infos, int code) {
 		this.statusCode = code;
 		this.infos = infos;
@@ -23,6 +29,6 @@ public class ChoiceInfoListResponse {
 	public ChoiceInfoListResponse(int code, String errorMessage) {
 		this.statusCode = code;
 		this.response = errorMessage;
-		this.infos = new ArrayList<ChoiceInfo>();
+		this.infos = new ArrayList<>();
 	}
 }

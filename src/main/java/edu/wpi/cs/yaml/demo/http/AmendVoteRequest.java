@@ -22,6 +22,6 @@ public class AmendVoteRequest {
 	}
 	
 	public String toString() {
-		return "Requesting to amend vote for alternativeID: " + Integer.toString(this.alternativeID)+ " and participantID: "+ Integer.toString(this.participantID);
+		return "Requesting to amend vote for alternativeID: " + this.alternativeID+ " and participantID: "+ this.participantID;
 	}
 }

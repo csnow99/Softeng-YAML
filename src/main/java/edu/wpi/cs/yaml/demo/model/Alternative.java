@@ -7,7 +7,7 @@ public class Alternative {
 	String description;
 	
 	public int getAlternativeID() {return this.alternativeID;}
-	public void setAlternativeID(int alternativeID) {this.alternativeID = alternativeID;};
+	public void setAlternativeID(int alternativeID) {this.alternativeID = alternativeID;}
 	
 	public String getChoiceID() {return this.choiceID ;}
 	public void setChoiceID(String choiceID) {this.choiceID = choiceID;}

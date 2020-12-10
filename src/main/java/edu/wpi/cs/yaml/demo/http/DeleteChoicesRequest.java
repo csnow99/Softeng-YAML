@@ -10,6 +10,6 @@ public class DeleteChoicesRequest {
 	public DeleteChoicesRequest(float howOld) {this.howOld = howOld;}
 	
 	public String toString() {
-		return "Requesting to delete all choices older than "+ Float.toString(howOld) + " days";
+		return "Requesting to delete all choices older than "+ howOld + " days";
 	}
 }

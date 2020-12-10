@@ -29,22 +29,21 @@ public class CreateChoiceRequest {
 	
 	public List<Alternative> getAlternatives() {return this.alternatives;}
 	public void setAlternatives(List<Alternative> alternatives) {this.alternatives = alternatives;}
-	public boolean addAlternative(Alternative alternative) {return this.alternatives.add(alternative);}
-	
+
 	
 	public CreateChoiceRequest() {}
 	
 	public CreateChoiceRequest(String name, int maxParticipants) {
 		this.name = name;
 		this.maxParticipants = maxParticipants;
-		this.alternatives = new ArrayList<Alternative>();
+		this.alternatives = new ArrayList<>();
 	}
 	
 	public CreateChoiceRequest(String name, int maxParticipants, String description) {
 		this.name = name;
 		this.maxParticipants = maxParticipants;
 		this.description = description;
-		this.alternatives = new ArrayList<Alternative>();
+		this.alternatives = new ArrayList<>();
 	}
 	
 	public CreateChoiceRequest(String name, int maxParticipants, String description, List<Alternative> alternatives) {

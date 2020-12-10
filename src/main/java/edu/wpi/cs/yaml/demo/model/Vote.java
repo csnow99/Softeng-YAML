@@ -6,6 +6,9 @@ public class Vote {
     int participantID;
     int amendType;
 
+    public int getVoteID() {return this.voteID;}
+    public void setVoteID(int voteID) {this.voteID = voteID;}
+
     public int getAlternativeID() {return this.alternativeID;}
     public void setAlternativeID(int altID) {this.alternativeID = altID;}
 
