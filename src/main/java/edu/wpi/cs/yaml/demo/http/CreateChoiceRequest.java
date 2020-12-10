@@ -1,6 +1,7 @@
 package edu.wpi.cs.yaml.demo.http;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.wpi.cs.yaml.demo.model.Alternative;
 
@@ -14,7 +15,7 @@ public class CreateChoiceRequest {
 	String name;
 	int maxParticipants;
 	String description;
-	ArrayList<Alternative> alternatives;
+	List<Alternative> alternatives;
 
 	
 	public String getName() {return name;}
@@ -26,8 +27,8 @@ public class CreateChoiceRequest {
 	public String getDescription() {return this.description;}
 	public void setDescription(String description) {this.description = description;}
 	
-	public ArrayList<Alternative> getAlternatives() {return this.alternatives;}
-	public void setAlternatives(ArrayList<Alternative> alternatives) {this.alternatives = alternatives;}
+	public List<Alternative> getAlternatives() {return this.alternatives;}
+	public void setAlternatives(List<Alternative> alternatives) {this.alternatives = alternatives;}
 	public boolean addAlternative(Alternative alternative) {return this.alternatives.add(alternative);}
 	
 	
@@ -46,7 +47,7 @@ public class CreateChoiceRequest {
 		this.alternatives = new ArrayList<Alternative>();
 	}
 	
-	public CreateChoiceRequest(String name, int maxParticipants, String description, ArrayList<Alternative> alternatives) {
+	public CreateChoiceRequest(String name, int maxParticipants, String description, List<Alternative> alternatives) {
 		this.name = name;
 		this.maxParticipants = maxParticipants;
 		this.description = description;

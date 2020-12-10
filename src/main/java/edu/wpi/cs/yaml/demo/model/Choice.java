@@ -1,6 +1,5 @@
 package edu.wpi.cs.yaml.demo.model;
 
-import java.sql.Timestamp;
 
 public class Choice {
 	String choiceID;

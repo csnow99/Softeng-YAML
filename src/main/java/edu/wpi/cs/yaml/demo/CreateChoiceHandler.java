@@ -1,6 +1,5 @@
 package edu.wpi.cs.yaml.demo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.amazonaws.services.lambda.runtime.Context;

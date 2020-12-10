@@ -90,7 +90,7 @@ public class AlternativeDAO {
 
     public boolean addAlternative(Alternative alternative) throws Exception {
         try {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (choice_ID, alternative_title,alternative_description) values(?,?,?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (choice_ID, alternative_title, alternative_description) values(?,?,?);");
             ps.setString(1, alternative.getChoiceID());
             ps.setString(2, alternative.getTitle());
             ps.setString(3, alternative.getDescription());       
