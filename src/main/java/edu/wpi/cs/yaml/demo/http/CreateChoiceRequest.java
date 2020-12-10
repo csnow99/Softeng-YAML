@@ -32,7 +32,7 @@ public class CreateChoiceRequest {
 	public boolean addAlternative(Alternative alternative) {return this.alternatives.add(alternative);}
 	
 	
-	public CreateChoiceRequest() {this.alternatives = new ArrayList<Alternative>();}
+	public CreateChoiceRequest() {}
 	
 	public CreateChoiceRequest(String name, int maxParticipants) {
 		this.name = name;
