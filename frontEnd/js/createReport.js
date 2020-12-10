@@ -31,6 +31,7 @@ function updatePageWithReport(response) {
         "<table>" +
         "   <tr>" +
         "       <th>Choice ID</th>" +
+        "       <th>Description</th>" +
         "       <th>Date Created</th>" +
         "       <th>Is Completed</th>" +
         "   </tr>"
@@ -44,6 +45,7 @@ function updatePageWithReport(response) {
         count = count + 1
 
         let choiceID = choice["choiceID"]
+        let description = choice["description"]
         let choiceCompleted = choice["isCompleted"]
         let choiceDateCreated = choice["creationDate"]
         let date = new Date(choiceDateCreated)
@@ -52,6 +54,7 @@ function updatePageWithReport(response) {
         output +=
             "<tr>" +
             "   <td>" + choiceID + "</td>" +
+            "   <td>" + description + "</td>" +
             "   <td>" + date + "</td>" +
             "   <td>" + choiceCompleted + "</td>" +
             "</tr>"

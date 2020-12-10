@@ -20,7 +20,7 @@ function processCreateChoiceResponse(response) {
 
 }
 
-function handleChoiceCreateClick() {
+function handleChoiceCreateClick(e) {
     let form = document.createChoice;
     let data = {};
     data["name"] = form.choiceName.value;
@@ -37,12 +37,7 @@ function handleChoiceCreateClick() {
     let alt3 = {};
     let alt4 = {};
     let alt5 = {};
-    if (
-        form.altName1.value === "" || form.altDesc1.value === "" || form.altName2.value === "" || form.altDesc2.value === ""
-    ) {
-        alert("Must have at least two Alternatives to create a Choice");
-        return;
-    }
+
     switch(count){
         case 2:
             alt1["name"] = form.altName1.value;
@@ -86,6 +81,12 @@ function handleChoiceCreateClick() {
             break;
     }
     data["alternatives"] = alts;
+    if (
+        form.altName1.value === "" || form.altDesc1.value === "" || form.altName2.value === "" || form.altDesc2.value === ""
+    ) {
+        alert("Must have at least two Alternatives to create a Choice");
+        return;
+    }
     let js = JSON.stringify(data);
     console.log("Creating a choice with JSON: " + js);
     let xhr = new XMLHttpRequest();
