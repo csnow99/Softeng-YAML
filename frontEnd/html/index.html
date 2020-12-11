@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Create Choice</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap" rel="stylesheet">
+    <title>Create Choice</title>
 
-        <script type='text/javascript' src='../js/api.js'></script>
-        <script type='text/javascript' src='../js/createChoice.js'></script>
-        <script type='text/javascript' src='../js/altCreate.js'></script>
-    </head>
-    <body>
-    <div class="row center">
-        <h1 class="grey-text text-darken-2"
-            style="font-weight: 900; font-family: Lato; margin-top: 0; margin-bottom:0; font-size: 2.92rem;">YAML CHOICE</h1>
-    </div>
-        <div class = "container center" >
-            <form name="createChoice">
-                <div id="choiceInfo">
-                    <label>Choice Name: </label><input type="text" name="choiceName"><br>
-                    <label>Number of Participants: </label><input type="number" name="partNum" ><br>
-                    <label>Choice description: </label><input type="text" name="choiceDesc"><br>
-                </div>
-                <br>
-                <div id="alternatives">
-                    <div id="alternative1">
-                        <label>Alternative Name: </label><input type="text" name="altName1"><br>
-                        <label>Alternative Description: </label><input type="text" name="altDesc1"><br><br>
-                    </div>
-                    <div id="alternative2">
-                        <label>Alternative Name: </label><input type="text" name="altName2"><br>
-                        <label>Alternative Description: </label><input type="text" name="altDesc2"><br><br>
-                    </div>
-                    <div id="alternative3"></div>
-                    <div id="alternative4"></div>
-                    <div id="alternative5"></div>
-                    <input type="button" id="altCreate" value="Create another alternative"
-                           onclick="handleAltCreateClick()"><br>
-                </div>
-                <input type="button" value="Create Choice" onclick="handleChoiceCreateClick()">
-            </form>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../css/materialize.min.css" media="screen,projection"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap" rel="stylesheet">
+
+    <script type='text/javascript' src='../js/api.js'></script>
+    <script type='text/javascript' src='../js/createChoice.js'></script>
+    <script type='text/javascript' src='../js/altCreate.js'></script>
+</head>
+<body>
+<div class="row center">
+    <h1 class="grey-text text-darken-2"
+        style="font-weight: 900; font-family: Lato; margin-top: 0; margin-bottom:0; font-size: 2.92rem;">YAML
+        CHOICE</h1>
+</div>
+<div class="container center">
+    <form name="createChoice">
+        <div id="choiceInfo center">
+            <label>Choice Name: </label><input type="text" name="choiceName" required><br>
+            <label>Number of Participants: </label><input type="number" name="partNum" required><br>
+            <label>Choice description: </label><input type="text" name="choiceDesc" required><br>
         </div>
-        <!--JavaScript at end of body for optimized loading-->
-        <script type="text/javascript" src="..js/materialize.min.js"></script>
-    </body>
+        <br>
+        <div id="alternatives">
+            <div id="alternative1">
+                <label>Alternative Name: </label><input type="text" name="altName1" required><br>
+                <label>Alternative Description: </label><input type="text" name="altDesc1" required><br><br>
+            </div>
+            <div id="alternative2">
+                <label>Alternative Name: </label><input type="text" name="altName2" required><br>
+                <label>Alternative Description: </label><input type="text" name="altDesc2" required><br><br>
+            </div>
+            <div id="alternative3"></div>
+            <div id="alternative4"></div>
+            <div id="alternative5"></div>
+            <input class="btn orange white-text waves-effect waves-light btn" style="margin-bottom: 10px;" type="button"
+                   id="altCreate" value="Create another alternative"
+                   onclick="handleAltCreateClick()"><br>
+        </div>
+        <input class="btn blue-grey white-text waves-effect waves-light btn" type="submit" value="Create Choice"
+               onclick="handleChoiceCreateClick()">
+    </form>
+</div>
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="..js/materialize.min.js"></script>
+</body>
 </html>

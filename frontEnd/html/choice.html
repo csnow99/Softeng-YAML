@@ -2,7 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Choice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Choice - YAML</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../css/materialize.min.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../css/login.css" media="screen,projection"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;900&display=swap" rel="stylesheet">
+
     <script type='text/javascript' src='../js/api.js'></script>
     <script type='text/javascript' src='../js/createChoice.js'></script>
     <script type="text/javascript" src='../js/register.js'></script>
@@ -18,28 +27,53 @@
         function loadPage() {
             loadChoicePage();
         }
+
+
+
+
+
+
+
+
+
     </script>
 </head>
 <body onload="loadPage()">
 
-    <h1 id="mainMessage">Sign In</h1>
-    <p id="choiceID"></p>
-    <div id="loginStuff">
-        <form name="registerForm">
-            <label>Name: </label><input type="text" name="partName" value="" required><br>
-            <label>Password (Optional):  </label><input type="password" name="partPass" value=""><br>
-            <input type="button" value="Sign In" onclick="JavaScript:handleSignInClick(this)"><br>
-        </form>
-        <p>
-            Name/Password are only for this choice. <br>
-            New to this choice? Make up a name (and password). <br>
-            Returning? Use the same name (and password). <br>
-        </p>
+<div class="row center">
+    <h1 id="mainMessage"
+        style="font-family: product_sansregular; font-size: 2.5rem; margin-bottom: 15px; margin-top: 15px; font-weight: 600;">Sign
+        In</h1>
+    <div center>
+        <p id="choiceID" class="light"></p>
     </div>
+    <div id="loginStuff">
+        <form name="registerForm" style="width: 50%; " class="row center">
+            <label>Name: </label><input type="text" name="partName" value="" required><br>
+            <label>Password (Optional): </label><input type="password" name="partPass" value=""><br>
+            <input class="btn orange white-text waves-effect waves-light btn" type="button" value="Sign In"
+                   onclick="JavaScript:handleSignInClick(this)"><br>
+        </form>
 
+        <div class="row">
+            <div class="col s12">
+                <p class="light center">
+                    Name/Password are only for this choice. <br>
+                    New to this choice? Make up a name (and password). <br>
+                    Returning? Use the same name (and password). <br>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row center">
     <div id="choice"> LOADING ...</div>
 
     <div id="alternatives"> LOADING ...</div>
+</div>
 
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="..js/materialize.js"></script>
 </body>
 </html>

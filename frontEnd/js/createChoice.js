@@ -87,6 +87,11 @@ function handleChoiceCreateClick(e) {
         alert("Must have at least two Alternatives to create a Choice");
         return;
     }
+
+    if(form.choiceName.value || form.partNum.value || form.choiceDesc.value) {
+        alert("Please Fill out all choice information")
+    }
+
     let js = JSON.stringify(data);
     console.log("Creating a choice with JSON: " + js);
     let xhr = new XMLHttpRequest();

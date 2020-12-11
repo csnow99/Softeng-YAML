@@ -43,8 +43,8 @@ function updatePageWithChoice(response) {
     let choiceID = parsedResponse["choiceID"]
     let choiceDescription = parsedResponse["choiceDescription"]
 
-    output = output + "<h2>" + choiceName + "</h2>"
-    output = output + "<p>" + choiceDescription + "</p>"
+    output = output + "<h2 style='font-family: product_sansregular; font-size: 3rem; margin-bottom: 30px; font-weight: 600;'>" + choiceName + "</h2>"
+    output = output + "<p class='light center'>" + choiceDescription + "</p>"
 
     choiceDiv.innerHTML = output
     document.getElementById("choiceID").innerText = "To invite your friends to participate in this choice, share with them the following link: https://yamlcs3733bucket.s3.us-east-2.amazonaws.com/html/choice.html?choice=" + choiceID + "&user=0";

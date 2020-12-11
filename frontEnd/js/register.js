@@ -6,6 +6,7 @@ function handleSignInClick(e){
     let finalChoiceID = queryString.toString()
     data["choiceID"] = finalChoiceID;
     if (form.partName.value === "") {
+        alert("Please enter a username and/or password")
         return
     }
     data["name"] = form.partName.value;

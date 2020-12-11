@@ -55,8 +55,8 @@ function updatePageWithAlternative(response) {
         let alternativeDescription = alternative["description"]
         choiceID = alternative["choiceID"]
 
-        output = output + "<div id='" + alternativeID + "'><label><b> Alternative #"+ count + ": " + alternativeName + "</b></label><br>"
-        output = output + "<label> <b> Description: </b>" + alternativeDescription + "</label><br>"
+        output = output + "<div id='" + alternativeID + "'><label 'style=font-size: 30px; font-weight: 300;'><b> Alternative #"+ count + ": </b>" + alternativeName + "</label><br>"
+        output = output + "<label 'style=font-size: 50px;'> <b> Description: </b>" + alternativeDescription + "</label><br>"
         if (finalParticipantID !== "0"){
             output = output + "<div id=\"buttons"+ count +"\">\n" +
                 "        <a onclick='handleAmendVoteClick(\"like:" + alternativeID + "\")'>\n" +
@@ -68,9 +68,9 @@ function updatePageWithAlternative(response) {
                 "   </div>" +
                 "       <div id='feedback" + alternativeID + "'></div><br>" +
                 "       <div id='addFeedback" + alternativeID + "'>" +
-                "           <input id='addFeedbackBtn" + alternativeID + "' type=\"button\" value=\"Add Feedback\" " +
+                "           <input class='btn orange white-text waves-effect waves-light btn' id='addFeedbackBtn" + alternativeID + "' type=\"button\" value=\"Add Feedback\" " +
                 "           onclick='JavaScript:addFeedback(\"feedback" + alternativeID + "\")'></div>" +
-                "<hr style=\"width:50%;text-align:left;margin-left:0\"></div>"
+                "<hr style=\"width:50%;\"></div>"
         } else {
             output += "</div>";
         }

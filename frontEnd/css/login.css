@@ -1,0 +1,49 @@
+body.login, body.signup {
+  background: #e9eae5
+}
+
+a {
+  font-size: 1rem
+}
+
+.edge {
+  padding: 0 10% !important
+}
+
+#login_return {
+  float: right;
+  color: #fff
+}
+
+.center-box {
+  display: -webkit-box !important;
+  display: -moz-box !important;
+  display: -ms-flexbox !important;
+  display: -webkit-flex !important;
+  display: flex !important;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-height: 100% !important
+}
+
+.center-box-description {
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #f4f4f4 inset !important
+}
+
+
