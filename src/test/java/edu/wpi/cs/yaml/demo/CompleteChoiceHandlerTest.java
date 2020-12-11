@@ -64,8 +64,9 @@ public class CompleteChoiceHandlerTest extends LambdaTest{
 			/*Assert the choice is completed now*/
 			Choice finalChoice = choiceDAO.getChoice(choiceID);
 			Assert.assertEquals(200, completeResp.getHttpCode());
-			Assert.assertTrue(finalChoice.getIsCompleted());
+			Assert.assertEquals(true, finalChoice.getIsCompleted());
 			Assert.assertNotEquals(0, finalChoice.getDateCompleted());
+			Assert.assertEquals();
 
 			/*make sure the creator cannot complete the choiceAgain*/
 			GetChoiceResponse completeResp2 = completeHandler.handleRequest(completeReq, createContext("complete"));

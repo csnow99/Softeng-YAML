@@ -22,9 +22,10 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 		GetChoiceResponse response = null;
 
 		String choiceID = req.getChoiceID();
+		int altID = req.getAlternativeID();
 
 		try {
-			if(choiceDAO.setIsCompleted(choiceID)) {
+			if(choiceDAO.setIsCompleted(choiceID, altID)) {
 				response = new GetChoiceResponse(200, "Succesfully completed choice: " + choiceID);
 			} else {
 				response = new GetChoiceResponse(422, "Unable to completed choice: " + choiceID);

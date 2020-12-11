@@ -95,13 +95,14 @@ public class ChoiceDAO {
          }
     }
 
-    public boolean setIsCompleted(String choiceID) throws Exception {
+    public boolean setIsCompleted(String choiceID, int altID) throws Exception {
         try {
 
-            PreparedStatement ps = conn.prepareStatement("UPDATE " + tblName + " SET choice_isCompleted = ? WHERE choice_ID=?;");
+            PreparedStatement ps = conn.prepareStatement("UPDATE " + tblName + " SET choice_isCompleted = ? , completion_time = ? , chosen_alternative = ? WHERE choice_ID=?;");
             ps.setBoolean(1, true);
-            ps.setString(2, choiceID);
-
+            ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+            ps.setInt(3, altID);
+            ps.setString(4, choiceID);
             ps.execute();
 
             return true;
