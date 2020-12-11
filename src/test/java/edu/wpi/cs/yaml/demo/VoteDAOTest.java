@@ -22,7 +22,7 @@ import edu.wpi.cs.yaml.demo.model.VoteInfo;
 public class VoteDAOTest {
 
 	@Test 
-	public void testChoiceDAOBasics() {
+	public void testChoiceDAO() {
 		java.sql.Connection conn;
 
 		try  {
