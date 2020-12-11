@@ -88,7 +88,7 @@ function handleChoiceCreateClick(e) {
         return;
     }
 
-    if(form.choiceName.value || form.partNum.value || form.choiceDesc.value) {
+    if(form.choiceName.value === "" || form.partNum.value === "" || form.choiceDesc.value === "") {
         alert("Please Fill out all choice information")
     }
 
