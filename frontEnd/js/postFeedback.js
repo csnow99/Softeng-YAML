@@ -19,6 +19,9 @@ function addFeedback(id) {
 }
 
 function postFeedback(alternativeID) {
+    document.getElementById("addFeedback" + alternativeID).innerHTML =
+        "<input id='addFeedbackBtn" + alternativeID + "' type=\"button\" value=\"Add Feedback\" " +
+        "           onclick='JavaScript:addFeedback(\"feedback" + alternativeID + "\")'>"
     let queryString = new URLSearchParams(window.location.search);
     let choiceQueryString = queryString.get("choice")
     let userQueryString = queryString.get("user")

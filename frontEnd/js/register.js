@@ -50,8 +50,8 @@ function processLogIn(result){
         document.getElementById("mainMessage").innerText = "Welcome, " + name
         window.history.replaceState(stateObj,"", "choice.html?" + queryString)
     } else {
-        document.registerForm.form.partName.value = ""
-        document.registerForm.form.partPass.value = ""
+        document.registerForm.partName.value = ""
+        document.registerForm.partPass.value = ""
         alert(newData["response"])
     }
     loadChoicePage();
