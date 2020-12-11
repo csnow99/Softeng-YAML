@@ -20,7 +20,7 @@ function processCreateChoiceResponse(response) {
 
 }
 
-function handleChoiceCreateClick(e) {
+function handleChoiceCreateClick() {
     let form = document.createChoice;
     let data = {};
     data["name"] = form.choiceName.value;

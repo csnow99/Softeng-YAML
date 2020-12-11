@@ -70,6 +70,7 @@ function updatePageWithAlternative(response) {
                 "       <div id='addFeedback" + alternativeID + "'>" +
                 "           <input class='btn orange white-text waves-effect waves-light btn' id='addFeedbackBtn" + alternativeID + "' type=\"button\" value=\"Add Feedback\" " +
                 "           onclick='JavaScript:addFeedback(\"feedback" + alternativeID + "\")'></div>" +
+                " <input id='completeChoice' class='btn orange white-text waves-effect waves-light btn' type=\"button\" value=\"Pick Alternative\" onclick='JavaScript:completeChoice(" + alternativeID + ")'>" +
                 "<hr style=\"width:50%;\"></div>"
         } else {
             output += "</div>";

@@ -12,6 +12,7 @@ let getUsername_url = base_url + "choice"               // GET + /{choiceID}/{pa
 let getFeedback_url = base_url + "feedback"             // GET + /{choiceID}
 let postFeedback_url = base_url + "feedback"            // GET + /{choiceID}/{participantID}
 let deleteOldChoices = base_url + "admin"               // POST
+let completeChoice_url = base_url + "completeChoice"    //POST
 
 
 
