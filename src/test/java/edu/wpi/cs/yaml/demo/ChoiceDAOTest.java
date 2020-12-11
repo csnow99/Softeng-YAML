@@ -14,7 +14,7 @@ import edu.wpi.cs.yaml.demo.model.ChoiceInfo;
 public class ChoiceDAOTest extends LambdaTest {
 	
 	@Test 
-	public void testChoiceDAOBasics() {
+	public void testChoiceDAO() {
 		java.sql.Connection conn;
 		
 		try  {

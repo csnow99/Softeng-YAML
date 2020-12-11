@@ -66,13 +66,13 @@ public class CompleteChoiceHandlerTest extends LambdaTest{
 			Assert.assertEquals(200, completeResp.getHttpCode());
 			Assert.assertEquals(true, finalChoice.getIsCompleted());
 			Assert.assertNotEquals(0, finalChoice.getDateCompleted());
-			Assert.assertEquals();
+			Assert.assertEquals(alt1ID, finalChoice.getSelectedAlternativeID());
 
 			/*make sure the creator cannot complete the choiceAgain*/
 			GetChoiceResponse completeResp2 = completeHandler.handleRequest(completeReq, createContext("complete"));
 			/*Assert the httpCode and response */
 			Assert.assertEquals(403, completeResp2.getHttpCode());
-			Assert.assertNotEquals("Choice has already been completed", completeResp2.getResponse());
+			Assert.assertEquals("Choice has already been completed", completeResp2.getResponse());
 
 			choiceDAO.deleteChoice(choiceID);
 
@@ -105,8 +105,8 @@ public class CompleteChoiceHandlerTest extends LambdaTest{
 		String choiceID2 = null;
 
 		CreateChoiceHandler createHandler = new CreateChoiceHandler();
-		CreateChoiceRequest ccr = new CreateChoiceRequest("testAmendVote2", 3, "sample description", alternatives);
-		CreateChoiceRequest ccr2 = new CreateChoiceRequest("testAmendVote3", 3, "sample description", alternatives);
+		CreateChoiceRequest ccr = new CreateChoiceRequest("testChompleteChoice2", 3, "sample description", alternatives);
+		CreateChoiceRequest ccr2 = new CreateChoiceRequest("testChompleteChoice3", 3, "sample description", alternatives);
 		try {
 			CreateChoiceResponse createResp = createHandler.handleRequest(ccr, createContext("create"));
 			CreateChoiceResponse createResp2 = createHandler.handleRequest(ccr2, createContext("create"));

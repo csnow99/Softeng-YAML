@@ -22,7 +22,7 @@ import edu.wpi.cs.yaml.demo.model.Participant;
 
 public class FeedbackDAOTest {
 	@Test 
-	public void testChoiceDAOBasics() {
+	public void testFeedbackDAO() {
 		java.sql.Connection conn;
 
 		try  {

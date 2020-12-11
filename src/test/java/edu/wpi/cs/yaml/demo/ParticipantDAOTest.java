@@ -17,7 +17,7 @@ import edu.wpi.cs.yaml.demo.model.Participant;
 public class ParticipantDAOTest {
 	
 	@Test 
-	public void testChoiceDAOBasics() {
+	public void testParticipantDAO() {
 		java.sql.Connection conn;
 		
 		try  {

@@ -17,7 +17,7 @@ import edu.wpi.cs.yaml.demo.model.Choice;
 public class AlternativeDAOTest {
 	
 	@Test 
-	public void testChoiceDAOBasics() {
+	public void testAlternativeDAO() {
 		java.sql.Connection conn;
 		
 		try  {
