@@ -94,6 +94,22 @@ public class ChoiceDAO {
              throw new Exception("Failed in getting completion status for choice: " + choice_ID + e.getMessage());
          }
     }
+
+    public boolean setIsCompleted(String choiceID) throws Exception {
+        try {
+
+            PreparedStatement ps = conn.prepareStatement("UPDATE" + tblName + "SET choice_isCompleted = 1 WHERE choice_ID=?;");
+            ps.setString(1, choiceID);
+
+            ps.execute();
+
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw new Exception("Failed in completeing a choice");
+        }
+    }
+
     public boolean deleteChoice(String choiceID) throws Exception {
         try {
             PreparedStatement ps = conn.prepareStatement("DELETE FROM " + tblName + " WHERE choice_ID = ?;");
