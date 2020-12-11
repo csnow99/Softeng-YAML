@@ -32,6 +32,9 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 			/*If the participantID does not belong to the choiceID (someone trying to hack in)*/
 			if (!partDao.belongsToChoiceID(choiceID, req.getParticipantID())) {return new GetChoiceResponse(403, "ParticipantID not associated with choiceID");}
 
+			/*If the alternativeID does not belong to the choiceID*/
+			if (!altDao.belongsToChoiceID(choiceID, req.getAlternativeID())) {return new GetChoiceResponse(403, "AlternativeID not associated with choiceID");}
+
 			/*If the choice has been completed, then return a 403 i.e. forbidden*/
 			if (choiceDAO.getIsCompleted(choiceID)) {return new GetChoiceResponse(403, "Choice has already been completed");}
 

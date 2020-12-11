@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.cs.yaml.demo.model.Alternative;
+import edu.wpi.cs.yaml.demo.model.Participant;
 
 public class AlternativeDAO { 
 
@@ -85,6 +86,29 @@ public class AlternativeDAO {
          	e.printStackTrace();
              throw new Exception("Failed in getting choice: " + e.getMessage());
          }
+    }
+    
+    public boolean belongsToChoiceID(String choiceID, int alternativeID) throws Exception {
+    	try {
+    		Alternative alternative = null;
+    		PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE alternative_id=?;");
+    		ps.setInt(1, alternativeID);
+    		ResultSet resultSet = ps.executeQuery();
+    		
+    		while (resultSet.next()) {
+    			alternative = generateAlternative(resultSet);
+    		}
+    		resultSet.close();
+    		ps.close();
+
+    		if (alternative == null) {return false;}
+    		
+    		return alternative.getChoiceID().equals(choiceID);
+
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		throw new Exception("Failed in getting participant: " + e.getMessage());
+    	}
     }
 
 

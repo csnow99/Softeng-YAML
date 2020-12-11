@@ -25,9 +25,8 @@ public class ParticipantDAO {
     public boolean belongsToChoiceID(String choiceID, int participantID) throws Exception {
     	try {
     		Participant participant = null;
-    		PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choice_id=? AND participantID=?;");
-    		ps.setString(1,  choiceID);
-    		ps.setInt(2, participantID);
+    		PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE participantID=?;");
+    		ps.setInt(1, participantID);
     		ResultSet resultSet = ps.executeQuery();
     		
     		while (resultSet.next()) {
@@ -38,7 +37,7 @@ public class ParticipantDAO {
 
     		if (participant == null) {return false;}
     		
-    		return true;
+    		return participant.getChoiceID().equals(choiceID);
 
     	} catch (Exception e) {
     		e.printStackTrace();
