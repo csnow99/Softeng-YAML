@@ -25,19 +25,19 @@
 <div class="container center">
     <form name="createChoice">
         <div id="choiceInfo center">
-            <label>Choice Name: </label><input type="text" name="choiceName" required><br>
-            <label>Number of Participants: </label><input type="number" name="partNum" required><br>
-            <label>Choice description: </label><input type="text" name="choiceDesc" required><br>
+            <label>Choice Name: </label><input type="text" name="choiceName" ><br>
+            <label>Number of Participants: </label><input type="number" name="partNum" ><br>
+            <label>Choice description: </label><input type="text" name="choiceDesc" ><br>
         </div>
         <br>
         <div id="alternatives">
             <div id="alternative1">
-                <label>Alternative Name: </label><input type="text" name="altName1" required><br>
-                <label>Alternative Description: </label><input type="text" name="altDesc1" required><br><br>
+                <label>Alternative Name: </label><input type="text" name="altName1" ><br>
+                <label>Alternative Description: </label><input type="text" name="altDesc1" ><br><br>
             </div>
             <div id="alternative2">
-                <label>Alternative Name: </label><input type="text" name="altName2" required><br>
-                <label>Alternative Description: </label><input type="text" name="altDesc2" required><br><br>
+                <label>Alternative Name: </label><input type="text" name="altName2" ><br>
+                <label>Alternative Description: </label><input type="text" name="altDesc2" ><br><br>
             </div>
             <div id="alternative3"></div>
             <div id="alternative4"></div>
@@ -46,7 +46,7 @@
                    id="altCreate" value="Create another alternative"
                    onclick="handleAltCreateClick()"><br>
         </div>
-        <input class="btn blue-grey white-text waves-effect waves-light btn" type="submit" value="Create Choice"
+        <input class="btn blue-grey white-text waves-effect waves-light btn" type="button" value="Create Choice"
                onclick="JavaScript:handleChoiceCreateClick()">
     </form>
 </div>
