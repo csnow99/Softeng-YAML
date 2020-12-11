@@ -7,20 +7,20 @@ function addFeedback(id) {
         let oldAlternativeID = document.getElementById("feedbackInput").getAttribute("name");
         otherAttempt.parentElement.removeChild(otherAttempt);
         document.getElementById("addFeedback" + oldAlternativeID).innerHTML =
-            "<input id='addFeedbackBtn" + oldAlternativeID + "' type=\"button\" value=\"Add Feedback\" " +
+            "<input class='btn blue-grey white-text waves-effect waves-light btn' id='addFeedbackBtn" + oldAlternativeID + "' type=\"button\" value=\"Add Feedback\" " +
             "           onclick='JavaScript:addFeedback(\"feedback" + oldAlternativeID + "\")'>"
     }
     let element = document.getElementById("addFeedbackBtn" + alternativeID);
     element.parentElement.removeChild(element);
     output += "<div id='newFeedback'><label>Enter Feedback text:</label><br>" +
                 "<textarea id='feedbackInput' name='" + alternativeID + "' rows='4' cols='50'></textarea><br>" +
-                "<input type='button' value='Post Feedback' onclick='postFeedback(" + alternativeID + ")'></div>";
+                "<input class='btn blue-grey white-text waves-effect waves-light btn' type='button' value='Post Feedback' onclick='postFeedback(" + alternativeID + ")'></div>";
     feedbackDiv.innerHTML = output;
 }
 
 function postFeedback(alternativeID) {
     document.getElementById("addFeedback" + alternativeID).innerHTML =
-        "<input id='addFeedbackBtn" + alternativeID + "' type=\"button\" value=\"Add Feedback\" " +
+        "<input class='btn blue-grey white-text waves-effect waves-light btn' id='addFeedbackBtn" + alternativeID + "' type=\"button\" value=\"Add Feedback\" " +
         "           onclick='JavaScript:addFeedback(\"feedback" + alternativeID + "\")'>"
     let queryString = new URLSearchParams(window.location.search);
     let choiceQueryString = queryString.get("choice")
