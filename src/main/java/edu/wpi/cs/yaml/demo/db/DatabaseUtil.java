@@ -60,6 +60,7 @@ public class DatabaseUtil {
 					dbPassword);
 			return conn;
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			System.err.println("DB-ERROR:" + schemaName + "," + dbUsername + "," + dbPassword + "," + rdsMySqlDatabaseUrl);
 			throw new Exception("Failed in database connection");
 		}

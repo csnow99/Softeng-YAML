@@ -4,7 +4,7 @@ function completeChoice(alternativeID) {
     let choiceQueryString = queryString.get("choice")
     let userQueryString = queryString.get("user")
     let finalChoiceID = choiceQueryString.toString()
-    let finalParticipantID = userQueryString.toString()
+    let finalParticipantID = parseInt(userQueryString.toString())
 
     let data = {};
     data["choiceID"] = finalChoiceID
@@ -14,6 +14,7 @@ function completeChoice(alternativeID) {
     console.log("Completing Choice:" + js);
     let xhr = new XMLHttpRequest();
     xhr.open("POST",completeChoice_url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(js);
 
     xhr.onloadend = function () {
