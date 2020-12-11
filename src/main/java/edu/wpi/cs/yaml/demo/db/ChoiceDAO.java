@@ -98,8 +98,9 @@ public class ChoiceDAO {
     public boolean setIsCompleted(String choiceID) throws Exception {
         try {
 
-            PreparedStatement ps = conn.prepareStatement("UPDATE" + tblName + "SET choice_isCompleted = 1 WHERE choice_ID=?;");
-            ps.setString(1, choiceID);
+            PreparedStatement ps = conn.prepareStatement("UPDATE " + tblName + " SET choice_isCompleted = ? WHERE choice_ID=?;");
+            ps.setBoolean(1, true);
+            ps.setString(2, choiceID);
 
             ps.execute();
 

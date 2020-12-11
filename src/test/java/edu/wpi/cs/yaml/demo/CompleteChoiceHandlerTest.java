@@ -22,7 +22,7 @@ public class CompleteChoiceHandlerTest extends LambdaTest{
 	public void testCompleteChoice() {
 		String choiceID = null;
 		ChoiceDAO choiceDAO = new ChoiceDAO();
-
+		AlternativeDAO altDAO = new AlternativeDAO();
 		try {
 			/*We first need to insert a choice in the database*/
 			ArrayList<Alternative> alternatives = new ArrayList<Alternative>();
@@ -38,7 +38,8 @@ public class CompleteChoiceHandlerTest extends LambdaTest{
 			CreateChoiceResponse createResp = createHandler.handleRequest(ccr, createContext("create"));
 			choiceID = createResp.getResponse();
 			if(choiceID == null) {Assert.fail("Created ChoiceID is null");}
-
+			/*we need altID*/
+			int alt1ID = altDAO.getAlternativeIDFromChoiceIDandTitle(choiceID, "alt1_name");
 			/*Now that it's inserted we can try to register the creator */
 
 			RegisterParticipantHandler registerHandler = new RegisterParticipantHandler();
@@ -57,7 +58,7 @@ public class CompleteChoiceHandlerTest extends LambdaTest{
 
 
 			/*Next complete the choice*/
-			CompleteChoiceRequest completeReq = new CompleteChoiceRequest(choiceID, part1ID);
+			CompleteChoiceRequest completeReq = new CompleteChoiceRequest(choiceID, alt1ID, part1ID);
 			CompleteChoiceHandler completeHandler = new CompleteChoiceHandler();
 			GetChoiceResponse completeResp = completeHandler.handleRequest(completeReq, createContext("complete"));
 			/*Assert the choice is completed now*/
@@ -111,6 +112,10 @@ public class CompleteChoiceHandlerTest extends LambdaTest{
 			choiceID = createResp.getResponse();
 			choiceID2 = createResp2.getResponse();
 			if(choiceID == null) {Assert.fail("Created ChoiceID is null");}
+			int alt1ID = altDAO.getAlternativeIDFromChoiceIDandTitle(choiceID, "alt1_name");
+			int alt2ID = altDAO.getAlternativeIDFromChoiceIDandTitle(choiceID2, "alt1_name");
+
+
 
 
 			/*Now that it's inserted we can try to register the first user to both choices */
@@ -128,8 +133,8 @@ public class CompleteChoiceHandlerTest extends LambdaTest{
 			int part2ID = partDAO.getParticipantIDFromChoiceIDAndParticipantName(choiceID2, "creator");
 
 			CompleteChoiceHandler completeHandler = new CompleteChoiceHandler();
-			CompleteChoiceRequest completeRequest1 = new CompleteChoiceRequest(choiceID, part2ID);
-			CompleteChoiceRequest completeRequest2 = new CompleteChoiceRequest(choiceID2, part1ID);
+			CompleteChoiceRequest completeRequest1 = new CompleteChoiceRequest(choiceID, alt1ID, part2ID);
+			CompleteChoiceRequest completeRequest2 = new CompleteChoiceRequest(choiceID2, alt2ID, part1ID);
 
 			GetChoiceResponse completeResponse1 = completeHandler.handleRequest(completeRequest1,  createContext("improper Amend1"));
 			GetChoiceResponse completeResponse2 = completeHandler.handleRequest(completeRequest2,  createContext("improper Amend2"));
