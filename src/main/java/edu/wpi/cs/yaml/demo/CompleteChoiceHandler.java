@@ -28,7 +28,6 @@ public class CompleteChoiceHandler implements RequestHandler<CompleteChoiceReque
 		int altID = req.getAlternativeID();
 
 		try {
-			choiceID = altDao.getChoiceIDA(req.getAlternativeID());
 
 			/*If the participantID does not belong to the choiceID (someone trying to hack in)*/
 			if (!partDao.belongsToChoiceID(choiceID, req.getParticipantID())) {return new GetChoiceResponse(403, "ParticipantID not associated with choiceID");}
