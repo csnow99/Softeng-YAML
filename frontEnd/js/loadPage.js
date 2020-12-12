@@ -50,7 +50,9 @@ function checkQuality(response, finalParticipantID, finalChoiceID) {
                 }
                 let chosenAltID = response["choice"]["selectedAlternativeID"];
                 let chosenAltDiv = document.getElementById(chosenAltID);
-                let chosenAltName = chosenAltDiv.innerHTML.split("<br>")[0].split(":")[1].split("</b>")[0]
+                let chosenAltName = chosenAltDiv.innerHTML
+                    .split("</b>")[1]
+                    .split("</label><br>")[0]
                 document.getElementById("choiceID").innerText = "The choice has been complete with an Alternative: " + chosenAltName;
 
             }
