@@ -30,7 +30,11 @@ function checkQuality(response, finalParticipantID, finalChoiceID) {
     } else {
         let isCompleted = response["choice"]["isCompleted"];
         let element = document.getElementById("loginStuff")
-        element.parentElement.removeChild(element)
+
+        if(element !== null) {
+            element.parentElement.removeChild(element)
+        }
+
         // Callbacks:
         // Username -> ChoiceInfo -> AlternativeInfo -> VoteInfo -> FeedbackInfo
         requestUsername(finalParticipantID, finalChoiceID, requestChoiceInfo);

@@ -55,7 +55,7 @@ function updatePageWithAlternative(response) {
         let alternativeDescription = alternative["description"]
         choiceID = alternative["choiceID"]
 
-        output = output + "<div id='" + alternativeID + "'><label 'style=font-size: 30px; font-weight: 300;'><b> Alternative #"+ count + ": </b>" + alternativeName + "</label><br>"
+        output = output + "<div id='" + alternativeID + "'><label style='font-size: 20px; font-weight: 300;'><b> Alternative #"+ count + ": </b>" + alternativeName + "</label><br>"
         output = output + "<label 'style=font-size: 50px;'> <b> Description: </b>" + alternativeDescription + "</label><br>"
         if (finalParticipantID !== "0"){
             output = output + "<div id=\"buttons"+ count +"\">\n" +
@@ -70,7 +70,7 @@ function updatePageWithAlternative(response) {
                 "       <div id='addFeedback" + alternativeID + "'>" +
                 "           <input class='btn orange white-text waves-effect waves-light btn' id='addFeedbackBtn" + alternativeID + "' type=\"button\" value=\"Add Feedback\" " +
                 "           onclick='JavaScript:addFeedback(\"feedback" + alternativeID + "\")'></div>" +
-                " <input id='completeChoice' class='btn orange white-text waves-effect waves-light btn' type=\"button\" value=\"Pick Alternative\" onclick='JavaScript:completeChoice(" + alternativeID + ")'>" +
+                " <input style='margin-bottom: 10px; margin-top: 10px;' id='completeChoice' class='btn orange white-text waves-effect waves-light btn' type=\"button\" value=\"Pick Alternative\" onclick='JavaScript:completeChoice(" + alternativeID + ")'>" +
                 "<hr style=\"width:50%;\"></div>"
         } else {
             output += "</div>";
